@@ -45,11 +45,12 @@ const getSleepHours = (day) => {
         "Look at your face, you slept for " +
           (actualSleepHours - idealSleepHours) +
           " hour(s) more than you need");
-    } else (actualSleepHours < idealSleepHours)
+    } else (actualSleepHours < idealSleepHours) // need a { here
       console.log(
         "You got " +
           (idealSleepHours - actualSleepHours) +
           " hour(s) less. We need power, sleep more!"
+          // need a } here
       );
     }
   calculateSleepDebt();
