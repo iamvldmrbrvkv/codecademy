@@ -1,3 +1,5 @@
+// functions as data
+
 /* JavaScript functions behave like any other data type in the language; we can assign functions to variables, and we can reassign them to new variables.
 Below, we have an annoyingly long function name that hurts the readability of any code in which it’s used. 
 Note: If the below function’s syntax feels unfamiliar, revisit the arrow functions exercise to refresh your knowledge on ES6 arrow notation.
@@ -44,4 +46,4 @@ const checkThatTwoPlusTwoEqualsFourAMillionTimes = () => {
   isTwoPlusTwo();
   console.log(isTwoPlusTwo.name);
 
-  
+// functions as parameters
