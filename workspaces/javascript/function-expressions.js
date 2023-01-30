@@ -1,4 +1,5 @@
-/* Another way to define a function is to use a function expression. 
+/*
+Another way to define a function is to use a function expression. 
 To define a function inside an expression, we can use the function keyword. 
 In a function expression, the function name is usually omitted. 
 A function with no name is called an anonymous function. 
@@ -14,7 +15,8 @@ Then a set of curly braces that contain the function body.
 To invoke a function expression, write the name of the variable in which the function is stored followed by parentheses enclosing any arguments being passed into the function.
 variableName(argument1, argument2)
 
-Unlike function declarations, function expressions are not hoisted so they cannot be called before they are defined. */
+Unlike function declarations, function expressions are not hoisted so they cannot be called before they are defined.
+*/
 
 // example
 const plantNeedsWater = function(day) {

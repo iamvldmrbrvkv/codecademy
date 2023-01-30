@@ -7,11 +7,13 @@ function multiplyByNineFifths(number) {
   };
    
   getFahrenheit(15); // Returns 59
+
   /* 
   1. create function with parameter 'number' (which we add later), then make formula which include 'number' to conver farengheit to celsius
   2. create function with parameter 'celsius' and then return previous return with parameter 'celsius' + 32. In general we can made it in a first function - number * (9/5) + 32
   3. calling getFahrenheit with 15 and it returnes 59
   */
+ 
   // example
   function monitorCount(rows, columns) {
     return rows * columns;
