@@ -429,11 +429,6 @@ captain: Lily
 chief officer: Dan
 medic: Clementine
 translator: Shauna
-
-captain: Lily
-chief officer: Dan
-medic: Clementine
-translator: Shauna
 Lily: Computer Engineering
 Dan: Aerospace Engineering
 Clementine: Physics
