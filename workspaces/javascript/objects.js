@@ -329,7 +329,7 @@ When we did the reassignment in the body of tryReassignment(), the obj variable 
 */
 
 // example
-et spaceship = {
+let spaceship = {
   'Fuel Type' : 'Turbo Fuel',
   homePlanet : 'Earth'
 };
