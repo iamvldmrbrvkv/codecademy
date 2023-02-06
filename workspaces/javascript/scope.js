@@ -1,4 +1,58 @@
-/* Global scope. In global scope, variables are declared outside of blocks. These variables are called global variables. Because global variables are not bound inside a block, they can be accessed by any code in the program, including code in blocks. */
+// blocks and scope
+
+/*
+Before we talk more about scope, we first need to talk about blocks.
+
+We’ve seen blocks used before in functions and if statements. 
+A block is the code found inside a set of curly braces {}. 
+Blocks help us group one or more statements together and serve as an important structural marker for our code.
+
+A block of code could be a function, like this:
+*/
+const logSkyColor = () => {
+  let color = 'blue'; 
+  console.log(color); // blue 
+}
+/*
+Notice that the function body is actually a block of code.
+
+Observe the block in an if statement:
+*/
+if (dusk) {
+  let color = 'pink';
+  console.log(color); // pink
+}
+
+// example
+const city = 'New York City';
+function logCitySkyline() {
+let skyscraper = 'Empire State Building';
+return 'The stars over the ' + skyscraper + ' in ' + city;
+}
+console.log(logCitySkyline());
+
+// global scope
+
+/*
+In global scope, variables are declared outside of blocks. 
+These variables are called global variables. 
+Because global variables are not bound inside a block, they can be accessed by any code in the program, including code in blocks.
+*/
+
+const color = 'blue';
+ 
+const returnSkyColor = () => {
+  return color; // blue 
+};
+ 
+console.log(returnSkyColor()); // blue
+
+/*
+Even though the color variable is defined outside of the block, it can be accessed in the function block, giving it global scope.
+In turn, color can be accessed within the returnSkyColor function block.
+*/
+
+// example
 const satellite = 'The Moon';
 const galaxy = 'The Milky Way';
 const stars = 'North Star';
@@ -7,9 +61,15 @@ function callMyNightSky() {
 }
 console.log(callMyNightSky());
 
-/* Block scope. The next context we’ll cover is block scope. When a variable is defined inside a block, it is only accessible to the code within the curly braces {}. We say that variable has block scope because it is only accessible to the lines of code within that block.
+// block scope
 
-Variables that are declared with block scope are known as local variables because they are only available to the code that is part of the same block. */
+/*
+The next context we’ll cover is block scope. 
+When a variable is defined inside a block, it is only accessible to the code within the curly braces {}. 
+We say that variable has block scope because it is only accessible to the lines of code within that block.
+
+Variables that are declared with block scope are known as local variables because they are only available to the code that is part of the same block.
+*/
 const logSkyColor = () => {
   let color = 'blue'; 
   console.log(color); // Prints "blue"
@@ -18,9 +78,11 @@ const logSkyColor = () => {
 logSkyColor(); // Prints "blue"
 console.log(color); // throws a ReferenceError
 
-/* We define a function logSkyColor().
+/*
+We define a function logSkyColor().
 Within the function, the color variable is only available within the curly braces of the function.
-If we try to log the same variable outside the function, it throws a ReferenceError. */
+If we try to log the same variable outside the function, it throws a ReferenceError.
+*/
 
 function logVisibleLightWaves() {
   const lightWaves = 'Moonlight';
@@ -29,8 +91,9 @@ function logVisibleLightWaves() {
 logVisibleLightWaves();
 console.log(lightWaves); // it will be "ReferenceError: lightWaves is not defined".
 
-/* scope pulution
-While it’s important to know what global scope is, it’s best practice to not define variables in the global scope. */
+// scope pulution
+
+// While it’s important to know what global scope is, it’s best practice to not define variables in the global scope.
 
 let num = 50;
  
@@ -42,11 +105,13 @@ const logNum = () => {
 logNum(); // Prints 100
 console.log(num); // Prints 100
 
-/* We have a variable num.
+/*
+We have a variable num.
 Inside the function body of logNum(), we want to declare a new variable but forgot to use the let keyword.
 When we call logNum(), num gets reassigned to 100.
 The reassignment inside logNum() affects the global variable num.
-Even though the reassignment is allowed and we won’t get an error, if we decided to use num later, we’ll unknowingly use the new value of num. */
+Even though the reassignment is allowed and we won’t get an error, if we decided to use num later, we’ll unknowingly use the new value of num.
+*/
 
 const satellite = 'The Moon';
 const galaxy = 'The Milky Way';
@@ -59,7 +124,8 @@ const callMyNightSky = () => {
 console.log(callMyNightSky());
 console.log(stars);
 
-// good scoping
+// practice good scoping
+
 const logSkyColor = () => {
   const dusk = true;
   let color = 'blue'; 
@@ -71,11 +137,13 @@ const logSkyColor = () => {
 };
  
 console.log(color); // throws a ReferenceError
+/*
 We create a variable dusk inside the logSkyColor() function.
 After the if statement, we define a new code block with the {} braces. Here we assign a new value to the variable color if the if statement is truthy.
 Within the if block, the color variable holds the value 'pink', though outside the if block, in the function body, the color variable holds the value 'blue'.
 While we use block scope, we still pollute our namespace by reusing the same variable name twice. A better practice would be to rename the variable inside the block.
-Block scope is a powerful tool in JavaScript, since it allows us to define variables with precision, and not pollute the global namespace. If a variable does not need to exist outside a block— it shouldn’t! */
+Block scope is a powerful tool in JavaScript, since it allows us to define variables with precision, and not pollute the global namespace. If a variable does not need to exist outside a block— it shouldn’t! 
+*/
 
 const logVisibleLightWaves = () => {
   let lightWaves = 'Moonlight';
