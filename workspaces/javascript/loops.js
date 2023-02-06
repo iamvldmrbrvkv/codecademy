@@ -4,18 +4,18 @@ console.log(vacationSpots[0]);
 console.log(vacationSpots[1]);
 console.log(vacationSpots[2]);
 
-/* for loop
-
+// for loop
+/*
 A for loop contains three expressions separated by ; inside the parentheses:
 
 1. an initialization starts the loop and can also be used to declare the iterator variable.
 2. a stopping condition is the condition that the iterator variable is evaluated against— if the condition evaluates to true the code block will run, and if it evaluates to false the code will stop.
 3. an iteration statement is used to update the iterator variable on each loop.
-
+*/
 for (let counter = 0; counter < 4; counter++) {
   console.log(counter);
 }
-
+/*
 In this example, the output would be the following:
 0
 1
@@ -26,7 +26,8 @@ The initialization is let counter = 0, so the loop will start counting at 0.
 The stopping condition is counter < 4, meaning the loop will run as long as the iterator variable, counter, is less than 4.
 The iteration statement is counter++. This means after each loop, the value of counter will increase by 1. For the first iteration counter will equal 0, for the second iteration counter will equal 1, and so on.
 The code block is inside of the curly braces, console.log(counter), will execute until the condition evaluates to false. The condition will be false when counter is greater than or equal to 4 — the point that the condition becomes false is sometimes called the stop condition.
-This for loop makes it possible to write 0, 1, 2, and 3 programmatically. */
+This for loop makes it possible to write 0, 1, 2, and 3 programmatically.
+*/
 
 // example
 for (let numbers = 5; numbers < 11; numbers++) {
@@ -34,6 +35,7 @@ for (let numbers = 5; numbers < 11; numbers++) {
   }
 
 // looping in reverse
+
 // The loop below loops from 0 to 3. Edit it to loop backwards from 3 to 0
 for (let counter = 3; counter >= 0; counter--){
   console.log(counter);
@@ -113,8 +115,9 @@ for (let counterOne = 1; counterOne < 4; counterOne++){
     counterTwo++;
   }
 
-  /* The counterTwo variable is declared before the loop. 
-  We can access it inside our while loop since it’s in the global scope.
+/*
+The counterTwo variable is declared before the loop. 
+We can access it inside our while loop since it’s in the global scope.
 We start our loop with the keyword while followed by our stopping condition, or test condition. 
 This will be evaluated before each round of the loop. While the condition evaluates to true, the block will continue to run. 
 Once it evaluates to false the loop will stop.
@@ -128,7 +131,8 @@ So you may be wondering when to use a while loop!
 The syntax of a while loop is ideal when we don’t know in advance how many times the loop should run. 
 Think of eating like a while loop: when you start taking bites, you don’t know the exact number you’ll need to become full. 
 Rather you’ll eat while you’re hungry. 
-In situations when we want a loop to execute an undetermined number of times, while loops are the best choice. */
+In situations when we want a loop to execute an undetermined number of times, while loops are the best choice.
+*/
 
 // example
 const cards = ['diamond', 'spade', 'heart', 'club'];

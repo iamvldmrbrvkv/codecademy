@@ -13,7 +13,6 @@ const plantNeedsWater = function(day) {
     return area;
   };
   */
-
   const plantNeedsWater = (day) => {
     if (day === 'Wednesday') {
       return true;

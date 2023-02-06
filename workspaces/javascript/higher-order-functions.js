@@ -5,11 +5,9 @@ JavaScript functions behave like any other data type in the language; we can ass
 Below, we have an annoyingly long function name that hurts the readability of any code in which it’s used. 
 Note: If the below function’s syntax feels unfamiliar, revisit the arrow functions exercise to refresh your knowledge on ES6 arrow notation.
 */
-
 const announceThatIAmDoingImportantWork = () => {
     console.log("I’m doing very important work!");
 };
-
 /*
 Let’s pretend this function does important work and needs to be called repeatedly. 
 To rename this function without sacrificing the source code, we can re-assign the function to a variable with a suitably short name:
