@@ -21,7 +21,7 @@ const menu = {
   }
   menu.meal = 'Vodka';
   menu.price = 100;
-  console.log(menu.todaysSpecial);
+  console.log(menu.todaysSpecial); // Today’s Special is Vodka for 50% discount!
   
   // first test log
   /*
@@ -38,4 +38,3 @@ const menu = {
   console.log(menu._meal);
   console.log(menu._price);
   */
- // If you want to extend your learning on this project, try adding an array of meals and prices to randomly set and get Today’s Special!

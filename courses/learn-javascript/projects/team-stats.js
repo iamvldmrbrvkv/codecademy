@@ -37,3 +37,17 @@ const team = {
   console.log(team._players);
   team.addGame('Petr', 3, 254);
   console.log(team._games);
+/*
+[
+  { firstName: 'VLadimir', lastName: 'Borovikov', age: 35 },
+  { firstName: 'Polina', lastName: 'Deruga', age: 22 },
+  { firstName: 'Lucya', lastName: 'Koroleva', age: 33 },
+  { firstName: 'Vladimir', lastName: 'Putin', age: 89 }
+]
+[
+  { opponent: 'Vika', teamPoints: 3, opponentPoints: 2 },
+  { opponent: 'Anton', teamPoints: 1, opponentPoints: 4 },
+  { opponent: 'Jamie', teamPoints: 0, opponentPoints: 100 },
+  { opponent: 'Petr', teamPoints: 3, opponentPoints: 254 }
+]
+*/
