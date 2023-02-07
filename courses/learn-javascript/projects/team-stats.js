@@ -52,4 +52,4 @@ const team = {
 ]
 */
 
-// finish!!!
+// this is a final project!
