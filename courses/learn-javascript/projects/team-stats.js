@@ -51,3 +51,5 @@ const team = {
   { opponent: 'Petr', teamPoints: 3, opponentPoints: 254 }
 ]
 */
+
+// finish!!!
