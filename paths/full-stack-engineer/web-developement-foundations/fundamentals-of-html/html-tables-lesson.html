@@ -1,0 +1,236 @@
+<!--The first step in entering data into the table is to add rows using the table row element: <tr>.
+
+Each cell element must also be defined. In HTML, you can add data using the table data element: <td>.
+
+To add titles to rows and columns, you can use the table heading element: <th>.
+
+The table heading element is used just like a table data element, except with a relevant title. 
+Just like table data, a table heading must be placed within a table row.-->
+<table>
+    <tr>
+      <th></th>
+      <th scope="col">Saturday</th>
+      <th scope="col">Sunday</th>
+    </tr>
+    <tr>
+      <th scope="row">Temperature</th>
+      <td>73</td>
+      <td>81</td>
+    </tr>
+  </table>
+<!--First, a new row was added to hold the three headings: a blank heading, a Saturday heading, and a Sunday heading. 
+The blank heading creates the extra table cell necessary to align the table headings correctly over the data they correspond to.
+
+In the second row, one table heading was added as a row title: Temperature.
+
+Note, also, the use of the scope attribute, which can take one of two values:
+
+row - this value makes it clear that the heading is for a row.
+col - this value makes it clear that the heading is for a column.-->
+
+<!--table borders-->
+table, td {
+    border: 1px solid black;
+  }
+
+<!--spanning columns-->
+<!--Data can span columns using the colspan attribute. The attribute accepts an integer (greater than or equal to 1) to denote the number of columns it spans across.-->
+<table>
+    <tr>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+    </tr>
+    <tr>
+      <td colspan="2">Out of Town</td>
+      <td>Back in Town</td>
+    </tr>
+  </table>
+
+<!--spanning rows-->
+<table>
+    <tr> <!-- Row 1 -->
+      <th></th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+    <tr> <!-- Row 2 -->
+      <th>Morning</th>
+      <td rowspan="2">Work</td>
+      <td rowspan="3">Relax</td>
+    </tr>
+    <tr> <!-- Row 3 -->
+      <th>Afternoon</th>
+    </tr>
+    <tr> <!-- Row 4 -->
+      <th>Evening</th>
+      <td>Dinner</td>
+    </tr>
+  </table>
+
+<!--table body-->
+<!--Long tables can be sectioned off using the table body element: <tbody>.
+
+The <tbody> element should contain all of the table’s data, excluding the table headings (more on this in a later exercise).-->
+<table>
+  <tbody>
+    <tr>
+      <th></th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+    <tr>
+      <th>Morning</th>
+      <td rowspan="2">Work</td>
+      <td rowspan="3">Relax</td>
+    </tr>
+    <tr>
+     <th>Afternoon</th>
+    </tr>
+    <tr>
+      <th>Evening</th>
+      <td>Dinner</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--table head-->
+<!--When a table’s body is sectioned off, however, it also makes sense to section off the table’s column headings using the <thead> element.-->
+    <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th scope="col">Saturday</th>
+            <th scope="col">Sunday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Morning</th>
+            <td rowspan="2">Work</td>
+            <td rowspan="3">Relax</td>
+          </tr>
+          <tr>
+           <th scope="row">Afternoon</th>
+          </tr>
+          <tr>
+            <th scope="row">Evening</th>
+            <td>Dinner</td>
+          </tr>
+        </tbody>
+      </table>
+<!--In the example above, the only new element is <thead>. 
+The table headings are contained inside of this element. 
+Note that the table’s head still requires a row in order to contain the table headings.
+
+Additionally, only the column headings go under the <thead> element. 
+We can use the scope attribute on <th> elements to indicate whether a <th> element is being used as a "row" heading or a "col" heading.-->
+
+<!--table footer-->
+<!--The bottom part of a long table can also be sectioned off using the <tfoot> element.-->
+    <table>
+        <thead>
+          <tr>
+            <th>Quarter</th>
+            <th>Revenue</th>
+            <th>Costs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Q1</th>
+            <td>$10M</td>
+            <td>$7.5M</td>
+          </tr>
+          <tr>
+            <th>Q2</th>
+            <td>$12M</td>
+            <td>$5M</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total</th>
+            <td>$22M</td>
+            <td>$12.5M</td>
+          </tr>
+        </tfoot>
+      </table>
+<!--In the example above, the footer contains the totals of the data in the table. 
+Footers are often used to contain sums, differences, and other data results.-->
+
+<!--styling with css-->
+table, th, td {
+    border: 1px solid black;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+
+<!--example-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ship To It - Company Packing List</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato: 100,300,400,700|Luckiest+Guy|Oxygen:300,400" rel="stylesheet">
+  <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+  <ul class="navigation">
+    <li><img src="https://content.codecademy.com/courses/web-101/unit-9/htmlcss1-img_logo-shiptoit.png" height="20px;"></li>
+    <li class="active">Action List</li>
+    <li>Profiles</li>
+    <li>Settings</li>
+  </ul>
+
+  <div class="search">Search the table</div>
+  
+  <table>
+    <thead>
+    <tr>
+      <th>Company Name</th>
+      <th>Number of Items to Ship</th>
+      <th>Next Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td colspan="2">Adam's Greenworks</td>
+      <td>14</td>
+      <td>Package Items</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Davie's Burgers</td>
+      <td>2</td>
+      <td>Send Invoice</td>
+    </tr>
+    <tr>
+      <td>Baker's Bike Shop</td>
+      <td>3</td>
+      <td>Send Invoice</td>
+    </tr>
+    <tr>
+      <td>Miss Sally's Southern</td>
+      <td>4</td>
+      <td>Ship</td>
+    </tr>
+    <tr>
+      <td>Summit Resort Rentals</td>
+      <td>4</td>
+      <td>Ship</td>
+    </tr>
+    <tr>
+      <td>Strike Fitness</td>
+      <td>1</td>
+      <td>Enter Order</td>
+    </tr>
+    </tbody>
+    <tfoot>
+      <td>Total</td>
+      <td>28</td>
+    </tfoot>
+  </table>
+
+
+</body>
+</html>
