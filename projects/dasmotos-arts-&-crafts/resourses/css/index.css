@@ -1,5 +1,11 @@
-h1 {
+h1,
+h2,
+h3,
+p {
     font-family: Helvetica;
+}
+
+h1 {
     font-size: 100px;
     font-weight: bold;
     color: khaki;
@@ -7,46 +13,26 @@ h1 {
     background-image: url('../images/pattern.jpeg');
 }
 
-h3 {
-    font-family: Helvetica;
-    color:black;
-    text-align: left;
+.div h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    width: 100%;
 }
 
-p {
-    color: black;
-    text-align: left;
-}
-
-.brushes {
+#brushes {
     background-color: mediumspringgreen;
-    font-family: Helvetica;
-    font-size: 32px;
-    font-weight: bold;
-    color: white;
-    width: 100%;
 }
 
-.frames {
+#frames {
     background-color: lightcoral;
-    font-family: Helvetica;
-    font-size: 32px;
-    font-weight: bold;
-    color: white;
-    width: 100%;
 }
 
-.paint {
+#paint {
     background-color: skyblue;
-    font-family: Helvetica;
-    font-size: 32px;
-    font-weight: bold;
-    color: white;
-    width: 100%;
 }
 
-.strong {
-    font-family: Helvetica;
+.span {
     font-weight: bold;
     color: blue;
 }
