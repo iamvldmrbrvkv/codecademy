@@ -1,0 +1,48 @@
+body {
+    background-color: rgb(220, 220, 220);
+    color: black;
+    font-family: Arial, sans-serif;
+    width: auto;
+  }
+  
+header {
+    text-align: center;
+     margin-top: 5px;
+  }
+  
+h1 {
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+h2 {
+    color: rgb(113, 17, 157);
+    font-size: 24px;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+table, th, td {
+    border: 2px solid rgb(220, 220, 220);
+    font-family: Arial, sans-serif;
+  }
+
+.table {
+    width: 600px;
+    margin: 0 auto;
+    border: 2px solid rgb(168, 0, 207);
+}
+
+.colored {
+    background-color: rgb(234, 146, 224);
+    font-weight: bold;
+    border: 1px solid rgb(220, 220, 220);
+    width: 600px;
+}
+
+.left {
+    background-color:rgb(245, 247, 218);
+    font-family: monospace;
+    border: 1px solid rgb(220, 220, 220);
+}
