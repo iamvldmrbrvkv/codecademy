@@ -1,4 +1,4 @@
-Introduction
+introduction
 Consider the website to the right. We can see that the site is listing hotels in Singapore. 
 Do you know if this site offers any other categories of travel products (tours, flights, experiences) or products in other regions? 
 There is no way to tell from the current view.
@@ -12,7 +12,7 @@ For example, a shopping site may have a breadcrumb trail leading to a pair of sh
 Why do we call them breadcrumbs?
 Think about the story of Hansel and Gretel, where the kids drop breadcrumbs as they walked in the woods so that they would be able to find their way back.
 
-Benefit of using breadcrumbs
+benefit of using breadcrumbs
 Breadcrumb navigation provides a lot of benefits for users that come to random pages in a website through direct links or search results. 
 Even if they enter to a seemingly random page on our site, they already have an idea of where they are in the website. 
 The breadcrumb also hints at the extent of the site. 
@@ -25,7 +25,7 @@ Without the breadcrumbs, they would likely need to click “back” twice in the
 The decision to use breadcrumbs is a judgment call depending on the type, depth, and complexity of your site. 
 In this lesson, we’ll discuss some of the benefits of including breadcrumb navigation, how to implement it using HTML and CSS, and some of the pitfalls to avoid.
 
-Simple Example of Breadcrumbs
+simple example of breadcrumbs
 As you saw in the introduction, it is difficult to understand where you are on a website that lacks breadcrumb navigation. 
 By adding it to a site, users can get a quick feel for where they are on a site.
 
@@ -91,7 +91,7 @@ example
   color: red;
 }
 
-Where do Breadcrumbs Lead
+where do breadcrumbs lead
 In the previous examples, if you clicked on any of the breadcrumbs, it wouldn’t take you to a new page. 
 This is because we have set href="#". 
 With this value, a click on the link will cause the page to scroll to the top of the current page.
