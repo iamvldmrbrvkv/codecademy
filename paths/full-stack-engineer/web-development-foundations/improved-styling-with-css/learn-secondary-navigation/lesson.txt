@@ -1,4 +1,79 @@
-simple example of breadcrumbs
+Introduction
+Consider the website to the right. We can see that the site is listing hotels in Singapore. 
+Do you know if this site offers any other categories of travel products (tours, flights, experiences) or products in other regions? 
+There is no way to tell from the current view.
+
+What is primary vs secondary navigation?
+The primary navigation system typically contains the most important links and buttons that need to be displayed on every single page of the site.
+Secondary navigation, or breadcrumb navigation, usually consists of a clickable list of pages or attributes that led to the current page. 
+It can help users understand the extent of the site and also where they are currently.
+For example, a shopping site may have a breadcrumb trail leading to a pair of shoes like so:
+
+Why do we call them breadcrumbs?
+Think about the story of Hansel and Gretel, where the kids drop breadcrumbs as they walked in the woods so that they would be able to find their way back.
+
+Benefit of using breadcrumbs
+Breadcrumb navigation provides a lot of benefits for users that come to random pages in a website through direct links or search results. 
+Even if they enter to a seemingly random page on our site, they already have an idea of where they are in the website. 
+The breadcrumb also hints at the extent of the site. 
+For the example above, users could safely assume the site had shoes for other categories, shoes in different styles, and shoes in more colors.
+
+Breadcrumbs also provide a way for a user to quickly jump backward in their navigation of the site. 
+For example, if a user wanted to browse another style of shoe, they could click directly on the “Shoes” page and navigate to their desired style. 
+Without the breadcrumbs, they would likely need to click “back” twice in their browser or start their search over from the home page.
+
+The decision to use breadcrumbs is a judgment call depending on the type, depth, and complexity of your site. 
+In this lesson, we’ll discuss some of the benefits of including breadcrumb navigation, how to implement it using HTML and CSS, and some of the pitfalls to avoid.
+
+Simple Example of Breadcrumbs
+As you saw in the introduction, it is difficult to understand where you are on a website that lacks breadcrumb navigation. 
+By adding it to a site, users can get a quick feel for where they are on a site.
+
+It also hints at the breadth of the site. 
+If a user sees something like “Fashion > Shoes” in the breadcrumb structure, they could reasonably expect the site contains other clothing items or accessories besides shoes.
+
+Breadcrumbs are usually displayed as a horizontal list of pages and take up minimal space. 
+Users expect to find them in the header, left-aligned, and below any primary navigation. 
+Typically they are separated with a “>” or a “/“ symbol.
+
+Let’s practice setting CSS rules to conform to the expectations for breadcrumb navigation. 
+You will start with a plain looking list, but by the end you will have created a breadcrumb!
+
+Instructions
+1. Breadcrumbs are typically displayed next to each other, on the same line. 
+First, set the display property to inline for the .breadcrumb > li selector in order to put list items on the same line.
+
+Set display: inline for the .breadcrumb > li selector.
+
+2. Another common feature of breadcrumbs is that they are separated by a symbol, often > or /.
+Instead of having to manually add this to all of the breadcrumbs in our breadcrumb trail, we can use a CSS pseudo-element.
+This requires some complicated CSS, but it will save us time in the long run!
+.breadcrumb li+li::before is the selector that we want! 
+View the hint if you want more information about how this complicated selector works!
+In styles.css, find the selector (.breadcrumb li+li::before). 
+Set the content property to “>” to place the greater than sign between each adjacent breadcrumb.
+
+The + is called the adjacent sibling combinator; it will only select two li‘s when they are immediately next to each other, with the same parent. 
+The element that actually gets selected is the second element of this sibling pair.
+The ::before part of this selector creates a pseudo-element. 
+The ::before pseudo-element is often used with the content property, to add content that will be displayed just before the selected element.
+.breadcrumb li+li::before {
+  content: "/";
+}
+The code above adds a “/“ symbol inbetween all adjacent breadcrumbs.
+
+3. Another feature of breadcrumbs is that they are often not underlined. 
+Underlines are used to communicate that text within paragraph elements can be clicked, but we want our users to recognize breadcrumbs as part of the site navigation, rather than just like any other clickable text.
+Remove the link underline by changing the text-decoration property of the breadcrumb a selector to have the value none.
+
+Set text-decoration: none for the .breadcrumb a selector.
+
+4. Breadcrumbs should change when you hover over them to highlight their clickability.
+Change the color property of the .breadcrumb a:hover selector to have the value red.
+
+Set color: red for the .breadcrumb a:hover selector.
+
+example
 .breadcrumb > li {
   display: inline;
 }
@@ -15,21 +90,62 @@ simple example of breadcrumbs
 .breadcrumb a:hover {
   color: red;
 }
-Another common feature of breadcrumbs is that they are separated by a symbol, often > or /.
-Instead of having to manually add this to all of the breadcrumbs in our breadcrumb trail, we can use a CSS pseudo-element.
-This requires some complicated CSS, but it will save us time in the long run!
-.breadcrumb li+li::before is the selector that we want! View the hint if you want more information about how this complicated selector works!
 
-The + is called the adjacent sibling combinator; it will only select two li‘s when they are immediately next to each other, with the same parent. 
-The element that actually gets selected is the second element of this sibling pair.
-The ::before part of this selector creates a pseudo-element. 
-The ::before pseudo-element is often used with the content property, to add content that will be displayed just before the selected element.
-.breadcrumb li+li::before {
-  content: "/";
+Where do Breadcrumbs Lead
+In the previous examples, if you clicked on any of the breadcrumbs, it wouldn’t take you to a new page. 
+This is because we have set href="#". 
+With this value, a click on the link will cause the page to scroll to the top of the current page.
+
+In a full site, these breadcrumbs would link to their respective pages. 
+This is accomplished by setting the href property to the appropriate page.
+
+Since breadcrumbs are typically relative to the current page, the breadcrumb list on each page needs to be different. 
+However, as a user moves around the breadcrumb list, they should expect the breadcrumb style and list to stay consistent.
+
+For example, if the breadcrumb list was:
+
+Fashion > Shoes > Flats > Brown
+
+and a user clicked on “Flats”, the breadcrumb list on that page should look like:
+
+Fashion > Shoes > Flats
+
+It would be confusing for a user if the categories or order of them changed like:
+
+Shoes > Shopping > Flats
+
+where am i?
+Instructions
+1. In the code to the right, we’ve included the page “Singapore Hotels”. 
+It currently has no breadcrumbs - you’ll be adding them!
+The first step is to create an HTML unordered list within index.html below the jumbotron div. 
+The list should have the class of "breadcrumb" and the list items should be “Asia”, “Singapore”, “Tourism”, and “Hotels”.
+For now, set the breadcrumb items to link to "#".
+
+<ul class="breadcrumb">
+  <li><a href="#">Asia</a></li>
+  <li><a href="#">Singapore</a></li>
+  <li><a href="#">Tourism</a></li>
+  <li><a href="#">Hotels</a></li>
+</ul>
+
+2. Add CSS to breadcrumb.css to configure the display of the breadcrumbs. 
+(We’ve already added a bit of CSS to remove some of the existing styling within style.css).
+You can style the breadcrumbs how you like, but at a minimum, it should set the .breadcrumb li elements to display inline and you should use the .breadcrumb li+li::before selector to insert a “>” between the items.
+
+.breadcrumb li {
+  display: inline;
 }
-The code above adds a “/“ symbol inbetween all adjacent breadcrumbs.
+.breadcrumb li+li::before {
+  color: gray;
+  content: ">";
+}
 
 breadcrumb styles
+The previous exercise demonstrated the most basic styling for breadcrumbs. 
+When designing your own site, you’ll need to make a judgment call if this approach is sufficient. 
+If you want to invite the user to interact with the breadcrumbs, you can style them to make them a more prominent part of the page design.
+
 The example below makes use of a couple of CSS tricks to create an arrow effect. 
 We’re using the ::before and ::after pseudo-elements to add filled rectangles (with empty content) before and after each list item:
 
@@ -48,58 +164,6 @@ By setting a portion of the border to transparent, it creates the “tail” of 
 }
 This effect works because the element borders are drawn from the center of the element. 
 We use similar CSS to draw the head of the arrow.
-breadcrumb {
-  text-align: left;
-}
-.breadcrumb li {
-  float: left;
-}
-
-.breadcrumb a {
-  color: #fff;
-  background: darkcyan;
-  text-decoration: none;
-  position: relative;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  margin-right: 15px;
-  padding: 0 5px;
-}
-
-.breadcrumb a::before,
-.breadcrumb a::after {
-  content: "";
-  position: absolute;
-  border-color: darkcyan;
-  border-style: solid;
-  border-width: 15px 5px;
-}
-
-.breadcrumb a::before {
-  left: -10px;
-  border-left-color: transparent;
-}
-.breadcrumb a::after {
-  left: 100%;
-}
-
-.breadcrumb a::after {
-  left: 100%;
-  border-color: transparent;
-  border-left-color: darkcyan;
-}
-
-.breadcrumb a:hover {
-  background-color: blue;
-}
-.breadcrumb a:hover::before {
-  border-color: blue;
-  border-left-color: transparent;
-}
-.breadcrumb a:hover::after {
-  border-left-color: blue;
-}
 
 breadcrumb types
 There are three major types of breadcrumbs:
@@ -110,10 +174,12 @@ Path
 You’ve seen the first two types in our examples so far.
 
 Location based breadcrumbs are based on where you are with respect to the navigation structure of the website. 
-In our previous shoe shopping example, the first three li elements are location based. We are in the “shoes” section of the website, which is contained within the “fashion” section, which is contained within the “shopping” section.
+In our previous shoe shopping example, the first three li elements are location based. 
+We are in the “shoes” section of the website, which is contained within the “fashion” section, which is contained within the “shopping” section.
 
 Attribute based breadcrumbs are based on the attributes of the page or product that you are browsing. 
-In our previous example, the final two li elements are attribute based. We are shopping for shoes that are “flats” and “brown”. 
+In our previous example, the final two li elements are attribute based. 
+We are shopping for shoes that are “flats” and “brown”. 
 Since the order of these attributes is not prescriptive, you’ll see some sites display these at the same level in the UI. 
 If you want to allow users to remove attributes, provide an (x) button or similar to indicate they can be removed.
 
@@ -122,36 +188,40 @@ For example, if they landed on the home page, browsed to the about page and fina
 
 Home > About > Register
 
-Note that this breadcrumb trail will be different for each user and each visit. 
-For even mildly complex sites, the number of steps will become large. 
-To simplify the display, the beginning of the trail is often abbreviated:
+Note that this breadcrumb trail will be different for each user and each visit. For even mildly complex sites, the number of steps will become large. To simplify the display, the beginning of the trail is often abbreviated:
 
 ... > About > Register
 
-.breadcrumb {
-  text-align: left;
-}
-.breadcrumb li {
-  display: inline;
-  color: gray;
-}
-.breadcrumb > li.location+li.location::before {
-  color: gray;
-  content: ">";
-}
-.breadcrumb a {
-  display: inline;
-}
+Instructions
+1. In the pane to the right, we have the basic breadcrumbs structure for the travel website. 
+We’ve added a couple of attribute based breadcrumbs.
+Add an attribute class to the li elements that are attribute based and a location class to the breadcrumbs that are location based.
+
+<ul class="breadcrumb">
+  <li class="location"><a href="">...</a></li>
+  <li class="location"><a href="">Hotels</a></li>
+  <li class="attribute"><a href="">Pets</a></li>
+  <li class="attribute"><a href="">Queen Bed</a></li>
+</ul>
+
+2. Modify the CSS to only put the “>” character between location based breadcrumbs.
+
+Change the selector for adding the “>” character to .breadcrumb li.location+li.location::before
+
+3. Color the “attribute” anchor tags gray to indicate that they are different than the “location” ones.
 
 .attribute a {
   color: gray;
 }
+
+4. Add a “close” indication using the :after pseudoselector:
 
 .attribute a::after {
   content: " x";
   font-size: 8px;
   vertical-align: super;
 }
+Note that this functionality has not been implemented, we are focused on the display of the page only.
 
 breadcrumb pitfalls
 Sometimes it is not appropriate to use breadcrumbs as a means of secondary navigation within a website. 
@@ -168,3 +238,13 @@ In general, the rule of not adding anything extraneous to the design applies her
 If the site only contains a few pages or if the pages in the breadcrumbs are already available through primary navigation, there is little reason to include breadcrumbs in the design.
 
 summary
+In this lesson we covered the concept of using breadcrumbs as a secondary navigation method for a site:
+
+Use breadcrumbs to indicate where a user is and the extent of the site
+Breadcrumbs are implemented using unordered lists in HTML with custom CSS styling
+Three types of breadcrumbs exist:
+location - based on hierarchical structure of site
+attribute - based on attributes of current page or item
+path - unique to a user’s journey on the site
+Path-based breadcrumbs can be confusing, only use if needed
+Ensure breadcrumbs will add value before adding to a site
