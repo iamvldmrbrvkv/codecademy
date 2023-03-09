@@ -1,0 +1,37 @@
+body {
+    font-family: Helvetica;
+    font-size: 22px;
+    color: seashell;
+    background-color: black;
+    opacity: 0.9;
+}
+
+.header {
+    height: 69px;
+    position: fixed;
+    border-bottom: 1px solid seashell;
+    width: 100%;
+}
+
+li {
+    display: inline-block;
+    text-decoration: underline;
+}
+
+.mission {
+    padding-top: 100px;
+    background: url('./images/img-mission-background.jpeg');
+}
+
+.feautured {
+    padding-top: 100px;
+}
+
+.locations {
+    background: url('./images/img-locations-background.jpeg');
+    margin: 0 auto;
+}
+
+footer {
+    text-align: left;
+}
