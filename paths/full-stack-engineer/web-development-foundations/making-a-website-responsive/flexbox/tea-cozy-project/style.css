@@ -3,35 +3,106 @@ body {
     font-size: 22px;
     color: seashell;
     background-color: black;
+    text-align: center;
     opacity: 0.9;
+    margin: 0;
+    padding: 0;
 }
 
 .header {
+    width: 100%;
     height: 69px;
     position: fixed;
     border-bottom: 1px solid seashell;
-    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    background-color: black;
 }
 
-li {
+header img {
+    height: 50px;
+    margin-left: 10px;
+}
+
+li, a {
     display: inline-block;
     text-decoration: underline;
+    padding-right: 5px;
+    height: 100%;
+    color: seashell;
 }
 
-.mission {
-    padding-top: 100px;
+.mission-box {
+    height: 700px;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     background: url('./images/img-mission-background.jpeg');
-}
-
-.feautured {
-    padding-top: 100px;
-}
-
-.locations {
-    background: url('./images/img-locations-background.jpeg');
+    background-position: center;
+    padding-top: 69px;
     margin: 0 auto;
+}
+
+.mission-items {
+    width: 100%;
+    background-color: black;
+    margin: auto;
+}
+
+.featured-box {
+    max-width: 1000px;
+    display: inline-flex;
+    height: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-items img {
+    height: 200px;
+    width: 300px;
+    padding: 10px;
+}
+
+
+.locations-box {
+    min-height: 500px;
+    max-width: 1200px;
+    background: url('./images/img-locations-background.jpeg');
+    background-position: center;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loc {
+    display: inline-flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.locations-items {
+    align-items: center;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 15px 40px;
+    width: 300px;
+}
+
+.contacts {
+    height: 200px;
 }
 
 footer {
     text-align: left;
+    margin-left: 20px;
 }
