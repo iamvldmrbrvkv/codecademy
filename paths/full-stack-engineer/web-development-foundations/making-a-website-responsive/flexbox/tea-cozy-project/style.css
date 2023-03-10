@@ -26,12 +26,24 @@ header img {
     margin-left: 10px;
 }
 
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 li, a {
     display: inline-block;
     text-decoration: underline;
     padding-right: 5px;
-    height: 100%;
     color: seashell;
+}
+
+#mission,
+#featured,
+#locations {
+  scroll-margin-top: 69px;
 }
 
 .mission-box {
@@ -43,7 +55,6 @@ li, a {
     align-items: center;
     background: url('./images/img-mission-background.jpeg');
     background-position: center;
-    padding-top: 69px;
     margin: 0 auto;
 }
 
@@ -60,6 +71,7 @@ li, a {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
 }
 
 .featured-items img {
