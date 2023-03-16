@@ -155,12 +155,9 @@ justify-content: center; positions the columns in the center of the grid, leavin
 align items
 In the previous two exercises, we learned how to position grid items and grid columns from left to right across the page. 
 Now we’ll learn how to position grid items from top to bottom!
-
 align-items is a property that positions grid items along the block, or column axis. 
 This means that it positions items from top to bottom. This property is declared on grid containers.
-
 align-items accepts these values:
-
 start — aligns grid items to the top side of the grid area
 end — aligns grid items to the bottom side of the grid area
 center — aligns grid items to the center of the grid area
@@ -168,7 +165,6 @@ stretch — stretches all items to fill the grid area
 There are several other values that align-items accepts, which you can read about on the Mozilla Developer Network. 
 The definitions for these values can also be found in the documentation. 
 It is important to note that the page with the definitions includes some values that are not accepted in CSS Grid layout.
-
 <main>
   <div class="card">Card 1</div>
   <div class="card">Card 2</div>
@@ -180,7 +176,6 @@ main {
   align-items: center;
 }
 In the example above, we use align-items to adjust the positioning of some elements on this web page.
-
 There is a grid container with three rows that are 400 pixels tall.
 The container has three grid items that do not have a specified width.
 Without setting the align-items property, these elements will span the height of the row they are in (400 pixels).
