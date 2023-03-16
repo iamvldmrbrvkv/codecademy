@@ -100,8 +100,8 @@ start — aligns grid items to the left side of the grid area
 end — aligns grid items to the right side of the grid area
 center — aligns grid items to the center of the grid area
 stretch — stretches all items to fill the grid area
-There are several other values that justify-items accepts, which you can read about on the Mozilla Developer Network https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Box_Alignment_in_CSS_Grid_Layout#Aligning_items_on_the_block_or_column_Axis. 
-The definitions for these values can also be found in the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#values. 
+There are several other values that justify-items accepts, which you can read about on the Mozilla Developer Network https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Box_Alignment_in_CSS_Grid_Layout#Justifying_Items_on_the_Inline_or_Row_Axis. 
+The definitions for these values can also be found in the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/justify-items#values. 
 It is important to note that the page with the definitions includes some values that are not accepted in CSS Grid layout.
 <main>
   <div class="card">Card 1</div>
@@ -134,8 +134,8 @@ stretch — stretches the grid items to increase the size of the grid to expand 
 space-around — includes an equal amount of space on each side of a grid element, resulting in double the amount of space between elements as there is before the first and after the last element
 space-between — includes an equal amount of space between grid items and no space at either end
 space-evenly — places an even amount of space between grid items and at either end
-There are several other values that justify-content accepts, which you can read about on the Mozilla Developer Network. 
-The definitions for these values can also be found in the documentation. 
+There are several other values that justify-content accepts, which you can read about on the Mozilla Developer Network https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Box_Alignment_in_CSS_Grid_Layout#Justifying_Items_on_the_Inline_or_Row_Axis. 
+The definitions for these values can also be found in the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#values. 
 It is important to note that the page with the definitions includes some values that are not accepted in CSS Grid layout.
 <main>
   <div class="left">Left</div>
@@ -162,8 +162,8 @@ start — aligns grid items to the top side of the grid area
 end — aligns grid items to the bottom side of the grid area
 center — aligns grid items to the center of the grid area
 stretch — stretches all items to fill the grid area
-There are several other values that align-items accepts, which you can read about on the Mozilla Developer Network. 
-The definitions for these values can also be found in the documentation. 
+There are several other values that align-items accepts, which you can read about on the Mozilla Developer Network https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Box_Alignment_in_CSS_Grid_Layout#Justifying_Items_on_the_Inline_or_Row_Axis. 
+The definitions for these values can also be found in the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#values. 
 It is important to note that the page with the definitions includes some values that are not accepted in CSS Grid layout.
 <main>
   <div class="card">Card 1</div>
@@ -194,8 +194,8 @@ stretch — stretches the grid items to increase the size of the grid to expand 
 space-around — includes an equal amount of space on each side of a grid element, resulting in double the amount of space between elements as there is before the first and after the last element
 space-between — includes an equal amount of space between grid items and no space at either end
 space-evenly — places an even amount of space between grid items and at either end
-There are several other values that align-content accepts, which you can read about on the Mozilla Developer Network. 
-The definitions for these values can also be found in the documentation. 
+There are several other values that align-content accepts, which you can read about on the Mozilla Developer Network https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Box_Alignment_in_CSS_Grid_Layout#Justifying_Items_on_the_Inline_or_Row_Axis. 
+The definitions for these values can also be found in the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/align-content#values. 
 It is important to note that the page with the definitions includes some values that are not accepted in CSS Grid layout.
 <main>
   <div class="top">Top</div>
@@ -226,8 +226,8 @@ end — positions grid items on the right side/bottom of the grid area
 center — positions grid items on the center of the grid area
 stretch — positions grid items to fill the grid area (default)
 align-self and justify-self accept the same values as align-items and justify-items. 
-You can read about these values on the Mozilla Developer Network. 
-The definitions for these values can also be found in the documentation. 
+You can read about these values on the Mozilla Developer Network https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Box_Alignment_in_CSS_Grid_Layout#Justifying_Items_on_the_Inline_or_Row_Axis. 
+The definitions for these values can also be found in the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#values. 
 It is important to note that the page with the definitions includes some values that are not accepted in CSS Grid layout.
 
 implicit vs. explicit grid
