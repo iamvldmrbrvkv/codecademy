@@ -29,7 +29,7 @@ html {
   max-width: 100%;
 }
 
-@media only screen and (max-width: 895px) {
+@media only screen and (max-width: 760px) {
   .main-content {
     top: 2.5625rem;
   }
@@ -42,7 +42,7 @@ header {
   width: 100%;
   border-bottom: solid 1px #c6c1c1;
   background-color: white;
-  z-index: 100;
+  z-index: 1;
 }
 
 header .content {
@@ -70,17 +70,6 @@ nav a {
   color: #4a4a4a;
 }
 
-nav .button {
-  padding: .1875rem .5rem;
-  background-color: #9dc20b;
-  line-height: 1.6;
-  color: white;
-}
-
-nav li:last-child {
-  display: none;
-}
-
 header .icon {
   width: 1rem;
   padding-left: .75rem;
@@ -90,17 +79,7 @@ header .mobile {
   display: none;
 }
 
-@media only screen and (max-width: 895px) {
-  nav li:last-child {
-    display: block;
-  }
-
-  header .content {
-    padding: 1rem 1rem;
-  }
-}
-
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 760px) {
   header .desktop {
     display: none;
   }
@@ -124,6 +103,13 @@ header .mobile {
   header .mobile li {
     padding: 0;
   }
+
+  header .mobile .button {
+    padding: .1875rem .5rem;
+    background-color: #9dc20b;
+    line-height: 1.6;
+    color: white;
+  }
 }
 
 /* Sign Up Section */
@@ -141,7 +127,7 @@ header .mobile {
 
 #sign-up-cta {
   position: relative;
-  top: 171px;
+  top: 170px;
   left: 10%;
   padding: 0 5rem 2.5rem 5rem;
   border: solid 1px #979797;
@@ -184,7 +170,7 @@ header .mobile {
   padding: 1.25rem 7.25rem;
 }
 
-@media only screen and (max-width: 895px) {
+@media only screen and (max-width: 760px) {
   #sign-up-section {
     align-items: center;
     justify-content: center;
@@ -216,7 +202,7 @@ header .mobile {
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 450px) {
   #sign-up-section {
     height: 20rem;
   }
@@ -252,10 +238,6 @@ header .mobile {
   margin: 0 auto;
 }
 
-.feature .content {
-  padding: 2.5rem 0;
-}
-
 .feature h2 {
   padding-bottom: .5rem;
   font-size: 2.25rem;
@@ -270,18 +252,9 @@ header .mobile {
   color: #4a4a4a;
 }
 
-@media only screen and (max-width: 895px) {
-  #features-section {
-    padding: 1rem;
-  }
-
-  .feature {
-    margin: 0px .5rem;
-    padding: 1rem;
-  }
-
+@media only screen and (max-width: 890px) {
   .feature h2 {
-    font-size: 2rem;
+    font-size: 1.125rem;
     line-height: 1.3;
     font-weight: normal;
   }
@@ -292,7 +265,11 @@ header .mobile {
   }
 }
 
-@media only screen and (max-width: 600px) {
+.feature .content {
+  padding: 2.5rem 0;
+}
+
+@media only screen and (max-width: 760px) {
   #features-section {
     flex-flow: column;
     padding: 0;
@@ -301,10 +278,6 @@ header .mobile {
   .feature {
     margin: 0;
     padding: 1.25rem 1rem 0 1rem;
-  }
-
-  .feature .content {
-    padding: 1.25rem 0 1.875rem 0;
   }
 }
 
@@ -339,7 +312,7 @@ header .mobile {
   padding: 0 1%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 760px) {
   #filters-section {
     padding: 1.5rem 0 0 0;
   }
@@ -376,10 +349,7 @@ header .mobile {
 }
 
 #quotes-section .content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5rem 1.5rem;
+  padding: 5rem 0;
 }
 
 #quotes-section .quote {
@@ -395,18 +365,11 @@ header .mobile {
   height: 1.875rem;
 }
 
-@media only screen and (max-width: 895px) {
-  #quotes-section .content {
-    padding: 3rem 1.5rem;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  #quotes-section .content {
-    flex-flow: column;
+@media only screen and (max-width: 760px) {
+  #quotes-section content {
     padding: 1.875rem .625rem;
   }
-  
+
   #quotes-section .quote {
     font-size: 1.5rem;
     line-height: 1.4;
@@ -436,7 +399,7 @@ footer .copyright {
   flex-grow: 1;
 }
 
-@media only screen and (max-width: 895px) {
+@media only screen and (max-width: 760px) {
   footer .content {
     font-size: .625rem;
   }
