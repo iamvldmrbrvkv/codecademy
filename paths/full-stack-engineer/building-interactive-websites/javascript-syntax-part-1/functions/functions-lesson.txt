@@ -5,7 +5,6 @@ Measure the height of the rectangle.
 Multiply the width and height of the rectangle.
 With practice, you can calculate the area of the rectangle without being instructed with these three steps every time.
 We can calculate the area of one rectangle with the following code:
-
 const width = 10;
 const height = 6;
 const area =  width * height;
