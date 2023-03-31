@@ -1,4 +1,4 @@
-creating a grid
+Creating a grid
 To set up a grid, you need to have both a grid container and grid items. 
 The grid container will be a parent element that contains grid items as children and applies overarching styling and positioning to them.
 To turn an HTML element into a grid container, you must set the element’s display property to one of two values:
@@ -6,7 +6,7 @@ grid — for a block-level grid.
 inline-grid — for an inline grid.
 Then, you can assign other properties to lay out the grid to suit your needs.
 
-creating columns
+Creating columns
 By default, grids contain only one column. 
 If you were to start adding items, each item would be put on a new row; that’s not much of a grid! 
 To change this, we need to explicitly define the number of rows and columns in our grid.
@@ -41,7 +41,7 @@ Notice that in this example, the total width of our columns (120 pixels) exceeds
 This might make our grid cover other elements on the page! 
 In a later exercise, we will discuss how to avoid overflow.
 
-creatng rows
+Creatng rows
 We’ve learned how to define the number of columns in our grid explicitly. 
 To specify the number and size of the rows, we are going to use the property grid-template-rows.
 This property is almost identical to grid-template-columns. 
@@ -73,7 +73,7 @@ In this example, we’ve made two rows and three columns of varying sizes.
 The same rules from before apply; when using percentages to set rows, each row will be a percentage of the grid’s total height. 
 Columns are still a percentage of the total width.
 
-fraction
+Fraction
 You may already be familiar with several types of responsive units such as percentages (%), ems and rems. 
 CSS Grid introduced a new relative sizing unit — fr, like fraction.
 By using the fr unit, we can define the size of columns and rows as a fraction of the grid’s length and width. 
@@ -105,7 +105,7 @@ In this example, 60 pixels are taken up by the second column.
 Therefore the first and third columns have 40 available to split between them. 
 Since each gets one fraction of the total, they both end up being 20 pixels wide.
 
-repeat
+Repeat
 The properties that define the number of rows and columns in a grid can take a function as a value. 
 repeat() is one of these functions. 
 The repeat() function was created specifically for CSS Grid.
@@ -123,7 +123,7 @@ Finally, the second parameter of repeat() can have multiple values.
 grid-template-columns: repeat(2, 20px 50px)
 This code will create four columns where the first and third columns will be 20 pixels wide and the second and fourth will be 50 pixels wide.
 
-minmax
+Minmax
 So far, all of the grids that we have worked with have been a fixed size. 
 The grid in our example has been 400 pixels wide and 500 pixels tall. 
 But sometimes you might want a grid to resize based on the size of your web browser.
@@ -131,7 +131,6 @@ But sometimes you might want a grid to resize based on the size of your web brow
 In these situations, you might want to prevent a row or column from getting too big or too small. 
 For example, if you have a 100-pixel wide image in your grid, you probably don’t want its column to get thinner than 100 pixels! 
 The minmax() function can help us solve this problem.
-
 .grid {
   display: grid;
   grid-template-columns: 100px minmax(100px, 500px) 100px;
@@ -140,7 +139,7 @@ In this example, the first and third columns will always be 100 pixels wide, no 
 The second column, however, will vary in size as the overall grid resizes. 
 The second column will always be between 100 and 500 pixels wide.
 
-grid gap
+Grid gap
 In all of our grids so far, there hasn’t been any space between the items in our grid. 
 The CSS properties row-gap and column-gap will put blank space between every row and column in the grid.
 .grid {
@@ -167,7 +166,7 @@ The example above will set the distance between rows to 20 pixels and the distan
 Unlike other CSS grid properties, this shorthand does not take a / between values! If only one value is given, it will set the column gap and the row gap to that value.
 Note: You might have seen grid-row-gap, grid-column-gap, and grid-gap in other code, but these properties are now deprecated.
 
-multiple grid items
+Multiple grid items
 Using the CSS properties grid-row-start and grid-row-end, we can make single grid items take up multiple rows. 
 Remember, we are no longer applying CSS to the outer grid container; we’re adding CSS to the elements sitting inside the grid!
 .item {
@@ -186,7 +185,7 @@ It is possible for the value of grid-row-start to be greater than that of grid-r
 Both properties can also each have negative values. 
 Consult the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-start to learn more about how to use these features.
 
-grid row
+Grid row
 We can use the property grid-row as shorthand for grid-row-start and grid-row-end. 
 The following two code blocks will produce the same output:
 .item {
@@ -202,7 +201,7 @@ Again, the ending row is exclusive; this grid item will occupy rows four and fiv
 When an item spans multiple rows or columns using these properties, it will also include the gap if any exists. 
 For example, if an item spans two rows of height 100 pixels and there is a ten-pixel gap, then the item will have a total height of 210 pixels.
 
-grid column
+Grid column
 The previous three properties also exist for columns. 
 grid-column-start, grid-column-end and grid-column work identically to the row properties. 
 These properties allow a grid item to span multiple columns.
@@ -228,7 +227,7 @@ It produces the same result as the following code blocks:
 span is a useful keyword, because it avoids off-by-one errors (miscalculating the ending grid line) you might make when determining the ending grid line of an element. 
 If you know where you want your grid item to start and how long it should be, use span!
 
-grid area
+Grid area
 We’ve already been able to use grid-row and grid-column as shorthand for properties like grid-row-start and grid-row-end. 
 We can refactor even more using the property grid-area. 
 This property will set the starting and ending positions for both the rows and columns of an item.
@@ -246,7 +245,7 @@ In the above example, the item will start on row 2 and end on row 4, though the 
 The item will then start on column 3 and instead of setting a number for which column to end on, we want this item to span 5 columns — this means the item will include columns 3, 4, 5, 6, and 7.
 Using grid-area is an easy way to place items exactly where you want them in a grid.
 
-review
+Review
 At this point, we’ve covered a great deal of different ways to manipulate the grid and the items inside it to create interesting layouts.
 grid-template-columns defines the number and sizes of the columns of the grid
 grid-template-rows defines the number and sizes of the rows of the grid

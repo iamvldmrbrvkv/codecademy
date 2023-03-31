@@ -1,4 +1,4 @@
-what is flexbox?
+What is flexbox?
 There are two important components to a flexbox layout: flex containers and flex items. 
 A flex container is an element on a page that contains flex items. 
 All direct child elements of a flex container are flex items. 
@@ -416,7 +416,7 @@ In the example above, the first value in the flex-flow declaration is a flex-dir
 All values for flex-direction and flex-wrap are accepted.
 Note: The flex-flow property is declared on flex containers.
 
-nested flexboxes
+Nested flexboxes
 So far, we’ve had multiple flex containers on the same page to explore flex item positioning. 
 It is also possible to position flex containers inside of one another.
 <div class='container'>
@@ -467,7 +467,6 @@ review: flexbox
 You should be proud of yourself! You have learned the most important properties of flexbox. 
 Flexbox is an art and a science; you can use it to make laying out multiple elements a piece of cake. 
 You know everything necessary to begin using it in your own projects.
-
 display: flex changes an element to a block-level container with flex items inside of it.
 display: inline-flex allows multiple flex containers to appear inline with each other.
 justify-content is used to space items along the main axis.

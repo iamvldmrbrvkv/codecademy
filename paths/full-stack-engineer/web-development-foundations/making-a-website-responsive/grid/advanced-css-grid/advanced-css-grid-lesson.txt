@@ -1,4 +1,4 @@
-grid template areas
+Grid template areas
 The grid-template-areas property allows you to name sections of your web page to use as values in the grid-row-start, grid-row-end, grid-column-start,grid-column-end, and grid-area properties. 
 This property is declared on grid containers.
 <div class="container">
@@ -53,7 +53,7 @@ The element with class .services spans the third row and right column.
 The footer element spans the bottom row and both columns.
 That’s it! An entire page laid out in 40 lines of code.
 
-overlapping elements
+Overlapping elements
 Another powerful feature of CSS Grid Layout is the ability to easily overlap elements.
 When overlapping elements, it is generally easiest to use the grid-area property with grid row names. 
 Remember that grid-area will set the starting and ending positions for both the rows and columns of an item.
@@ -86,7 +86,7 @@ The services section covers all eight rows and the last three columns.
 The image spans the 2nd, 3rd, and 4th rows and the 3rd and 4th columns.
 The z-index property tells the browser to render the image element on top of the services and info sections so that it is visible.
 
-justify items
+Justify items
 We have referred to “two-dimensional grid-based layout” several times throughout this course.
 There are two axes in a grid layout — the column (or block) axis and the row (or inline) axis.
 The column axis stretches from top to bottom across the web page.
@@ -121,7 +121,7 @@ By setting the justify-items property to center, the .card <div>s will be center
 They will only be as wide as necessary to contain their content (the words Card 1, etc).
 If we specify a width for the .card elements, they will not stretch the width of their column.
 
-justify content
+Justify content
 In the previous exercise, we learned how to position elements within their columns. 
 In this exercise, we will learn how to position a grid within its parent element.
 We can use justify-content to position the entire grid along the row axis. 
@@ -152,7 +152,7 @@ In the example above, the grid container is 1000 pixels wide, but we only specif
 This will leave 400 pixels of unused space in the grid container.
 justify-content: center; positions the columns in the center of the grid, leaving 200 pixels on the right and 200 pixels on the left of the grid.
 
-align items
+Align items
 In the previous two exercises, we learned how to position grid items and grid columns from left to right across the page. 
 Now we’ll learn how to position grid items from top to bottom!
 align-items is a property that positions grid items along the block, or column axis. 
@@ -183,7 +183,7 @@ By setting the align-items property to center, the .card <div>s will be centered
 They will only be as tall as necessary to contain their content (the words Card 1, etc).
 If we specify a height for the .card elements, they will not stretch the height of their row even if align-items: stretch; is set.
 
-align content
+Align content
 In the previous exercise, we positioned grid items within their rows. 
 align-content positions the rows along the column axis, or from top to bottom, and is declared on grid containers.
 It accepts these positional values:
@@ -213,7 +213,7 @@ In the example above, the grid container is 600 pixels tall, but we only specifi
 This will leave 200 pixels of unused space in the grid container.
 align-content: center; positions the rows in the center of the grid, leaving 100 pixels at the top and 100 pixels at the bottom of the grid.
 
-justify self and align self
+Justify self and align self
 The justify-items and align-items properties specify how all grid items contained within a single container will position themselves along the row and column axes, respectively.
 justify-self specifies how an individual element should position itself with respect to the row axis. 
 This property will override justify-items for any item on which it is declared.
@@ -230,7 +230,7 @@ You can read about these values on the Mozilla Developer Network https://develop
 The definitions for these values can also be found in the documentation https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#values. 
 It is important to note that the page with the definitions includes some values that are not accepted in CSS Grid layout.
 
-implicit vs. explicit grid
+Implicit vs. explicit grid
 So far, we have been explicitly defining the dimensions and quantities of our grid elements using various properties. 
 This works well in many cases, such as a landing page for a business that will display a specific amount of information at all times.
 However, there are instances in which we don’t know how much information we’re going to display. For example, consider online shopping. 
@@ -244,7 +244,7 @@ The default behavior of the implicit grid is as follows: items fill up rows firs
 New grid rows will only be tall enough to contain the content within them. 
 In the next exercise, you’ll learn how to change this default behavior.
 
-grid auto rows and grid auto columns
+Grid auto rows and grid auto columns
 CSS Grid provides two properties to specify the size of grid tracks added implicitly: grid-auto-rows and grid-auto-columns. 
 These properties are declared on grid containers.
 grid-auto-rows specifies the height of implicitly added grid rows. 
@@ -271,7 +271,7 @@ However, in the body ruleset, we only specify a 2-row, 2-column grid — four gr
 The fifth <div> will be added to an implicit row that will be 50 pixels tall.
 If we did not specify grid-auto-rows, the rows would be auto-adjusted to the height of the content of the grid items.
 
-grid auto flow
+Grid auto flow
 In addition to setting the dimensions of implicitly-added rows and columns, we can specify the order in which they are rendered.
 grid-auto-flow specifies whether new elements should be added to rows or columns, and is declared on grid containers.
 grid-auto-flow accepts these values:
@@ -280,7 +280,7 @@ column — specifies the new elements should fill columns from top to bottom and
 dense — this keyword invokes an algorithm that attempts to fill holes earlier in the grid layout if smaller elements are added
 You can pair row or column with dense, like this: grid-auto-flow: row dense;.
 
-review
+Review
 grid-template-areas specifies grid named grid areas
 grid layouts are two-dimensional: they have a row, or inline, axis and a column, or block, axis.
 justify-items specifies how individual elements should spread across the row axis

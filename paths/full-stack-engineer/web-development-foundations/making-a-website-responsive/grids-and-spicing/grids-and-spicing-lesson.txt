@@ -1,4 +1,4 @@
-grid anatomy
+Grid anatomy
 When designing a website, the grid comprises three major components: columns, gutters, and margins.
 Columns are defined as the vertical sections that span the width of a page. 
 In web design, it’s common to see layouts consisting of 12 or 16 columns, while other may only feature three columns. 
@@ -10,7 +10,7 @@ These ensure the content of your designs doesn’t match up to the edges of the 
 It’s important to note, margins may vary depending on the width of the grid, browser window, or device. 
 For larger displays, margins may be very noticeable while on smaller screens, they may have the same width as a gutter.
 
-grid columns
+Grid columns
 Columns are the vertical containers that span the width of the page. 
 They can be dependent on each other, meaning they are used to organize related content such as a continuation of a paragraph. 
 They can also be independent of each other, meaning they are used for organizing the layout of unrelated content such as a sidebar. 
@@ -27,7 +27,7 @@ Columns can also be used to push, or offset content.
 Say you want to only display content on the right 4 columns of a page while using a 12 column grid. 
 To do this, you can easily offset the content by 8 columns so the content is pushed to those right 4 columns.
 
-grid rows
+Grid rows
 Rows are the horizontal lines on a grid. 
 Think of rows as invisible boxes that group content together by height. 
 Rows are commonly used in web designs to group content together and re-order other content to allow for more whitespace.
@@ -42,7 +42,7 @@ That means we still have five unfilled columns to either the left or the right s
 Naturally, any new content added to our document will try and fill this unused space. 
 However, by placing a row element around our component that spans 7 columns we can force any new content to start beneath our component and leave the remaining 5 columns empty.
 
-grid gutters
+Grid gutters
 Gutters make up the negative space between columns. 
 This design element helps to provide a natural break between elements aligned horizontally, while also helping to break rows of content vertically.
 Note, there will always be one less gutter than the total number of columns. 
@@ -54,7 +54,7 @@ This is because you as a designer may want more vertical spacing than horizontal
 Remember, if the gutter space is too tight, it can be hard to visually tell where one element ends and another starts. 
 On the other hand, if the gutter space is too large, the design can be hard to follow.
 
-responsive grid
+Responsive grid
 When designing web content, a designer needs to take into account the different screen-sizes a user might encounter and how that will affect a website’s layout. 
 Many websites utilize responsive design, a set of techniques that allow a website’s content to shift based on the device or screen size. 
 Because of these changes, responsive design requires a different number of total columns based on screen size, in order to accommodate content and keep it from being squished.
@@ -66,7 +66,7 @@ On a large or desktop device you may start with a 12 column grid, but on a small
 As a designer, responsive grid design enables you to maximize the content on the screen, ensuring a more accessible experience for users. 
 Additionally, your design elements will have sufficient space to breathe and content can naturally flow across the page.
 
-whitespace
+Whitespace
 Space is an important aspect of creating balanced and harmonious layouts in web design. 
 As a designer, it’s important to understand how space can enhance as well as hurt your designs.
 Whitespace, or negative space, refers to the emptiness between elements, whether that’s in the gutter of the columns, or additional padding around a block of text. 
@@ -80,7 +80,7 @@ In the example on the right, you’ll notice that too much whitespace can negati
 By including too much spacing in between elements, it can cause issues for users trying to navigate seamlessly through the content.
 Whitespace is broken up into passive and active, which we’ll explore in the next two exercises!
 
-passive whitespace
+Passive whitespace
 The first type of whitespace we will discuss is called passive whitespace or micro whitespace. 
 Used to improve the aesthetics of the layout without guiding the user through a specific reading, flow, or content order; passive whitespace is sometimes referred to as the unconsidered space. 
 The most frequent use of passive whitespace comes within text elements.
@@ -90,7 +90,7 @@ If a site’s text is too tight or lacks sufficient margin below headings and pa
 However, if the site’s text is too spaced out, it can make it just as hard to read.
 Finding a healthy balance between text that lacks sufficient spacing and text that has too much is an important task for designers.
 
-active whitespace
+Active whitespace
 Unlike passive whitespace, which occurs more naturally, active whitespace is intentional. 
 Also called macro whitespace, active whitespace refers to enhancing the overall page structure through space to emphasize content or guide users from one point to the next.
 By adding active whitespace to a site’s design, we can spread our different sections out. 
