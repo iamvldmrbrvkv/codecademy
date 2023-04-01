@@ -274,12 +274,19 @@ In the example above, since stopLight === 'red' evaluates to false and stopLight
 The rest of the conditions are not evaluated. 
 If none of the conditions evaluated to true, then the code in the else statement would have executed.
 
-let season = 'summer';
+let season = "summer";
 
-season === 'spring' ? console.log('It\'s spring! The trees are budding!');
-season === 'winter' ?
-  console.log('It\'s winter! Everything is covered in snow.'); season === 'fall' ? console.log('It\'s fall! Leaves are falling!'); ? season === 'summer' ?
-  console.log('It\'s sunny and warm because it\'s summer!'); : console.log('Invalid season.');
+if (season === "spring") {
+  console.log("It's spring! The trees are budding!");
+} else if (season === "winter") {
+  console.log("It's winter! Everything is covered in snow.");
+} else if (season === "fall") {
+  console.log("It's fall! Leaves are falling!");
+} else if (season === "summer") {
+  console.log("It's sunny and warm because it's summer!");
+} else {
+  console.log("Invalid season.");
+}
 
 The switch keyword
 else if statements are a great tool if we need to check multiple conditions. 
