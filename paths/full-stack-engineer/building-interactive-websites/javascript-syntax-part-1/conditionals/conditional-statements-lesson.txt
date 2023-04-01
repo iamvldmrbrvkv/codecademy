@@ -336,20 +336,21 @@ This behavior is different from if/else conditional statements that execute only
 At the end of each switch statement, there is a default statement. 
 If none of the cases are true, then the code in the default statement will run.
 
-let athleteFinalPosition = '5';
-switch (athleteFinalPosition) {
+let athleteFinalPosition = 'first place';
+
+switch(athleteFinalPosition){
   case 'first place':
-  console.log('You get the gold medal!');
-  break;
+    console.log('You get the gold medal!');
+    break;
   case 'second place':
-  console.log('You get the silver medal!');
-  break;
+    console.log('You get the silver medal!');
+    break;
   case 'third place':
-  console.log('You get the bronze medal!');
-  break;
+    console.log('You get the bronze medal!');
+    break;
   default:
-  console.log('No medal awarded.');
-  break;
+    console.log('No medal awarded.');
+    break;
 }
 
 Review
