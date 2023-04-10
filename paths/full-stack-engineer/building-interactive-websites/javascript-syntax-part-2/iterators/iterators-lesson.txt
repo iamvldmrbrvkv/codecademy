@@ -12,8 +12,8 @@ The .forEach() Method
 The first iteration method that we’re going to learn is .forEach(). 
 Aptly named, .forEach() will execute the same code for each element of an array.
 The code above will log a nicely formatted list of the groceries to the console. Let’s explore the syntax of invoking .forEach().
-const groseries = ['brown sugar', 'salt', 'crandberries', 'walnuts'];
-groseries.forEach(function(groceryItem) {
+const groceries = ['brown sugar', 'salt', 'crandberries', 'walnuts'];
+groceries.forEach(function(groceryItem) {
     console.log(' - ' + groceryItem);
 });
 groceries.forEach() calls the forEach method on the groceries array.
