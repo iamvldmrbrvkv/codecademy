@@ -11,30 +11,22 @@ subLength('cheesecake', 'k'); // returns 0
 
 // Write function below
 const subLength = (str, char) => {
-    let charCount = 0;
-    let len = -1;
-    
-    for (let i=0; i<str.length; i++) {
-      if (str[i] == char) {
-        charCount++;
-        if (charCount > 2) {
-          return 0;
-        }
-        if (len == -1) {
-          len = i;
-        } else {
-          len = i - len + 1
-        }
-      }
+  let arr = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === char) {
+      arr.push(i)
+      //console.log(i)
     }
-    if (charCount < 2) {
+  }
+  if (arr.length < 2 || arr.length > 2) {
       return 0;
     }
-  
-    return len;
-  };
-  
-  console.log(subLength('Saturday', 'a')); // returns 6
-  console.log(subLength('summer', 'm')); // returns 2
-  console.log(subLength('digitize', 'i')); // returns 0
-  console.log(subLength('cheesecake', 'k')); // returns 0
+  return arr[1] - arr[0] + 1;
+  //console.log(arr);
+  //console.log(arr.length);
+};
+
+console.log(subLength('Saturday', 'a'));
+console.log(subLength('summer', 'm'));
+console.log(subLength('digitize', 'i'));
+console.log(subLength('cheesecake', 'k'));
