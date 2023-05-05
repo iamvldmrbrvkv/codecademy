@@ -78,3 +78,88 @@ let parentElement = document.getElementById('must-have').parentNode; // returns 
 let childElements = document.getElementById('groceries').children; // returns an array of <li> elements
 Here, the parentElement variable stores the .parentNode of the <li> element with the ID of must-have, which will be the <ul> element with the ID of groceries. 
 The childElements variable is set to the children of the <ul> element with the ID of groceries, which will be an array of four <li> elements.
+
+const first = document.body.children[0];
+first.innerHTML = 'BROWN BEARS ARE AWESOME!'
+first.parentNode.style.backgroundColor = 'beige'
+
+Create and Insert Elements
+Just as the DOM allows scripts to modify existing elements, it also allows for the creation of new ones.
+The .createElement() method https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement creates a new element based on the specified tag name passed into it as an argument. 
+However, it does not append it to the document. It creates an empty element with no inner HTML.
+let paragraph = document.createElement('p');
+In the example code above, the .createElement() method takes 'p' as its argument which creates an empty <p> element and stores it as the paragraph variable.
+We can assign values to the properties of the newly created element like how we’ve done previously with existing elements.
+paragraph.id = 'info'; 
+paragraph.innerHTML = 'The text inside the paragraph';
+Above, we use the .id property to assign 'info' as ID and the .innerHTML property to set 'The text inside the paragraph' as the content of the <p> element.
+In order to create an element and add it to the web page, you must assign it to be the child of an element that already exists on the DOM, referred to as the parent element. 
+We call this process appending. 
+The .appendChild() method will add a child element as the parent element’s last child node. 
+The following code appends the <p> element stored in the paragraph variable to the document body.
+document.body.appendChild(paragraph);
+The .appendChild() method does not replace the content inside of the parent, in this case, body. 
+Rather, it appends the new element as the last child of that parent.
+
+newAttraction = document.createElement('li')
+newAttraction.id = 'vespa'
+newAttraction.innerHTML = 'Rent a Vespa'
+document.getElementById('italy-attractions').appendChild(newAttraction)
+
+Remove an Element
+In addition to modifying or creating an element from scratch, the DOM also allows for the removal of an element. 
+The .removeChild() method removes a specified child from a parent.
+let paragraph = document.querySelector('p');
+document.body.removeChild(paragraph);
+In the above example code, the .querySelector() method returns the first paragraph in the document. 
+Then, the paragraph element is passed as an argument of the .removeChild() method chained to the parent of the paragraph—document.body. 
+This removes the first paragraph from the document body.
+If you want to hide an element rather than completely deleting it, the .hidden property https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/hidden allows you to hide it by setting the property as true or false:
+document.getElementById('sign').hidden = true;
+The code above did not remove the element with ID of 'sign' from the DOM but rather, hid it.
+
+const elementToRemove = document.getElementById('vespa');
+document.getElementById('italy-attractions').removeChild(elementToRemove)
+
+Add Click Interactivity
+You can add interactivity to DOM elements by assigning a function to run based on an event https://developer.mozilla.org/en-US/docs/Web/Events. 
+Events can include anything from a click to a user mousing over an element. 
+We will learn more about events in the upcoming DOM Events with JavaScript lesson. 
+For now, let’s take a look at how to modify an element when a click event happens.
+The .onclick property allows you to assign a function to run on when a click event happens on an element:
+let element = document.querySelector('button');
+ 
+element.onclick = function() { 
+  element.style.backgroundColor = 'blue' 
+};
+You can also assign the .onclick property to a function by name:
+let element = document.querySelector('button');
+ 
+function turnBlue() {
+   element.style.backgroundColor = 'blue';
+}
+ 
+element.onclick = turnBlue;
+In the above example code, when the <button> element detects a click event, the backgroundColor will change to 'blue'.
+
+let element = document.querySelector('button');
+
+function turnButtonRed(){
+  // Add code to turn button red
+element.style.backgroundColor = 'red';
+element.style.color = 'white';
+element.innerHTML = 'Red Button';
+}
+element.onclick = turnButtonRed;
+
+Review
+In this lesson, you manipulated a webpage structure by leveraging the Document Object Model (DOM) interface in JavaScript.
+Let’s review what we learned:
+The document keyword grants access to the root of the DOM in JavaScript.
+The DOM Interface allows you to select a specific element with CSS selectors by using the .querySelector() method.
+You can access an element directly by its ID with the .getElementById() method which returns a single element.
+You can access an array of elements with the .getElementsByClassName() and .getElementsByTagName() methods, then call a single element by referencing its placement in the array.
+The .innerHTML and .style properties allow you to modify an element by changing its contents or style respectively.
+You can create, append, and remove elements by using the .createElement(),.appendChild() and .removeChild() methods respectively.
+The .onclick property can add interactivity to a DOM element based on a click event.
+The .children property returns a list of an element’s children and the .parentNode property returns the element’s closest connected node in the direction towards the root.
