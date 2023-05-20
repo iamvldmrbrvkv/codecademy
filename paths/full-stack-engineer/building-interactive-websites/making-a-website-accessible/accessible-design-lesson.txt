@@ -1,0 +1,77 @@
+Introduction
+In this lesson, you are going to learn about using contrast to create appealing, intuitive, and accessible designs.
+Contrast is one of the main tools designers have to draw people’s attention to parts of the site that they want to highlight, and make sure that their site is accessible to people with vision impairments.
+There are a wide variety of users with vision impairments that use their sight to navigate the web. This includes people with low vision and color blindness.
+Designing with visual accessibility in-mind will drive you towards creating sites that are easier for everyone to read and navigate, whether or not they have a vision impairment.
+For more background about what digital accessibility is and why it matters, check out this article on Digital Accessibility https://www.codecademy.com/article/what-is-digital-accessibility.
+Press next when you are ready to get started!
+
+Contrast
+Contrast refers to the opposition of different properties (color, size, shape, font, etc) to make one object visually distinct from another.
+Careful use of contrast will aid all users in skimming or navigating our pages, by directing our user’s attention, and by visually communicating what is most important and what is not as important.
+Making sure that enough contrast exists between different elements can help us ensure that our site is accessible to users with vision impairments.
+In this lesson, we will cover creating accessibility-enhancing contrast through:
+Headings
+Font choices
+Color
+You will apply these principles to fix the “Creamy Chocolate Cupcakes” website so that it has a more accessible and more attractive design, with a more judicious use of contrast.
+Press next when you are ready to continue.
+
+Introduction to Headings
+Text is used differently on the web than it is in a book. 
+Users are often trying to navigate websites as quickly as possible.
+Breaking large chunks of text into different sections that have their own headings and subheadings is essential to helping them find the content that they are looking for.
+In HTML, there are six heading elements, <h1> - <h6>. 
+The heading elements decrease in importance and size as the heading number increases. 
+This means that an <h1> carries a higher rank than an <h6>.
+Heading elements in HTML accomplish several things:
+they create structure, dividing your page into groups of increasingly specific content
+they create visual contrast, with lower-numbered headers like h1 displaying in a larger and more striking format
+they provide navigation and contextual information to web browsers, plugins, and assistive technologies like screen readers.
+As an added benefit, having a keyword in an h1 tag will typically impact search results more than having the same keyword in a p tag, because it is assumed that words used in your main heading are very important to the topic of your entire website.
+
+Headings Hierarchy
+Heading elements should be used in order and it is considered best practice not to skip heading elements when possible.
+Let’s take a look at an example:
+<h1>Main Site Header</h1>
+<section>
+  <h2>Section Header</h2>
+</section>
+<section>
+  <h2>Section Header</h2>
+  <h3>Section Sub-Header</h3>
+</section>    
+<footer>
+  <h2>Footer Header</h2>
+</footer>
+In this example, we have one main site heading. 
+This content uses the <h1> element and is assigned the highest rank as it is the most important. 
+Note that each web page should only contain one <h1> element.
+This <h1> is considered the label for the entire document and it should clearly define the purpose of the web page. 
+After that, we use the <h2> element to assign the same level of importance to each sibling section.
+This provides our users with a clean and consistent level of hierarchy when viewing our websites and also conforms to today’s web standards by providing a clear content outline.
+Let’s apply what you’ve learned about headings to improve the “Creamy Chocolate Cupcakes” site.
+
+Font Accessibility
+Text Accessibility
+Highly accessible websites use real text instead of images of text, use text with high contrast with its background, and choose highly legible font sizes.
+Let’s dive into each of these concepts a bit more.
+Real text vs text within images
+Using real text instead of text within graphics provides a website with several key benefits:
+screen readers can transform the text into a voice-over
+users can scale or magnify the text for better legibility without losing image quality
+it’s less taxing on the browser to load real text versus requesting large image assets from a server.
+Contrasting colors
+Text is much easier to read when there is a high level of contrast between the text and the text’s background color. 
+According to the Web Content Accessibility Guidelines, a ratio of at least 4.5:1 should be used on all standard text sizes. 
+This means the lighter color must have four and a half times the luminance of its paired darker color.
+Readability can be preserved with less contrast for larger font sizes, 24 pixels or larger. 
+A ratio of at least 3:1 should be used for larger text sizes.
+Interested in testing a set of colors to see if they pass the WCAG’s guidelines? 
+Head over to WebAIM https://webaim.org/resources/contrastchecker/ and use their color contrast checker.
+Font sizes
+Lastly, we need to consider setting proper font sizes on our websites. 
+The standard font size for most modern web browsers is 16 pixels. 
+This allows users to scan your website and consume information without straining their eyes. 
+While smaller type sizes can be used, they should be reserved for nonessential content or design aesthetic only.
+
