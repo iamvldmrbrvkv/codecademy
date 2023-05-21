@@ -75,3 +75,58 @@ The standard font size for most modern web browsers is 16 pixels.
 This allows users to scan your website and consume information without straining their eyes. 
 While smaller type sizes can be used, they should be reserved for nonessential content or design aesthetic only.
 
+Color Accessibility
+When using color in our designs, it’s important to note the contrast between elements in the foreground and those in the background.
+Sufficient color contrast can improve the usability of your site for users with low vision or color blindness.
+For instance, using the combination of black (#00000) as a foreground color and white (#ffffff) as a background color provides maximum contrast.
+While this is a fairly common color combination for text on a page, the high contrast can also cause glare that will increase strain on the user’s eyes over time.
+On the other hand, using colors that are too similar, or lacking adequate contrast, can hinder users from being able to comprehend the content on the screen.
+Let’s explore how users perceive colors, and how we can effectively make decisions on what colors to use to reduce issues with legibility.
+
+Color Blindness
+A user with color blindness has a reduced ability to differentiate between colors. 
+In general, about 8% of men and 0.5% of women have a color vision deficiency.
+Designing color combinations for color-blind users can enhance the overall impact it will have on everyone visiting your site.
+There are many forms of color blindness. 
+The most common is red-green color blindness, where those two colors are often indistinguishable. 
+For instance, if a red-green colorblind user is looking at the color purple, it may appear blue as they do not perceive the red pigment.
+People can also have blue-yellow color vision deficiency, and total color blindness, however, these affect a much smaller percentage of the population.
+Here are some practical steps you can take to improve the color accessibility of your design:
+Choosing highly contrasting colors (opposite from each other on a color wheel) will aid users with partial color blindness.
+Using a color scheme with multiple shades of brightness for a single color will create contrast for users with partial or total color blindness. 
+Think about how it would look in grayscale: light blue would still be differentiable from dark blue.
+Pairing color with other forms of conveying information (text, icons, etc) is the most general solution. 
+For example, an invalid entry in a form on a website should not just turn the entry field red, it should also display text that explains the error.
+Color is a valuable tool for conveying information, but it should never be the only tool that your site uses to communicate any essential content.
+Toptal https://www.toptal.com/designers/colorfilter has created a colorblind web page filter tool to test your designs with different types of color blindness.
+Let’s take a look at some best practices of applying accessibility features to core components in design.
+
+Best Practices
+New web design trends come and go, and many times they are aesthetically appealing, but they are not always the most usable or accessible.
+You now know enough principles of accessibility and usability to be able to judge if these trends will create problems for your users. 
+Let’s reason through a few examples.
+Text Overlaid on Images
+White text overlaid on an image is a popular design trend. 
+However, it doesn’t adhere to standards as the contrast is often too low. 
+Adding a dark transparent overlay on top of the image could increase the contrast and provide better legibility.
+Removing Input Labels
+Another trend often seen in web design is the removal of labels above input fields, sometimes relying on placeholder text instead to identify the input field.
+While this enhances the aesthetic quality of a design in some instances, it can hinder a user’s ability to identify which input they are attempting to fill out. 
+This is particularly true for low vision users because the placeholder text is often light gray and low contrast. 
+This also creates problems for users employing screen readers, because the form’s placeholder text is not always narrated.
+Buttons and Links
+There has been a trend towards flat and minimal design https://www.nngroup.com/articles/flat-design/ in recent years. 
+This trend has improved usability in some ways, as it has encouraged designers to remove visual effects that are not contributing to the usability of their site.
+However, minimalism can go too far, especially if it obscures how users should navigate the site. 
+Visual contrast is especially important for buttons and links because these are the tools our users employ to navigate. 
+Color alone should not be used to indicate clickability, as this will cause challenges for low vision and color-blind users.
+Taking into consideration color choices, contrast, and font legibility will help you evaluate new design trends, and reduce the chance of new designs introducing accessibility barriers.
+
+Review
+Congratulations! You made the cupcake recipe site look much better! You practiced some new CSS syntax, and you learned the power of visual contrast, for both overall design, and for accessibility.
+You gained some knowledge on web accessibility and how to make your websites usable for all users.
+Remember, the keys to building a more visually inclusive Web are:
+Using contrast so our text and colors provide better visual cues
+Using correct font size so our content is legible
+Creating user interfaces that are enhanced by, but not dependent on, color
+Following these guidelines can increase the usability of our websites. In the next lesson, you will learn semantic HTML tags, which improve the accessibility of sites for people using a screen reader.
