@@ -710,9 +710,9 @@ class HospitalEmployee {
   takeVacationDays(daysOff) {
     this._remainingVacationDays -= daysOff;
   }
-
+  
   static generatePassword() {
-    return Math.floor(Math.random() * 10000);
+    return Math.floor(Math.random()*10000);
   }
 }
 
@@ -736,11 +736,11 @@ class Doctor extends HospitalEmployee {
     super(name);
     this._insurance = insurance;
   }
-
+  
   get insurance() {
     return this._insurance;
   }
-
+  
   insuranceLevel(level) {
     this._insurance = level;
   }
@@ -751,8 +751,6 @@ nurseOlynyk.takeVacationDays(5);
 console.log(nurseOlynyk.remainingVacationDays);
 nurseOlynyk.addCertification('Genetics');
 console.log(nurseOlynyk.certifications);
-HospitalEmployee.generatePassword();
-console.log(HospitalEmployee.generatePassword());
 
 const doctorVladimir = new Doctor('Vladimir', 'Level 1');
 console.log(doctorVladimir);
