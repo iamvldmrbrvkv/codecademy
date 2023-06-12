@@ -2,6 +2,7 @@ What are Modules?
 Modules are reusable pieces of code in a file that can be exported and then imported for use in another file. 
 A modular program is one whose components can be separated, used individually, and recombined to create a complex system.
 Consider the diagram below of an imaginary program written in a file my_app.js:
+diagram of a modular program. separate modules are combined to create a complex program
 Note: The words “module” and “file” are often used interchangably
 Instead of having the entire program written within my_app.js, its components are broken up into separate modules that each handle a particular task. 
 For example, the database_logic.js module may contain code for storing and retrieving data from a database. 
