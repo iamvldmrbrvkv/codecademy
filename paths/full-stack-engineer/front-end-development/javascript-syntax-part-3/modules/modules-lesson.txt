@@ -21,7 +21,8 @@ How to use the ES6 export statement to export code from a file - meaning its fun
 How to use the ES6 import statement to import functions and/or data from another module.
 
 Implementations of Modules in JavaScript: Node.js vs ES6
-Before we dive in, it should be noted that there are multiple ways of implementing modules depending on the runtime environment in which your code is executed. In JavaScript, there are two runtime environments and each has a preferred module implementation:
+Before we dive in, it should be noted that there are multiple ways of implementing modules depending on the runtime environment in which your code is executed. 
+In JavaScript, there are two runtime environments and each has a preferred module implementation:
 The Node https://nodejs.org/en/about runtime environment and the module.exports and require() syntax.
 The browser’s runtime environment and the ES6 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules import/export syntax.
 This article will focus on using the ES6 import/export syntax in a browser’s runtime environment. 
