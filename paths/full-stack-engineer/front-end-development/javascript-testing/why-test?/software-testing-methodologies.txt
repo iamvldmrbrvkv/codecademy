@@ -6,14 +6,14 @@ Imagine this scenario: you’ve written some code for a new feature and it’s t
 This scenario describes the process of manual testing, which is time-consuming, can result in errors being overlooked, and can’t be repeated easily. To get around the issues related to manual testing, organizations generally use software to automate their testing processes to validate code.
 
 What is a software testing methodology?
-Testing methodologies are specific strategies for testing all of the pieces of your software to make sure it behaves as expected. These strategies include many ways to test software, such as unit testing, integration testing, performance testing, and more. In this article, we’ll take a closer look at testing practices that use a test-first approach to software development.
+Testing methodologies are specific strategies for testing all of the pieces of your software to make sure it behaves as expected. These strategies include many ways to test software https://www.codecademy.com/resources/docs/general/software-testing, such as unit testing, integration testing, performance testing, and more. In this article, we’ll take a closer look at testing practices that use a test-first approach to software development.
 
 Why Use Software Testing Methodologies?
 There are many reasons that organizations adopt software testing methodologies:
 
 Software errors can cost companies resources such as money and users.
 Testing results in better reliability.
-Testing can provide a better end-user experience.
+Testing can provide a better end-user https://www.codecademy.com/resources/docs/uiux/user-and-end-user experience.
 Failing tests help indicate which part of the software is not working when bugs occur
 Overall, the primary goal of testing is to make software development more efficient, reliable, and future-proof.
 
@@ -29,7 +29,7 @@ These methodologies are particularly relevant for teams that use an agile, or it
 Test-driven development
 Testing doesn’t necessarily have to occur after code has been written. Test-driven development is a methodology that flips the order, where tests are written before the functioning code is written. By writing tests in this order, test cases can start with the definition of their purpose, or use case.
 
-Those use cases define the specification and documentation on what actions are to be supported by new code. TDD tests look at the components of code, like functions and classes, as the smallest unit to test.
+Those use cases define the specification and documentation on what actions are to be supported by new code. TDD tests look at the components of code, like functions https://www.codecademy.com/resources/docs/general/function and classes https://www.codecademy.com/resources/docs/general/class, as the smallest unit to test.
 
 In practice, TDD can accelerate software development since it dictates short development cycles with direct test cases. There are many other benefits of test-driven development:
 
@@ -53,4 +53,4 @@ Automated testing makes code production more reliable thanks to the ease of runn
 Software companies don’t need to pick a singular software testing methodology — they can be combined and used at various stages during software development.
 Some organizations take a test-first approach to software development, with testing methodologies such as TDD and BDD being the first step of code production.
 Since software errors can cost businesses money and customer trust, testing is an integral part of the development process and used in some flavor by every software company.
-As you continue with testing content, you’ll see TDD as the main methodology we teach (such as this course). Now you have some insight into what TDD is and how it can be used as an example of how to guide the software development process!
+As you continue with testing content, you’ll see TDD as the main methodology we teach (such as this course https://www.codecademy.com/learn/learn-testing-for-web-development/modules/learn-tdd-feature-test). Now you have some insight into what TDD is and how it can be used as an example of how to guide the software development process!
