@@ -1,0 +1,287 @@
+Introduction
+Testing is an essential part of development. When used properly, testing can catch and identify issues with your implementation code before you deploy it to users. Instead of testing every function manually, developers automate their tests with a test framework.
+
+Developers use test frameworks to organize and automate tests that provide useful feedback when errors occur. In this lesson we will use the Mocha test framework https://mochajs.org/ to write tests against JavaScript methods.
+
+In this lesson you will:
+
+Learn to write a basic Mocha test suite
+Use Node’s assert.ok method to verify the expected output of your code
+Understand and apply the four phases of a test to create an expressive testing suite
+Evaluate the quality of your tests against the characteristics of a good test https://www.codecademy.com/article/tdd-u1-good-test
+
+Install Mocha I
+Before writing any tests you’ll need to use Node.js and npm to set up a JavaScript project and install Mocha.
+
+Node allows you to run JavaScript in the terminal
+npm is a Node tool that allows you to download packages from the web, and manage them in a JavaScript project
+Mocha is one of those packages and is used to test other JavaScript code
+A JavaScript project is a directory of files. The following command creates a file package.json that can be used to manage packages for the project.
+
+$ npm init
+After running this command you will be prompted to enter information about your project. It’s okay to skip some fields if you’re not ready to enter that information.
+
+With your project setup, you can install packages.
+
+$ npm install mocha -D
+Here’s what this command means:
+
+npm install tells npm to install a package from the internet and any other packages it depends on
+mocha is the package you want to download
+-D signifies that this package is a development dependency and will show up under the devDependecies section in package.json. This means that the package will only be included in development mode and will not be included in the production bundle.
+Once you npm install packages, you can find the packages and all their dependencies in the node_modules folder. The new directory structure contains the following:
+
+project
+|_ node_modules
+|___ .bin
+|___ mocha
+|___ ...
+|_ package.json
+The ... in the file structure represents other packages that are a dependency for Mocha.
+
+Install Mocha II
+After installing Mocha as a dependency we can run it in two ways.
+
+The first (and more tedious) method is to call it directly from node_modules:
+
+$ ./node_modules/mocha/bin/mocha
+The second (and recommended) method is to add a script to package.json. In the scripts object in package.json, set the value of "test" to mocha. It should look like this:
+
+"scripts": {
+  "test": "mocha"
+}
+Now you can call Mocha with the following command:
+
+$ npm test
+Instead of manually running each test in the test directory, you can use this command to run the full test suite automatically.
+
+describe and it blocks
+In Mocha we group tests using the describe function and define tests using the it function. These two functions can be used to make your test suite complete, maintainable, and expressive in the following ways:
+
+Structure your test suite: you can organize tests into nested groups that reflect the structure of your implementation code.
+
+Provide informative messages: you can define your tests using human-readable strings.
+
+If you are testing a Math object with the method .max, you could use the following test code.
+
+describe('Math', () => {
+  describe('.max', () => {
+    it('returns the argument with the highest value', () => {
+      // Your test goes here
+    });
+    it('returns -Infinity when no arguments are provided', () => {
+      // Your test goes here
+    });
+  });
+});
+Both the describe and it functions accept two parameters: a descriptive string and a callback function. Though the functions are flexible, they are commonly used in the structure above: nest describe blocks to resemble the structure of your implementation code and write individual tests in it blocks. This makes your test suite isolated, maintainable, and expressive.
+
+assert
+In the last exercise, you learned how to organize and automate tests using the Mocha test framework. To write the tests themselves, we can use the assert.ok method provided by Node.js.
+
+In programming, a test compares an expected outcome to an actual outcome. For example, we expect the outcome of the following code…
+
+const a = 1 + 2;
+…to be: a has a value of 3.
+
+To test the value saved to a with plain JavaScript, you would need to write a conditional statement comparing a to the expected result. Inside the statement, you would construct an error when the actual outcome does not match the expected.
+
+if (a !== 3) {
+  throw 'Test failed! a is not 3'
+} 
+assert.ok() allows you to compare values and throw errors as needed using one function call. The small, human-readable format of the functions will help you make a more expressive test suite.
+
+As a Node module, assert can be imported at the top of your files with
+
+const assert = require('assert');
+You call assert functions like this:
+
+assert.ok(a === 3);
+In this case a === 3 evaluates to true, so no error is thrown.
+
+If an argument passed to assert.ok() evaluates to false, an AssertionError is thrown. The error communicates to Mocha that a test has failed, and Mocha logs the error message to the console.
+
+Setup, Exercise, and Verify
+In this exercise you will be separating a test into setup, exercise, and verify phases. This distinct and well-defined separation of steps makes your test more reliable, maintainable, and expressive.
+
+The phases are defined as follows:
+
+Setup - create objects, variables, and set conditions that your test depends on
+
+Exercise - execute the functionality you are testing
+
+Verify - check your expectations against the result of the exercise phase. You can use the assert library here
+
+Clear separation of each phase makes a test easier to read, change, and validate.
+
+const assert = require('assert');
+
+// Naive approach
+describe('.pop', () => {
+  it('returns the last element in the array [naive]', () => {
+    assert.ok(['padawan', 'knight'].pop() === 'knight'); 
+  });
+});
+
+// 3 phase approach
+describe('.pop', () => {
+  it('returns the last element in the array [3phase]', () => {
+    // Setup
+    const knightString = 'knight';
+    const jediPath = ['padawan', knightString];
+
+    // Exercise
+    const popped = jediPath.pop();
+
+    // Verify
+    assert.ok(popped === knightString);
+  });
+});
+
+Teardown
+So far, we’ve been writing just one test using a single it() block. However, in most situations, we will need to write many tests for a particular feature that get executed in succession.
+
+Running multiple tests can introduce issues if the tests make changes to the testing environment: changes to the environment in one test might affect the next test. Some common changes to an environment include:
+
+altering files and directory structure
+changing read and write permissions on a file
+editing records in a database
+To address this issue, we often add a teardown step to the end of our tests. The teardown phase makes our tests isolated by resetting the environment before the next test runs. This provides two key benefits:
+
+Changes to the environment caused by one test do not affect the other tests.
+Isolated tests can be executed in any order!
+Note: In some cases — including the previous exercises  — the teardown phase isn’t needed because there are no conditions to reset. 
+
+const assert = require('assert');
+const fs = require('fs');
+let path, str;
+ 
+describe('appendFileSync', () => {
+  it('creates a new file with a string of text', () => {
+ 
+   // Setup
+   path = './message.txt';
+   str = 'Hello Node.js';
+  
+   // Exercise: write to file
+   fs.appendFileSync(path, str);
+ 
+   // Verify: compare file contents to string
+   const contents = fs.readFileSync(path);
+   assert.equal(contents.toString(), str);
+ 
+   // Teardown: restore file
+fs.unlinkSync(path);
+ });
+ 
+ it('creates a new file with a string of text', () => {
+ 
+   // Setup
+   path = './message.txt';
+   str = '';
+  
+   // Exercise: write to file
+   fs.appendFileSync(path, str);
+ 
+   // Verify: compare file contents to string
+   const contents = fs.readFileSync(path);
+   assert.equal(contents.toString(), str);
+ 
+   // Teardown: restore file
+fs.unlinkSync(path);
+ });
+});
+
+Hooks
+Over the last two exercises, we learned about the four main phases of a test: setup, execute, verify, and teardown. In the last exercise, you may have noticed that the setup and teardown steps were identical between tests.
+
+While execution and verification are unique to each test, setup and teardown are often similar or even identical for multiple tests within a test suite. The Mocha test framework provides functions that enable us to reduce repetition, simplify the scope of each test, and more finely control the execution of our tests.
+
+These functions (also referred to as hooks) are:
+
+beforeEach(callback) - callback is run before each test
+afterEach(callback) - callback is run after each test
+before(callback) - callback is run before the first test
+after(callback) - callback is run after the last test
+Each hook accepts a callback to be executed at various times during a test. The before... hooks naturally happen before tests and are useful for separating out the setup steps of your tests. Meanwhile, the after... hooks are executed after tests and are useful for separating out the teardown steps of your tests.
+
+describe('messing around with hooks', () => {
+ 
+  let testValue; // Variable used by both tests
+ 
+  beforeEach(() => {
+    testValue = 5;
+  });
+ 
+  it('should add', () => {
+    // testValue = 5 <-- moved to beforeEach()
+    testValue = testValue + 5;
+    assert.equal(testValue, 10);
+  });
+ 
+  it('should multiply', () => {
+    // testValue = 5 <-- moved to beforeEach()
+    testValue = testValue * 5;
+    assert.equal(testValue, 25);
+  });
+ 
+});
+In this example, while each it() block could have set the testValue to 5, using the beforeEach() hook allows us to avoid that repetition while keeping each test isolated.
+
+Keep in mind that not all setup and teardown steps should be included in these hooks. Occasionally, you may find that you need to perform some unique setup or teardown for a single test that you don’t want to include in other tests.
+
+const assert = require('assert');
+const fs = require('fs');
+let path, str;
+ 
+describe('appendFileSync', () => {
+  // Write hooks above the tests
+before(() => {
+  path = './message.txt';
+});
+afterEach(() => {
+  fs.unlinkSync(path);
+});
+  it('writes a string to text file at given path name', () => {
+ 
+   // Setup
+   str = 'Hello Node.js';
+  
+   // Exercise: write to file
+   fs.appendFileSync(path, str);
+ 
+   // Verify: compare file contents to string
+   const contents = fs.readFileSync(path);
+   assert.equal(contents.toString(), str);
+ 
+   // Teardown: restore file
+ 
+ });
+ 
+ it('writes an empty string to text file at given path name', () => {
+ 
+   // Setup
+   str = '';
+  
+   // Exercise: write to file
+   fs.appendFileSync(path, str);
+ 
+   // Verify: compare file contents to string
+   const contents = fs.readFileSync(path);
+   assert.equal(contents.toString(), str);
+ 
+   // Teardown: restore file
+  
+ });
+});
+
+
+Review
+You can now write tests with Mocha and Node’s assert.ok() ! In this lesson you learned to:
+
+Install Mocha with npm
+Organize tests with describe() and it()
+Ensure your tests are isolated and expressive with the four phases of a test
+Ensure your tests are reliable with hooks
+Write assertions with assert.ok()
+As you continue to write tests, remember to always evaluate them against the characteristics of a good test https://www.codecademy.com/article/tdd-u1-good-test: fast, complete, reliable, isolated, maintainable, and expressive. If you are meeting these six criteria, you are creating high quality test frameworks!
