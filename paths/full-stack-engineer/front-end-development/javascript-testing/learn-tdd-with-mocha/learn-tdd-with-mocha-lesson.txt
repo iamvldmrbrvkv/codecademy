@@ -1,0 +1,334 @@
+Introduction
+Test-driven development (TDD) is a programming technique where you write test code before implementation code. Test code is written to define the desired behavior of your program. The test output provides descriptive error messages that inform the implementation of your program.
+
+The Red-Green-Refactor Cycle
+One of the driving forces of TDD is the red-green-refactor cycle. “Red” and “green” correspond to the color of the text that our test framework produces in the terminal while running the tests in our suite. Red signifies failing tests and green corresponds to passing tests.
+
+Use this red, green, refactor diagram https://content.codecademy.com/programs/tdd-js/articles/red-green-refactor-tdd.png?_gl=1*7xx4xn*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTY4NzYyNTU2Mi4zMzkuMS4xNjg3NjI1NTc3LjQ1LjAuMA.. to help you as you read the steps below:
+
+Red — Write tests that describe the intended behavior of implementation code, and then compare developer expectations with the actual results of implementation code. The tests should always fail at first because the implementation code for the desired behavior will be written in response to the failing test.
+Green — Write just enough implementation code to make the test pass. The tests return green because the implementation code executes the intended behavior described by the test in the red phase.
+
+Refactor — Clean up and optimize code following the characteristics of a good test https://www.codecademy.com/article/tdd-u1-good-test. Refactoring involves actively considering test and implementation code and making revisions to the code base. The tests are passing and should continue to pass throughout this phase of the cycle.
+
+In this lesson, you will use a test-driven development approach to program a method that calculates the sum of an array of numbers.
+
+Getting Into The Red I
+When we use the red, green, refactor cycle, we:
+
+Write test code that fails
+Write implementation code to make the test pass
+Consider refactoring the code
+As you learn TDD, it may feel backward to intentionally write and run code that will return errors. In TDD we react to the error messages by continually re-writing our implementation code so it behaves in the way that our test specifies.
+
+Imagine you were trying to create a method named .initials, inside of an object named Phrase.
+
+The desired behavior of .initials() is that it should return the first letter of each word in a phrase that is passed to it as an argument.
+
+Step 1: Write The Test
+The first step to writing a test with Mocha is to use describe and it blocks to describe the desired behavior of your code. It’s very important for tests to thoroughly describe the desired behavior with natural language. This will create the most helpful error messages and make it easy for you to understand the behavior that your test failed in executing.
+
+Before running our test, we would use an assert statement to compare the desired result of our method with the actual result.
+
+The first step in developing this method would be writing a test that could look like this:
+
+describe('Phrase', () => {
+  describe('.initials', () => {
+    it('returns the first letter of each word in a phrase.', () => {
+      assert.strictEqual(Phrase.initials('Nelson Mandela'), 'NM');
+    })
+  })
+})
+Step 2: Run the test
+If we ran this test we would get the following error message in the terminal:
+
+ReferenceError: Phrase is not defined
+
+Step 3: The test fails (yea!)
+The error message tells us that the error is related to the Phrase.initials code block. The ReferenceError tells us that the error is thrown because we don’t have a Phrase object. In the next exercise, we’ll show you the minimum possible code required to get this test to pass.
+
+Red To Green I
+Congrats you’re in the red!
+The red error messages describe the failures of our implementation code, so we can specifically address each issue that is preventing our test from passing.
+
+Let’s look at the error message from our Phrase.initials() example in the last exercise:
+
+ReferenceError: Phrase is not defined
+
+The error tells us that Phrase is not defined. This is because we have not created an object named Phrase yet. Let’s do that now:
+
+const Phrase = {}
+When we run our test again the error would look like this:
+
+TypeError: Phrase.initials is not a function
+
+We’re still in the red, but we have a new error. The error says that Phrase.initials is not a function. That’s because we haven’t added an .initials method to the Phrase object. Let’s do that now:
+
+const Phrase = {
+    initials() {
+  }
+}
+Now when we run our test we get the following error:
+
+AssertionError:  undefined == 'NM'
+
+This is the first error that is referencing the actual behavior of the .initials method.
+
+The assert statement we wrote looked like this:
+
+assert.strictEqual(Phrase.initials('Nelson Mandela'), 'NM');
+We expected the result of passing Nelson Mandela to Phrase.initials() to be NM, but the actual result was undefined. This is because our method has not been programmed to return anything.
+
+Following TDD, the next step would be writing the minimum possible implementation code to make our test pass. In this example, that would involve adding a line of implementation code so that .initials() returns our expected result, which is NM.
+
+The minimum possible implementation code to make the test pass:
+
+const Phrase = {
+  initials(phr) {
+    return 'NM';
+  }
+}
+Now our test would pass and we would be in the green. But that doesn’t mean our method is working as intended. If we entered “Jody Williams” our method would return ‘NM’, not ‘JW’. We will address this issue when it is time, but following TDD, now that we have progressed from the red to the green, we will move into the refactor phase.
+
+Refactor I
+Congrats you’re in the green!
+Once all your tests pass, you can confidently refactor your code — restructure and improve it without changing its external behavior. The confidence comes from knowing that our tests will catch us if we make a misstep.
+
+When refactoring, it’s critical to test early and often — if our tests turn red, then we know that something went wrong while we were refactoring, and we can undo those changes.
+
+A good place to start with refactoring is to restructure tests to reflect the four phases of a good test: setup, exercise, verification, teardown.
+
+Let’s consider the test for our Phrase.initials method. We could rewrite the test with setup, exercise, and verification stages to make it more expressive and maintainable.
+
+describe('Phrase', () => {
+  describe('.initials', () => {
+    it('returns the first letter of each word in a phrase.', () => {
+      // Setup
+      const inputName = 'Nelson Mandela';
+      const expectedInitials = 'NM';
+      // Exercise
+      const result = Phrase.initials(inputName);
+      // Verification
+      assert.strictEqual(result, expectedInitials);
+    });
+  });
+});
+Here, we have re-written the same test, but we have created variables to hold the values that we will use to test the behavior of .initials(), and broken up the test into distinct phases, which are marked by the comments in the code.
+
+Now that we have refactored our test code, we can refactor our implementation code. Our earlier code looked like this:
+
+const Phrase = {
+  initials(phr) {
+    return 'NM';
+  }
+}
+ 
+In order to make our implementation code more expressive, we can change the name of the input argument of .initials() like this:
+
+const Phrase = {
+  initials(inputName) {
+    return 'NM';
+  }
+}
+ 
+Refactoring will look different for each project and each iteration of the red-green-refactor cycle. In some cases you won’t need to refactor at all! Regardless, you should consider how you can improve your code and — although it is optional — it can set you up for success moving forward.
+
+Getting into the Red II
+Congratulations, you have made it through your first red-green-refactor cycle using TDD! The next step is to repeat this cycle to build a more complete implementation of the .initials method.
+
+Once you have a baseline test for your feature, you can start to write additional test cases that force you to write better implementation code.
+
+Let’s consider the test suite for our Phrase.initials method. We have one test that checks if Phrase.initial("Nelson Mandela") returns "NM".
+
+describe('Phrase', () => {
+  describe('.initials', () => {
+    it('returns the first letter of each word in a phrase.', () => {
+      const inputName = 'Nelson Mandela';
+      const expectedInitials = 'NM';
+      const result = Phrase.initials(inputName);
+      assert.strictEqual(result, expectedInitials);
+    });
+  });
+});
+Let’s write another test that pushes us to implement a Phrase.initials() method that returns the first letter of each word for “Nelson Mandela” and a different name.
+
+To do this, we will add another it block to our code, and inside the callback function we will again follow the setup, exercise, verification phases for writing tests. This time we will write a test based on the circumstance that the string passed to .initials() has three names: 'Juan Manuel Santos'.
+
+Here is what a second test for .initials() would look like:
+
+describe('Phrase', () => {
+  describe('.initials', () => {
+ 
+    . . .
+ 
+    it('returns the initials of a name', () => {
+      const nameInput = 'Juan Manuel Santos';
+      const expectedInitials = 'JMS';
+ 
+      const result = Phrase.initials(nameInput);
+ 
+      assert.strictEqual(result, expectedInitials);
+    });
+  });
+});
+ 
+Although the new it block is similar to the existing example, the two together force you to implement a method that will return initials that pass both tests.
+
+The idea of TDD is to continue building tests and going through the red-green-refactor process until you feel confident that your implementation code performs as expected.
+
+Red to Green II
+Now that we have tests that cover more than one condition, it is time to program the actual behavior that we want our .initials method to execute.
+
+Let’s think about the current state of Phrase.initials(). We have one passing test and one failing test that raises the following error when you run the test suite:
+
+AssertionError: 'NM' == 'JMS'
+
+This is not surprising, considering our current implementation always returns ‘NM.’
+
+To write a more complete implementation, that could get us back into the green, we could write something like this:
+
+const Phrase = {
+  initials(inputName) {
+    // Create an empty array for initials
+    const initials = [];
+    // Create an array of strings 
+    const words = inputName.split(" ");
+    // Iterate through the array of strings and push the first character of each to array
+    words.forEach((word) => {
+      initials.push(word.charAt(0));
+    });
+    // Return the initials as one string
+    return initials.join("");
+  }
+}
+This implementation will successfully pass the tests we have written. Each additional test pushes us to build a complete implementation of the .initials method.
+
+Refactor II
+Congrats, you’re back in the green!
+
+Which means the next step is to refactor the code so that your tests are fast, complete, reliable, isolated, maintainable, and expressive. Also, you want to make sure your implementation code is descriptive and efficient.
+
+Sometimes refactoring can take place in test and implementation code, either one, or neither. The purpose of the refactor phase is to think critically about the code you have and decide whether there is anything unnecessary, redundant, or that could be done more clearly or efficiently.
+
+Edge Case
+Now that we have written and refactored a few tests, it’s time to consider edge cases.
+
+An edge case is a problem or situation that occurs only at an extreme (maximum or minimum) operating parameter — you can think of these as special cases that you need to account for.
+
+Take our Phrase.initials() example from earlier. What happens if we pass .initials() a number instead of a string? We could write a test and then implementation code that responds to this behavior by raising an error message that instructs you to only use strings.
+
+The test for throwing an error when a number is passed to Phrase.initials() would look like this:
+
+it('raises an error if the parameter passed in is not a string', () => {
+  // Setup
+  const nameInput = 14;   
+  // Exercise
+  const exercise = () => { Phrase.initials(nameInput) };
+  // Verification
+  assert.throws(exercise, /only use string/);        
+})
+After getting our intended error message we would write just enough implementation code to pass the test. Which in this case would be adding the following to Phrase.initials():
+
+if (typeof inputName !== "string") {
+  throw new Error("ERROR: only use string");
+}
+The complete implementation code would now be back in the green and look like this:
+
+const Phrase = {
+  initials(inputName) {
+    if (typeof inputName !== "string") {
+      throw new Error("ERROR: only use string");
+    }
+    const initials = [];
+    const words = inputName.split(" ");
+ 
+    words.forEach((word) => {
+      initials.push(word.charAt(0));
+    });
+ 
+   return initials.join("");
+  }
+}
+This is an example of creating a test for edge cases.
+
+Review
+We have just covered Test Driven Development with Mocha.
+
+At a high-level the process is:
+
+Write The Test — Start with a test describing the functionality we’d like to see.
+Fail The Test — Write code in response to the test that fails.
+Pass The Test — The tests fail and communicate feedback to developers through error messages. It’s our responsibility to read those messages, then respond by writing the minimum amount of code to address those messages.
+Refactor Your Code — See below.
+The development process is guided by the red-green-refactor cycle.
+
+Red
+Write a test that covers the functionality you would like to see implemented. You don’t have to know what your code looks like at this point, you just have to know what it will do.
+
+Run the test. You should see it fail. Most test runners will output red for failure and green for success. While we say “failure” do not take this negatively. It’s a good sign! By seeing the test fail first, we know that once we make it pass, our code works.
+
+Green
+Read the error message from the failing test, and write as little code as possible to fix the current error message. By only writing enough code to see our test pass, we tend to write less code as a whole. Continue this process until the test passes.
+
+This may involve writing intermediary features covering lower level functionality which require their own Red, Green, Refactor cycle. The edge-case was an example of this.
+
+Do not focus on code quality at this point. Be shameless! We simply want to get our new test passing.
+
+Refactor
+Clean up your code, reducing any duplication you may have introduced. This includes your code as well as your tests.
+
+Treat your test suite with as much respect as you would your live code, as it can quickly become difficult to maintain if not handled with care. You should feel confident enough in the tests you’ve written that you can make your changes without breaking anything.
+
+Instructions
+Take a look at our final workspace here. We have both implementation code that we are confident in, and a test suite that can catch regressions.
+
+Here we can see the benefits of using Mocha with Test-Driven Development.
+
+// index.js
+const Calculate = {
+  sum(inputArray) {
+    if(inputArray.length === 0){
+      return 0
+    }
+    
+    return inputArray.reduce((sum, value) => {
+      return sum + value;
+    })
+  }
+}
+
+module.exports = Calculate;
+
+// index_test.js
+const assert = require('assert');
+const Calculate =  require('../index.js')
+
+describe('Calculate', () => {
+  describe('.sum',() => {
+    it('returns the sum of an array of numbers', () => {
+      const expectedResult = 6;
+      const inputArray = [1,2,3]
+      
+      const result = Calculate.sum(inputArray)
+      
+      assert.strictEqual(result, expectedResult);
+    });
+    
+    it('returns the sum of a four item list', ()=>{
+      const expectedResult = 22;
+      const inputArray = [4,6,5,7];
+      
+      const result = Calculate.sum(inputArray);
+      
+      assert.strictEqual(result, expectedResult)
+      
+    });
+    
+    it('returns zero when the array is empty', ()=>{
+       const expectedResult = 0;
+       const inputArray = [];
+       const result = Calculate.sum(inputArray);
+       assert.strictEqual(result, expectedResult)
+    });
+  });
+});
