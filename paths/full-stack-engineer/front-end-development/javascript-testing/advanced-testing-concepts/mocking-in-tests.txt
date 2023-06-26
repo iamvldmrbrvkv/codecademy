@@ -1,0 +1,29 @@
+Mocking In Tests
+In this article, you’ll be introduced to the practice of mocking and how it can be used in unit and integration tests.
+
+What is Mocking?
+Mocking is the process of creating a fake version of an external service for testing purposes, particularly in unit tests and integration tests. Mocking is effective in testing individual units of code without relying on the functionality of other services or units such as APIs or databases.
+
+Another word that is used to describe this practice is stubbing. While there is a difference https://dev.to/snird/the-difference-between-mocks-and-stubs-explained-with-js-kkc, it’s not a very relevant difference in this scope and context.
+
+Let’s say we’re testing a feature for a blog website which renders profile data (i.e. name and bio) of the author of a certain blog post. How might mocking help us better test this feature?
+
+Mocking in Unit Tests
+As mentioned above, mocking allows us to test a particular feature without needing to rely on other services or units. By removing dependencies, we are limiting the sources of potential bugs and unintended results to just the feature being tested.
+
+In our blog application, the new feature has three steps:
+
+profile data must first be fetched from a database
+the data received must be parsed and formatted
+the formatted data is rendered
+When unit testing how the data is displayed (step 3), we can skip the first two steps (fetching and formatting) by mocking the formatted data we need, allowing us to focus solely on testing how our feature renders that data. We can even mock bad or unexpected inputs to test how our feature might display an error message.
+
+Mocking in unit tests diagram
+
+Mocking in Integration Tests
+While it’s helpful to use mocks in unit tests, we should avoid using mocks in integration tests to better simulate interactions between internal services (though external services should remain mocked).
+
+In our blog application, we use an intermediate function to format incoming data from the database for our new feature that will render the data. To test this integration, we would no longer mock how that raw data is formatted and then displayed. We would, however, still mock the raw data coming in from the database.
+
+Summary
+Mocks are helpful tools that allow us to more accurately test units of code by limiting the impacts of other potential sources for bugs to emerge from. Though they can be useful in unit testing, we should make sure to use mocks sparingly to ensure that integration of internal services can be tested comprehensively.

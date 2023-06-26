@@ -1,0 +1,60 @@
+Code Coverage
+In this article, you will learn about code coverage and test coverage – two metrics that organizations can use to determine the extent to which an application’s code has been tested – and why these metrics are useful.
+
+What is Code Coverage?
+Code coverage is the metric that measures the amount of application code that has been executed in testing, represented as a percentage. For example, if 90% of our code has been executed in our tests, then we would say that we have “90% code coverage”.
+
+But what does it mean for code to be executed in a test? How rigorous does a test need to be in order to qualify as having executed the entirety of a program? And does 100% test coverage mean that a program is bug-free?
+
+Code Coverage Criteria
+Measuring code coverage is conducted using one or more criteria, depending on the organization’s standards for code coverage. Though this is not an exhaustive list, some key criteria to use when measuring code coverage include:
+
+Function Coverage: Has each function been called?
+Statement Coverage: Has each statement been executed?
+Path Coverage: Has every edge in the control-flow graph https://en.wikipedia.org/wiki/Control-flow_graph been executed?
+Condition Coverage: Has each boolean sub-expression evaluated to be both true and false?
+Let’s look at an example of how these criteria can be used to determine code coverage. Here we have a very simple function that returns the sum of two arguments, if two arguments have been provided, and returns null otherwise:
+
+function numSum(x, y) {
+  if (x && y) {
+    return (x + y);
+  } else {
+    return null;
+  }
+}
+The most basic test of this function would include calling the function at least once, thus achieving 100% function coverage.
+
+numSum(1, 2);  // This should return 3
+By executing the function only once and with the arguments above, we will execute some, but not all, of the lines of code in the function. So, we can test our function by calling it with arguments that will return null:
+
+numSum(1, 2);  // This should return 3
+numSum(1, false);  // This should return null
+With these two calls together, both paths in the if / else blocks are taken and both return statements are executed. Thus, we have 100% statement coverage and 100% path coverage.
+
+Finally, to achieve 100% condition coverage, we need to call our function with arguments such that x and y each evaluate to true and false in the function’s if condition statement.
+
+numSum(1, 2);  // This should return 3
+numSum(1, false);  // This should return null
+numSum(false, 1);  // This should return null
+numSum();   // This should return null
+The 100% Code Coverage Myth
+And there we have it, we’ve achieved 100% coverage in each of the four criteria! So, we’re done testing, right? Well, not quite.
+
+Having 100% code coverage does not guarantee bug-free code – it simply validates the completeness of our tests using a given set of criteria relative to other test suites with lower code coverage. We still must be vigilant about writing robust test suites that specifically address both the intended use cases, and unintended edge cases, of our application.
+
+For example, as written, the numSum function will concatenate numeric string arguments rather than performing addition.
+
+numSum('1', '2') // This will return '12' instead of 3
+While there are other coverage criteria https://en.wikipedia.org/wiki/Code_coverage#Parameter_value_coverage we can use to identify the full range of function parameters, code coverage is an insufficient metric to determine if our tests confirm the intended functionality of our program as defined by the end user’s requirements.
+
+Instead, we should consider the code coverage criteria as a set of guidelines to help you develop intuition for testing your code while remaining determined to write robust test suites that are specific in targeting the various use cases of our programs.
+
+Test Coverage
+Another term you may hear with regards to testing is called test coverage. Test coverage differs from code coverage in that test coverage measures the percentage of the required features/specs that are tested, as opposed to the percentage of lines executed. These features/specs are typically defined in a requirements document https://en.wikipedia.org/wiki/Product_requirements_document provided by a client or product designer.
+
+Suppose you are building a mobile-native application that needs to work on phones using the Android and iOS operating systems but is not expected to work on desktop browsers. Accordingly, to achieve high test coverage, you will be expected to write tests for your application’s performance on Android and iOS but not on browsers.
+
+Like code coverage, test coverage cannot guarantee that our program will not have unexpected behavior. However, the pursuit of high test coverage can lead us to identify bugs and unexpected behavior earlier on in the development process.
+
+Conclusion
+Code coverage measures the percentage of lines of code that are executed in a test while test coverage measures the percentage of required features that are tested. Though these metrics cannot guarantee bug-free code, by incorporating these two metrics into your test analysis, you can increase your confidence that your test suites are robust and that your products can satisfy your end users.
