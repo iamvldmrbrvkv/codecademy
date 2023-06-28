@@ -1,0 +1,32 @@
+General Asynchronous Programming Concepts
+Explore asynchronous programming and how it allows applications/apps to run operations in a non-sequential order.
+
+What is Synchronous Code?
+Before we define asynchronous code, let’s first start with synchronous code. We don’t even have to start with code, let’s use a real-life example.
+
+Consider the building of a house. We would first need to first lay down the bricks that make our foundation. Then, we layer more bricks on top of each other, building the house from the ground up. We can’t skip a level and expect our house to be stable. Therefore, the laying of bricks happens synchronously, or in sequential order.
+
+Likewise, synchronous code executes in sequential order — it starts with the code at the top of the file and executes line by line until it gets to the end of the file. This type of behavior is known as blocking (or blocking code) since each line of code cannot execute until the previous line finishes.
+
+What is Asynchronous Code?
+Let’s begin again with examining a real-life scenario, like baking a cake. We could start to preheat the oven and prepare our cake’s ingredients while we wait for our oven to heat up. The wait for the oven and the preparation of ingredients can happen at the same time, and thus these actions happen asynchronously.
+
+Similarly, asynchronous code can be executed in parallel to other code that is already running. Without the need to wait for other code to finish before executing, our apps can save time and be more efficient. This type of behavior is considered non-blocking.
+
+Asynchronous Code Under the Hood
+For most programming languages, the ability to execute asynchronous code depends on the number of threads that an app has access to. We can think of a thread as a resource that a computer provides an app to do a task. Typically one thread allows for an app to complete one task. If we return to our house example, our computers thread tasks might look like this:
+
+Thread 1: build house foundation -> build walls -> construct floor 
+A single thread could work for a synchronous task like building a house. However, in our cake baking example, our threads would have to look like this:
+
+Thread 1: preheat oven
+Thread 2: prepare ingredients -> bake cake
+We won’t discuss in-depth how many threads an app can access but we should note that the more threads we have, the more tasks we can run concurrently. Also, in most modern-day computers, multithreading is achieved by having a CPU that has multiple cores or by some other technology.
+
+Asynchronous Code in Web Development
+Similar to how asynchronous behavior is useful in baking a cake, it can also be helpful for web programming. If we use synchronous (blocking) code in the browser, we might be stopping a user from being able to interact with a web app until the code is done running. This isn’t a great user experience. If our app takes a long time to load, our users might think that something’s wrong and might even opt to browse a different site!
+
+However, if we opt for an asynchronous approach, we can cut down on the wait time. We’d load only the code that’s necessary for user interactions and then load up other bits of code in the background. With asynchronous code, we can create better user experiences and make apps that work more efficiently!
+
+Review
+Synchronous code and asynchronous code both have roles to play in programming. Understanding the concept of how asynchronous code works gives us an extra tool to make our apps work faster and more efficiently. We can avoid blocking users and give them a more seamless browsing experience. However, we would need to consider the number of threads that our programming language can access, which also depends on what resources our computer has. With this in mind, consider what type of code you need, is it synchronous or asynchronous?
