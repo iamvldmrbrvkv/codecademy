@@ -2,10 +2,10 @@ const fs = require('fs');
 const promisifiedReadfile = require('./promisifiedReadfile');
       
 // Here we use fs.readfile() and callback functions:
-fs.readFile('./file.txt', 'utf-8', (err, data) => {
+fs.readFile('paths/full-stack-engineer/front-end-development/async-javascript-and-http-requests/async-await/readFiles-app/file.txt', 'utf-8', (err, data) => {
   if (err) throw err;
   let firstSentence = data;
-  fs.readFile('./file2.txt',  'utf-8', (err, data) => {
+  fs.readFile('paths/full-stack-engineer/front-end-development/async-javascript-and-http-requests/async-await/readFiles-app/file2.txt',  'utf-8', (err, data) => {
     if (err) throw err;
     let secondSentence = data;
     console.log(firstSentence, secondSentence);
@@ -14,10 +14,10 @@ fs.readFile('./file.txt', 'utf-8', (err, data) => {
 
 // Here we use native promises with our "promisified" version of readfile:
 let firstSentence;
-promisifiedReadfile('./file.txt', 'utf-8')
+promisifiedReadfile('paths/full-stack-engineer/front-end-development/async-javascript-and-http-requests/async-await/readFiles-app/file.txt', 'utf-8')
   .then((data) => {
     firstSentence = data;
-    return promisifiedReadfile('./file2.txt', 'utf-8');
+    return promisifiedReadfile('paths/full-stack-engineer/front-end-development/async-javascript-and-http-requests/async-await/readFiles-app/file2.txt', 'utf-8');
   })
   .then((data) => {
     let secondSentence = data;
@@ -27,8 +27,8 @@ promisifiedReadfile('./file.txt', 'utf-8')
 
 // Here we use promisifiedReadfile() again but instead of using the native promise .then() syntax, we declare and invoke an async/await function:
 async function readFiles() {
-  let firstSentence = await promisifiedReadfile('./file.txt', 'utf-8');
-  let secondSentence = await promisifiedReadfile('./file2.txt', 'utf-8');
+  let firstSentence = await promisifiedReadfile('paths/full-stack-engineer/front-end-development/async-javascript-and-http-requests/async-await/readFiles-app/file.txt', 'utf-8');
+  let secondSentence = await promisifiedReadfile('paths/full-stack-engineer/front-end-development/async-javascript-and-http-requests/async-await/readFiles-app/file2.txt', 'utf-8');
   console.log(firstSentence, secondSentence);
 }
 
