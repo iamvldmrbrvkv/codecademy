@@ -1,0 +1,18 @@
+Making an async POST Request
+
+1. At the top of main.js, assign apiKey to your Rebrandly API key.
+
+2. The fetch() function should be inside the try{} statement, which should be inside the shortenUrl() function. In the fetch() function, pass in url as the first argument and an empty object as the second argument.
+
+In that empty object you just created, add the following three properties:
+
+method with a value of 'POST'
+body with a value of data
+headers with a value of the object below:
+{
+  'Content-type': 'application/json',
+  'apikey': apiKey
+}
+Run the code. Then paste in the URL again and click the shorten button.
+
+Great job using Rebrandly to shorten your URL!
