@@ -1,0 +1,17 @@
+What is a Web App?
+Learn about web apps and what goes into building them.
+
+What is a Web Application?
+A web application is an application software that does not require installation and can instead be accessed from a remote server via web browser. Web applications are made for interaction, allowing users to send and consume data between the browser and the web server. This interaction can be as simple as logging in to an account, or as complex as making a payment with your credit card.
+
+What is the Difference Between a Website and a Web Application?
+While the terms website and web application are often used interchangeably, they can denote somewhat different things. Most commonly, a website is defined as a set of information-carrying pages that are inter-related and accessed through a web browser. A web application, on the other hand, is an application software that runs on a web server and is accessed by the user through a web browser.
+
+If a website could be said to be defined by its content, then a web application would be defined by its interaction with the user. As such, web applications are significantly more complicated than static websites, both in general architecture and features.
+
+Web Application Architecture
+In order to facilitate this complex flow of data, web applications are usually designed with different layers. The most common design paradigm is a three-layered design consisting of a presentation layer (web browser), application layer (server), and storage layer (database). In this system, the presentation layer is responsible for relaying user data to the application layer, which can process that data and do any number of things, including passing it to the storage layer for “safe-keeping.”
+
+Many times, web applications can grow to be very complex. In these cases, a three-layered design may fall short. This may necessitate the introduction of additional layers to handle this complexity. For instance, the introduction of an integration layer between the application and storage layers can help provide a uniform interface for data access, allowing the application layer to be insulated from changes that occur to the storage layer implementation.
+
+If you’re interested in learning more about the technology that’s behind your favorite web applications, install the Wappalyzer chrome extension https://www.wappalyzer.com/. If you navigate to a site, you can click on it and it will give you a list of the different technologies used to build it.

@@ -1,0 +1,11 @@
+Introduction: Web Apps
+In this unit, you will be introduced to web applications.
+
+The goal of this unit is to introduce you to web applications. You will learn about web apps and single page applications (SPAs) and how they are different from static websites. You’ll find the knowledge that you gained in the previous units to be very useful for continuing to present and style information.
+
+After this unit, you will be able to:
+
+Define what a web app is and how it is built
+Know the differences between a web app and a static website
+Define what single page application (SPA) is
+Learning is social. Whatever you’re working on, be sure to connect with the Codecademy community in the forums https://discuss.codecademy.com/?_gl=1*1nk8uan*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTY4OTE2NDkyNC4zNzguMS4xNjg5MTY4MTE2LjYwLjAuMA... Remember to check in with the community regularly, including for things like asking for code reviews on your project work and providing code reviews to others in the projects category https://discuss.codecademy.com/c/project/1833?_gl=1*1nk8uan*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTY4OTE2NDkyNC4zNzguMS4xNjg5MTY4MTE2LjYwLjAuMA.., which can help to reinforce what you’ve learned.
