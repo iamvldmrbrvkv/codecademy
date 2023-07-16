@@ -69,21 +69,12 @@ Create a variable called jsObject that is an object parsed from jsonData.
 
 Print out the array of all the children property nested in jsObject. Be sure to use either bracket notation or dot notation to access the nested properties.
 
-12345
 const jsonData = '{ "parent": { "name": "Sally", "age": 45, "children" : [ { "name": "Kim", "age": 3 }, { "name": "Lee", "age": 1 } ] } }';
 
 const jsObject = JSON.parse(jsonData);
 
 console.log(jsObject.parent.children);
-Output:
-[ { name: 'Kim', age: 3 }, { name: 'Lee', age: 1 } ]
- 
-Run
 
-
-View solution
-👏
-You got it!
 Writing a JSON String
 Before we can send off our data across the web, we need to convert them to a JSON string. In JavaScript, we would use the built-in JSON class method, .stringify() to transform our JavaScript object to a JSON string.
 
@@ -111,17 +102,15 @@ Convert jsObject back to a JSON string using JSON.stringify() and save it as ano
 
 Log the jsObjectToJson string on the console.
 
-12345678
-(jsObject);
+const jsonData = '{"parent":{"name":"Sally","age":45,"children":[{"name":"Kim","age":3},{"name":"Lee","age":1}]}}';
+
+const jsObject = JSON.parse(jsonData);
+
+jsObject.parent.age = 35;
+
+const jsObjectToJson = JSON.stringify(jsObject);
 console.log(jsObjectToJson);
-Output:
-{"parent":{"name":"Sally","age":35,"children":[{"name":"Kim","age":3},{"name":"Lee","age":1}]}}
- 
-Run
 
-
-👏
-You got it!
 Review
 In this article, you have learned how to do the following:
 
