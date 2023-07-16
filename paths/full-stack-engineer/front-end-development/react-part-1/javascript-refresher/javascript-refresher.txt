@@ -1,0 +1,8 @@
+JavaScript Refresher
+Prepare yourself with a JavaScript refresher before you start learning about React.
+
+Before we dive into the world of React, let’s go over some core JavaScript concepts. These resources below will help you get a better sense of JavaScript syntax to apply to writing React apps.
+
+Reference Material: MDN’s Re-introduction to JavaScript https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript — Use this as a guide to brush up on foundational syntax
+Article: Introduction to Functional JavaScript https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a - Get the history of JS and its programming paradigms
+In the next article, you’ll also learn about destructuring which is a widely used syntax in React apps.
