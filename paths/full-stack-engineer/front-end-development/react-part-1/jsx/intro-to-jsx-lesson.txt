@@ -111,7 +111,7 @@ Nested JSX expressions can be saved as variables, passed to functions, etc., jus
    </a>
  );
 
- SX Outer Elements
+JSX Outer Elements
 There’s a rule that we haven’t mentioned: a JSX expression must have exactly one outermost element.
 
 In other words, this code will work:
