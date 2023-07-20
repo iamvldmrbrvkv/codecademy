@@ -1,0 +1,100 @@
+Use Multiline JSX in a Component
+In this lesson, you will learn some common ways that JSX and React components work together. You’ll get more comfortable with both JSX and React components while picking up some new tricks.
+
+Take a look at this HTML:
+
+<blockquote>
+  <p>
+    The world is full of objects, more or less interesting; I do not wish to add any more.
+  </p>
+  <cite>
+    <a target="_blank"
+      href="https://en.wikipedia.org/wiki/Douglas_Huebler">
+      Douglas Huebler
+    </a>
+  </cite>
+</blockquote>
+How might you make a React component return this HTML?
+
+Select QuoteMaker.js to see one way of doing it.
+
+The key thing to notice in QuoteMaker is the parentheses in the return statement, on lines 4 and 16. Until now, your function component return statements have looked like this, without any parentheses:
+
+return <h1>Hello world</h1>;
+However, a multi-line JSX expression should always be wrapped in parentheses! That is why QuoteMaker‘s return statement has parentheses around it.
+
+Use a Variable Attribute in a Component
+Take a look at this JavaScript object named redPanda:
+
+const redPanda = {
+  src: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Endangered_Red_Panda.jpg',
+  alt: 'Red Panda',
+  width: '200px'
+};
+How could you render a React component with an image of redPanda and its properties?
+
+Select RedPanda.js to see one way to do this.
+
+Note all the curly brace JavaScript injections inside the return statement. You can, and often will, inject JavaScript into JSX inside the return statement.
+
+Putting Logic in a Function Component
+A function component must have a return statement. However, that isn’t all that it can have.
+
+You can also put simple calculations that need to happen before returning your JSX element within the function component.
+
+Here’s an example of some calculations that can be done inside a function component:
+
+function RandomNumber() {
+  //First, some logic that must happen before returning
+  const n = Math.floor(Math.random() * 10 + 1);
+  //Next, a return statement using that logic: 
+  return <h1>{n}</h1>
+}
+Watch out for this common mistake:
+
+function RandomNumber() {
+  return (
+    const n = Math.floor(Math.random() * 10 + 1);
+    <h1>{n}</h1>
+  )
+}
+In the above example, the line with the const n declaration will cause a syntax error, as it should come before the return.
+
+Use a Conditional in a Function Component
+How might you use a conditional statement inside of a function component?
+
+Select TodaysPlan.js to see one way of doing it.
+
+Notice that the if statement is located inside of the function component, but before the return statement.
+
+Event Listener and Event Handlers in a Component
+Your function components can include event handlers. With event handlers, we can run some code in response to interactions with the interface, such as clicking.
+
+function MyComponent(){
+  function handleHover() {
+    alert('Stop it.  Stop hovering.');
+  }
+  return <div onHover={handleHover}></div>;
+}
+In the above example, the event handler is handleHover(). It is passed as a prop to the JSX element <div>. We’ll discuss more on props in a later lesson, but for now, understand that props are information passed to a JSX tag.
+
+The logic for what should happen when the <div> is hovered on is contained inside the handleHover() function. The function is then passed to the <div> element.
+
+Event handler functions are defined inside the function component and, by convention, start with the word “handle” followed by the type of event it is handling.
+
+There’s a small quirk you should watch out for. Take a look at this line again:
+
+return <div onHover={handleHover}></div>
+The handleHover() function is passed without the parentheses we would typically see when calling a function. This is because passing it as handleHover indicates it should only be called once the event has happened. Passing it as handleHover() would trigger the function immediately, so be careful!
+
+Review
+Congratulations! You have finished the lesson on React components.
+
+Here’s a short recap of the concepts introduced in this lesson:
+
+Function components can return multiple JSX lines by nesting the elements in a parent element.
+Variable attributes can be used inside of a React component with JavaScript injections.
+React components support logic by putting the logic statements above the return statements.
+Components can conditionally return JSX elements by putting conditional statements inside of the components.
+Components can respond to events by defining event handlers and passing them to the JSX elements.
+Great job on tackling these complex topics! You have spent a lot of time studying React components in isolation! Now, it’s time to learn how components fit into the world around them.
