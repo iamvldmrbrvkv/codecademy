@@ -1,0 +1,14 @@
+GitHub and Markdown
+Why learn Markdown?
+
+Once we add our code to GitHub, how do we actually format the text in our repository?
+
+Technically, we could use plaintext on everything. But if we wanted to highlight our project with codeblocks, insert images into our project descriptions, or visually pace our documentation with headings, using Markdown on GitHub is the answer!
+
+With a little bit of Markdown magic, you can achieve text that includes headings, hyperlinks, emojis, checkmarks, and codeblocks like the following file in our Learn C++ repository https://github.com/Codecademy/learn-cpp!
+
+A README.md file of a GitHub repository, filled with hyperlinks, indentations, headings, emojis
+
+Markdown is an indispensable skill and can be opened in many other applications, not just GitHub. In the next few interactive articles, you’ll learn the basics of Markdown and how to use it to write a good README for your project!
+
+Let’s get started!
