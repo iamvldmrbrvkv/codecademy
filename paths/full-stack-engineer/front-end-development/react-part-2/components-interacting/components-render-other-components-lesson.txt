@@ -78,3 +78,42 @@ Let’s recap:
 A React application can contain multiple components.
 Components can interact with each other by returning instances of each other.
 Components interacting allows them to be broken into smaller components, stored into separate files, and reused when necessary.
+
+Instructions
+
+1. If you want to practice your skills, use what you’ve learned about components interacting to create a page from scratch!
+
+In the code editor, we’ve provided three files, App.js, index.js, and HelloWorld.js. Render a “Hello World!” greeting onto the screen with the appropriate file structure, where App.js contains the top-level component and index.js renders it.
+
+If you’re stuck, view the hints on what should be included in each file.
+
+HelloWorld.js
+
+import React from 'react';
+
+function HelloWorld() {
+  return <h1>Hello World</h1>
+}
+
+export default HelloWorld;
+
+App.js
+
+import React from 'react';
+import HelloWorld from './HelloWorld';
+
+function App() {
+  return <HelloWorld />
+}
+
+export default App;
+
+index.js
+
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
+
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<App />);
