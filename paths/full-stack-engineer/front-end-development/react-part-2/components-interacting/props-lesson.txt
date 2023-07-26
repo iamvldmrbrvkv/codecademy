@@ -1,0 +1,500 @@
+props
+When thinking in the frame of a React application, components are small pieces of a whole. Together, they make up the interface that users will see.
+
+With each component playing a role in the interface, there are times when components must be able to communicate with other components.
+
+In this lesson, you will learn another way that components can interact: a component passing information to another component.
+
+Information that gets passed from one component to another is known as props.
+
+Props can be used to customize the output of each component depending on the information that is passed in.
+
+By allowing components to communicate with each other, we can add a level of flexibility that was not possible before.
+
+By the end of this lesson, you should be able to:
+
+Pass, access, and display props.
+Use props to create conditional statements.
+Define event handlers in a component and pass them to other components.
+Work with a component’s children.
+Assign default values to props.
+Let’s get started!
+
+Access a Component's props
+Every component has something called props.
+
+A component’s props is an object. It holds information about that component.
+
+You’ve seen this before, but you might not have realized it! Let’s take a look at the HTML button tag. There are several pieces of information we can pass to the button tag, such as the type of the button.
+
+<button type="submit" value="Submit"> Submit </button> 
+In this example, we’ve passed two pieces of information to the button tag, a type and a value. Depending on what type attribute we give to the <button> element, it will treat the form differently. In the same way, we can pass information to our own components to specify how they behave!
+
+Props serve the same purpose for components as arguments do for functions.
+
+To access a component’s props object, you can reference the props object and the dot notation for its properties. Here’s an example:
+
+props.name
+This would retrieve the name property from the props object.
+
+Pass `props` to a Component
+To take advantage of props, we need to pass information to a React component. In the previous exercise, we rendered an empty props object because we did not pass any props to our PropsDisplayer component.
+
+How do we pass props? By giving the component an attribute:
+
+<Greeting name="Jamel" />
+Let’s say that you want to pass a component the message, "We're great!". Here’s how you can do it:
+
+<SloganDisplay message="We're great!" />
+As you can see, to pass information to a component, you need a name for the information that you want to pass.
+
+In the above example, we used the name message. You can use any name you want.
+
+If you want to pass information that isn’t a string, then wrap that information in curly braces. Here’s how you would pass an array:
+
+<Greeting myInfo={["Astronaut", "Narek", "43"]} />
+In this next example, we pass several pieces of information to <Greeting />. The values that aren’t strings are wrapped in curly braces:
+
+<Greeting name="The Queen Mary" city="Long Beach, California" age={56} haunted={true} />
+
+Render a Component's props
+Props allow us to customize the component by passing it information.
+
+We’ve learned how to pass information to a component’s props object. You will often want a component to display the information that you pass.
+
+To make sure that a function component can use the props object, define your function component with props as the parameter:
+
+function Button(props) {
+  return <button>{props.displayText}</button>;
+}
+In the example, props is accepted as a parameter, and the object values are accessed with the dot notation accessors pattern (object.propertyName).
+
+Alternatively, since props is an object, you can also use destructuring syntax like so:
+
+function Button({displayText}) {
+  return <button>{displayText}</button>;
+}
+
+Pass props From Component To Component
+You have learned how to pass a prop to a component:
+
+<Greeting firstName="Esmerelda" />
+You have also learned how to access and display a passed-in prop:
+
+return <h1>{props.firstName}</h1>;
+The most common use of props is to pass information to a component from a different component.
+
+Props in React travel in a one-way direction, from the top to bottom, parent to child.
+
+Let’s explore the parent-child relationship of passing props a bit further.
+
+function App() {
+    return <Product name="Apple Watch" price = {399} rating = "4.5/5.0" />;
+}
+In this example, App is the parent and Product is the child. App passes three props to Product (name, price, and rating), which can then be read inside the child component.
+
+Props passed down are immutable, meaning they cannot be changed. If a component wants new values for its props, it needs to rely on the parent component to pass it new ones.
+
+Let’s practice this!
+
+Render Different UI Based on props
+You can do more with props than just display them. You can also use props to make decisions.
+
+function LoginMsg(props) {
+  if (props.password === 'a-tough-password') {
+    return <h2>Sign In Successful.</h2>
+  } else {
+    return <h2>Sign In Failed..</h2>
+  }
+}
+In this example, we use the props passed in to make a decision rather than rendering the value to the screen.
+
+If the password received is equal to 'a-tough-password', the resulting message in <h2></h2> will be different!
+
+The passed-in password is not displayed in either case! The prop is used to decide what will be displayed. This is a common technique.
+
+Put an Event Handler in a Function Component
+You can, and often will, pass functions as props. It is especially common to pass event handler functions.
+
+In the next exercise, we will pass an event handler function as a prop. However, we have to define an event handler before we can pass one anywhere. In this exercise, we will define an event handler function.
+
+How do we define an event handler in React?
+
+We define an event handler as a method on the function component!
+
+Take a look at the Example.js file in the code editor. On lines 4 through 8, an event handler method is defined. On line 10, that event handler method is attached to an event (a click event, in this case).
+
+Pass an Event Handler as a prop
+Good! You’ve defined a new method inside the Talker component. Now you’re ready to pass that function to another component.
+
+You can pass a method in the exact same way that you pass any other data—using curly braces.
+
+Receive an Event Handler as a prop
+Great! You just passed a function from <Talker /> to <Button />.
+
+Take a look at Button.js in the code editor. Notice that Button returns a <button> element.
+
+If a user clicks on this <button> element, you want your passed-in talk() function to get called. This means that you need to attach talk() to the <button> element as an event handler.
+
+How do you do that? In the same way that you attach any event handler to a JSX element: you give that JSX element a special attribute. The attribute’s name should be an event name like onClick or onHover. The attribute’s value should be the event handler that you want to attach.
+
+Talker.js
+
+import React from 'react';
+import Button from './Button';
+
+function Talker() {
+  function talk() {
+    let speech = '';
+    for (let i = 0; i < 10000; i++) {
+      speech += 'blah ';
+    }
+    alert(speech);
+	}
+  return <Button talk={talk}/>;
+}
+
+export default Talker;
+
+Button.js
+
+import React from 'react';
+
+function Button(props) {
+  return (
+    <button onClick={props.talk}>
+      Click me!
+    </button>
+  );
+}
+
+export default Button;
+
+handleEvent, onEvent, and props.onEvent
+Let’s talk about naming things.
+
+When you pass an event handler as a prop, as you just did, there are two names that you have to choose. Both naming choices occur in the parent component, the component that defines the event handler and passes it.
+
+The first name that you have to choose is the name of the event handler itself.
+
+Look at Talker.js, lines 5 through 11. This is our event handler. We chose to name it talk.
+
+The second name that you have to choose is the name of the prop that you will use to pass the event handler. This is the same thing as the attribute name.
+
+For our prop name, we also chose talk, as shown on line 12:
+
+return <Button talk={talk} />;
+These two names can be whatever we want. However, there is a naming convention that is commonly used.
+
+Here’s how the naming convention works: first, think about what type of event you are listening for. In our example, the event type was “click”. If you are listening for a “click” event, then you name your event handler handleClick. If you are listening for a “hover” event, then you name your event handler handleHover:
+
+function myClass() {
+  function handleHover() {
+    alert('I am an event handler.');
+    alert('I will be called in response to "hover" events.');
+  }
+}
+Your prop name should be the word on, plus your event type. If you are listening for a “click” event, then you name your prop onClick. If you are listening for a “hover” event, then you name your prop onHover:
+
+function myClass(){
+  function handleHover() {
+    alert('I am an event handler.');
+    alert('I will listen for a "hover" event.');
+  }
+   return <Child onHover={handleHover} />;
+}
+
+Instructions
+
+1. In Talker.js, change the event handler’s name from talk to handleClick.
+
+2. In Talker‘s return statement, change the prop‘s name from talk to onClick.
+
+Change the prop’s value to the newly named event handler, handleClick.
+
+3. Select Button.js.
+
+Change Button‘s return statement so that it expects a prop named onClick instead of talk.
+
+4. One major source of confusion is the fact that names like onClick have special meanings, but this is only if they’re used on HTML-like elements.
+
+Look at Button.js. When you give the <button> element an attribute named onClick, then this onClick attribute has a special purpose. As you’ve learned, this special onClick attribute creates an event listener that listens for clicks on the <button> element:
+
+// In Button.js: The onClick attribute creates an event listener:
+<button onClick={props.onClick}>
+  Click me!
+</button>
+Now, look at Talker.js. Here, the onClick attribute you gave to <Button /> does not create an event listener—it’s just a name of an attribute:
+
+// In Talker.js: The onClick attribute is just a normal attribute name.
+<Button onClick={handleClick} />
+The reason for this is that <Button /> is not an HTML-like JSX element; it’s a component instance.
+
+Names like onClick only create event listeners if they’re used on HTML-like JSX elements. Otherwise, they’re just ordinary prop names.
+
+Run your program to ensure your button is working as intended.
+
+Talker.js
+
+import React from 'react';
+import Button from './Button';
+
+function Talker() {
+  function handleClick() {
+    let speech = '';
+    for (let i = 0; i < 10000; i++) {
+      speech += 'blah ';
+    }
+    alert(speech);
+	}
+  return <Button onClick={handleClick}/>;
+}
+
+export default Talker;
+
+Button.js
+
+import React from 'react';
+
+function Button(props) {
+    return (
+      <button onClick={props.onClick}>
+        Click me!
+      </button>
+    );
+}
+
+export default Button;
+
+props.children
+Every component’s props object has a property named children.
+
+props.children will return everything in between a component’s opening and closing JSX tags.
+
+So far, all of the components that you’ve seen have been self-closing tags, such as <MyFunctionComponent />. They don’t have to be! You could write <MyFunctionComponent></MyFunctionComponent>, and it would still work.
+
+props.children would return everything in between <MyFunctionComponent> and </MyFunctionComponent>.
+
+By using props.children, we can separate the outer component, MyFunctionComponent in this case, from the content, which makes it flexible and reusable.
+
+Look at BigButton.js.
+
+In Example 1, <BigButton>‘s props.children would equal the text, “I am a child of BigButton.”
+In Example 2, <BigButton>‘s props.children would equal a <LilButton /> component.
+In Example 3, <BigButton>‘s props.children would equal undefined.
+If a component has more than one child between its JSX tags, then props.children will return those children in an array. However, if a component has only one child, then props.children will return the single child, not wrapped in an array.
+
+Instructions
+
+1. Select App.js.
+
+Notice that App renders two <List> instances, and that each <List> has at least one <li> child.
+
+Now open List.js, and take a look at the List component.
+
+Think about the fact that each List instance is going to be rendered with two JSX tags:
+
+<List>  // opening tag
+</List> // closing tag
+…and that there will be at least one <li></li> child in between those tags:
+
+<List>  // opening tag
+  <li></li> // child
+</List> // closing tag
+Click Run.
+
+2. You can see two list titles in the browser, but no list items! How can you make the list items appear?
+
+Open List.js. In the return statement of the List component, in between <ul></ul> tags, add {props.children}.
+
+3. Optional Task: Each <List></List> instance is passed a singular title: “Living Musician” and “Living Cat Musician,” respectively. Somehow, each <List></List> counts its list items and automatically adds an “s” to the end of its title if the count is greater than one. We could add a second piano cat, and the second list title would automatically pluralize.
+
+See if you can figure out how the instances of the List component class are automatically pluralizing their titles!
+
+BigButton.js
+
+import React from 'react';
+import LilButton  from './LilButton';
+
+function BigButton(props) {
+  console.log(props.children);
+  return <button>I am a Big Button.</button>;
+}
+
+export default BigButton;
+
+// Example 1
+<BigButton>
+  I am a child of BigButton.
+</BigButton>
+
+
+// Example 2
+<BigButton>
+  <LilButton />
+</BigButton>
+
+
+// Example 3
+<BigButton />
+
+App.js
+
+import React from 'react';
+import List from './List';
+
+function App() {
+  return (
+    <div>
+      <List type='Living Musician'>
+        <li>Sachiko M</li>
+        <li>Harvey Sid Fisher</li>
+      </List>
+      <List type='Living Cat Musician'>
+        <li>Nora the Piano Cat</li>
+      </List>
+    </div>
+  );
+}
+
+export default App;
+
+List.js
+
+import React from 'react';
+
+function List(props) {
+  let titleText = `Favorite ${props.type}`;
+  if (props.children instanceof Array) {
+    titleText += 's';
+  }
+  return (
+    <div>
+      <h1>{titleText}</h1>
+      <ul>{props.children}</ul>
+    </div>
+  );
+}
+
+export default List;
+
+Giving Default Values to props
+Take a look at the Button component. Notice that on line 6, Button expects to receive a prop named text. The received text will be displayed inside of a <button> element.
+
+What if nobody passes any text to Button?
+
+If nobody passes any text to Button, then Button‘s display will be blank. It would be better if Button could display a default message instead.
+
+You can make this happen by specifying a default value for the prop. There are three ways to do this!
+
+The first method is adding a defaultProps static property to the component:
+
+function Example(props) {
+  return <h1>{props.text}</h1>
+}
+ 
+Example.defaultProps = {
+  text: 'This is default text',
+};
+You can also specify the default value directly in the function definition:
+
+function Example({text='This is default text'}) {
+   return <h1>{text}</h1>
+}
+Lastly, you can also set the default value in the function body:
+
+function Example(props) {
+  const {text = 'This is default text'} = props;
+  return <h1>{text}</h1>
+}
+If an <Example /> doesn’t get passed any text, then it will display “This is default text”.
+
+If an <Example /> does get passed some text, then it will display that passed-in text.
+
+Button.js
+
+import React from 'react';
+
+function Button(props) {
+  const {text = 'Default Text of Big Button'} = props;
+    return (
+      <button>{text}</button>
+    );
+}
+
+export default Button;
+
+App.js
+
+import React from 'react';
+import Button from './Button.js';
+
+function App() {
+  return <Button text='' />;
+}
+
+export default App
+
+Review
+That completes our lesson on props! Here are some of the skills that you’ve learned:
+
+Passing a prop by giving an attribute to a component instance.
+Accessing a passed-in prop via props.propName.
+Displaying a prop.
+Using a prop to make decisions about what to display.
+Defining an event handler in a function component.
+Passing an event handler as a prop.
+Receiving a prop event handler and attaching it to an event listener.
+Naming event handlers and event handler attributes according to a convention.
+Accessing props.children.
+Assigning default values to props.
+That’s a lot! Don’t worry if it’s all a bit of a blur. You’ll soon get plenty of practice!
+
+Instructions
+
+For further practice, consider the following challenge:
+
+Create a simple online grocery store with reusable React function components. Your store should provide users with at least four buttons for possible items they can purchase. Every time a user clicks on a button, it should alert that the thing they’ve clicked on has been added to the cart via an alert message.
+
+1. Click on the folder icon next to the App.js file and create a GroceryItem.js file.
+
+2. Define a GroceryItem function component.
+
+3. The component should accept props and return a button that displays the grocery item’s name and contain an event handler for the onClick event.
+
+4. The component should be used to render the four grocery items, passing in the appropriate props.
+
+5. In App.js, return four instances of the GroceryItem component with names such as Eggs, Banana, Strawberry, or Bread. The items are up to you!
+
+App.js
+
+import React from 'react';
+import GroceryItem from './GroceryItem';
+
+function App() {
+  return (
+    <>
+  <GroceryItem name='Eggs' />
+  <GroceryItem name='Banana' />
+  <GroceryItem name='Strawberry' />
+  <GroceryItem name='Bread' />
+  </>
+  );
+}
+
+export default App
+
+GroceryItem.js
+
+import React from 'react';
+
+function GroceryItem(props) {
+  function handleClick() {
+    alert(props.name);
+  }
+  return (
+    <button onClick={handleClick}>{props.name} </button>
+  );
+}
+
+export default GroceryItem;
