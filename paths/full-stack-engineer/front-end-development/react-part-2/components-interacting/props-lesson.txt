@@ -488,13 +488,13 @@ GroceryItem.js
 
 import React from 'react';
 
-function GroceryItem(props) {
+function GroceryItem({ name }) {
   function handleClick() {
-    alert(props.name);
+    alert(name);
   }
   return (
     <button onClick={handleClick}>
-      {props.name}
+      {name}
     </button>
   );
 }
