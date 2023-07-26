@@ -493,7 +493,9 @@ function GroceryItem(props) {
     alert(props.name);
   }
   return (
-    <button onClick={handleClick}>{props.name} </button>
+    <button onClick={handleClick}>
+      {props.name}
+    </button>
   );
 }
 
