@@ -1,0 +1,103 @@
+Separate Container Components From Presentational Components
+As you continue building your React applications, you will soon realize that one component has too many responsibilities and is too difficult to maintain. In this lesson, you will learn a programming pattern that will help organize your React code.
+
+If a component has to have state, make calculations based on props, or manage any other complex logic, then that component shouldn’t also have to render JSX.
+
+To help reduce the component’s complexity, we can break it down into multiple simpler components. How should you break it apart?
+
+The pattern we’ll learn about focuses on splitting complex components into stateful (container) and stateless (presentational) components, where stateful components manage complex state or logic and stateless components only render JSX.
+
+As we progress through this lesson, we’ll take a look at how to apply this pattern to our example React app to break down a complex component into container and presentational components.
+
+Create Container Component
+Separating container components from presentational components is a popular React programming pattern.
+
+The functional part of a component (maintaining a state, making calculations based on props, etc.) can be separated into a container component, also known as a stateful component.
+
+This container component will be in charge of maintaining the state (creating and updating) and passing it on (we’ll see this later) to any component it renders through props.
+
+Create Presentational Component
+Now that we’ve created a container component and separated the logic, we can create a presentational (or stateless) component to render our guinea pig slideshow.
+
+The presentational component’s only job is to contain JSX. It should be an exported component and should not render itself because a presentational component will always get rendered by a container component.
+
+For example, say we have components called Presentational and Container. Presentational.js must export the component function (or class, when applicable):
+
+function Presentational(/*...props*/) {
+  // body of the component                      
+}
+                        
+export default Presentational;
+ 
+Container.js must import that component:
+
+import { Presentational } from 'Presentational.js';
+function Container() {
+  // renders Presentational component
+}
+ 
+It’s important to understand that although a presentational component doesn’t maintain state, it doesn’t mean it is not reactive. Recall that, like state, a change in props also triggers a potential change in the rendered JSX.
+
+Parent/Child and Sibling/Sibling Communication
+We’ve seen how container components communicate with presentational components by passing their state through props, but how do presentational components communicate changes to the container?
+
+One idea would be to update the props directly like this:
+
+function Presentational(props) {
+  const buttonClickHandler = () => {
+    props.isActive = !props.isActive
+  }
+  // rest of code
+}
+ 
+But this would not be correct because components should never directly update their props. Recall that React functional components should be pure functions and updating prop values directly would violate that principle.
+
+In order for a presentation (stateless) component to communicate changes to a container (stateful) component, the container component must define and provide a way for the presentational component to communicate with it using a change handler function passed as a prop.
+
+For example:
+
+function Container() {
+  const [isActive, setIsActive] = useState(false);                              
+                                
+  return (
+    <>
+      <Presentational active={isActive} toggle={setIsActive}/>
+      <OtherPresentational active={isActive}/>
+    </>
+    );                          
+  }
+                        
+function Presentational(props) {
+  return (
+    <h1>Engines are {props.active}</h1>
+    <button onClick={() => props.toggle(!props.active)}>Engine Toggle</button>
+  );
+}
+                            
+function OtherPresentational(props) {
+  // render...
+}
+```                 
+ 
+In the example above, `Container` maintains the `isActive` state and passes `setIsActive` to `Presentational` through the `toggle` prop. When `Presentational` needs to communicate a change to the `active` prop, it uses the function passed to it through the `toggle` prop. 
+                        
+Using this pattern also indirectly results in communication between sibling components (components with a common parent), as shown in the example above. When `Presentational` communicates a change through `toggle`, it causes a state update in `Container`, which provides the updated value for `isActive` to both `Presentational` and `OtherPresentational` through the `active` prop. 
+
+Render Presentational Components in Container Component
+We’ve learned how to separate logic in a container component and render JSX in a presentational component.
+
+The container component should now render the presentational components instead of rendering JSX. The container component’s state will be passed down as props to the presentation components to keep them reactive.
+
+Review
+Congrats! You’ve learned your first programming pattern to help organize your React code. You divided a complex React component into a container component and a couple of presentational components.
+
+Here are the steps we took:
+
+Identified that the original component needed to be refactored: it handled calculations/logic and presentation/rendering.
+Created a container component containing all the stateful logic.
+Created a function that calls the state setter method provided by useState().
+Created and exported presentational components containing only JSX.
+Imported the presentational components into the container component.
+Used the presentational components in the return statement of the container component.
+Passed state and functions used to change state as props to the rendered presentational components.
+In this programming pattern, the container component does the work of figuring out what to display using state. The presentational component does the work of actually displaying the state through props. If a component does a significant amount of work in both areas, then that’s a sign that you should use this pattern!
