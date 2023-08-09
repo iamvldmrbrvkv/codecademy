@@ -1,0 +1,102 @@
+Intro to Styling React Apps
+Styling is a critical aspect of any React application as it can impact the user experience and help create a distinct identity for your application. As your application grows in complexity, the way you style becomes increasingly important. It’s essential to choose the right approach to keep your styles organized and manageable.
+
+In this lesson, we will cover the basics of styling in React, including the different approaches and techniques you can use. We’ll start with a discussion of inline and object variable styling and explain the unique syntax rules that are specific to React. Next, we’ll dive into CSS modules and show you how to use them to make your styles modular and reusable.
+
+By the end of this lesson, you will have a solid foundation in React styling and be equipped with the knowledge to style your components in a way that makes them maintainable, scalable, and organized.
+
+Inline Styles and Style Object Variables
+There are many different ways to use styles in React. This exercise is focused on two of them: inline styles and style object variables.
+
+An inline style is a style that’s written as an attribute, like this:
+
+<h1 style={{ color: 'red' }}>Hello world</h1>
+ 
+Notice that it has double curly braces. The outer curly braces are to note that everything between should be read as JavaScript. The inner curly braces create a JavaScript object literal.
+
+However, using inline styles can quickly become messy if you want to apply more than just a few styles. An alternative is to store a style object in a variable and then inject that variable as the value of the style attribute.
+
+To do this, we can initialize an object with properties and values like so:
+
+const darkMode = {
+  color: 'white',
+  background: 'black';
+};
+ 
+Then, the object can be injected to style a component:
+
+<h1 style={darkMode}>Hello world</h1>
+
+Style Syntax
+There are a few things to keep in mind when styling components with JSX.
+
+Just like how we reference CSS properties in the style object of the DOM https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style in JavaScript, we write CSS property names using camelCase in React:
+
+const styles = {
+  marginTop: '20px',
+  backgroundColor: 'green'
+};
+ 
+This syntax comes from a small rule. A hyphen is a reserved operator in JavaScript. If we use background-color, the hyphen is then interpreted as a minus sign. Thus, we want to be consistent with the property names in the DOM style JavaScript object and use camel case.
+
+In regular JavaScript, style values are almost always strings. Even if a style value is numeric, you usually have to write it as a string so that you can specify a unit. For example, you’d write '450px' or '20%'.
+
+If you write a style value as a number, then the unit 'px' is assumed. For example, if you want a font size of 30px, you can write:
+
+{ fontSize: 30 }
+ 
+If you want to use units other than 'px', you can use a string:
+
+{ fontSize: "2em" }
+ 
+Specifying the 'px' unit in a string will still work, although it’s redundant.
+
+A few specific styles https://github.com/facebook/react/blob/4131af3e4bf52f3a003537ec95a1655147c81270/src/renderers/dom/shared/CSSProperty.js#L15-L59 will not automatically fill in the px for you. These are styles where you aren’t likely to use 'px' anyway, so you don’t really have to worry about them.
+
+Multiple Stylesheets
+While inline styles and style object variables are valid methods of styling in React, it can become organizationally difficult to keep track of the styles being applied as your application grows.
+
+One way to make styles modular, organized, and reusable is to create separate stylesheets for each component.
+
+We can import a stylesheet by using the import keyword:
+
+import './App.css'
+ 
+However, if we have multiple stylesheets with the same class names, the names can collide and create style conflicts.
+
+One way to prevent this is to use CSS modules. By importing it as a module, the styles will only be available for the component that imported the style. This is done automatically by creating unique class names for each module. This frees us from having to keep track of the class names we’ve used across stylesheets.
+
+To use CSS modules, we begin by naming our stylesheet in this format, where fileName should be replaced with the name of the component you’re styling:
+
+fileName.module.css
+ 
+This indicates that the file should be processed as a CSS module.
+
+Then, it must be imported into the file containing our component.
+
+import styles from './fileName.module.css'
+ 
+From this import, we can see that the styles object now holds the class selectors of fileName.module.css. To access the selectors, we use the dot notation like so:
+
+<div className={styles.divStyle}></div>
+ 
+Note that we apply styles using the className attribute rather than class. class is a reserved JavaScript keyword, so React uses className to avoid conflicts.
+
+Although React does not have an opinion on how styles should be defined, this is the preferred method for styling in React, as it maintains the compositional philosophy of React.
+
+Review
+Well done! You’ve reached the end of this lesson on styling in React apps.
+
+Before you go, here’s a recap:
+
+React components can be styled in a number of different ways: inline styling, object variable styling, stylesheets, and CSS modules.
+Inline styling can be used to apply styles to a single element. Inline styling can be done by giving the element an attribute named style whose value is an object literal surrounded in curly braces.
+<h1 style={{color: "red"}}> Hello, World! </h1>
+ 
+An object variable can also be used to apply a style to a single element. The syntax is similar to inline styling, but rather than passing an object literal, the name of the variable is passed instead.
+const myStyle = { color: "red" }
+<h1 style={myStyle}> Hello, World! </h1>
+ 
+Style names in React must be in camelCase. For example, background-color becomes backgroundColor.
+In React, a number style value is automatically interpreted with px.
+Styles can be separated and stored into CSS module files. The styles can be imported and used by applying className attributes to the relevant elements.
