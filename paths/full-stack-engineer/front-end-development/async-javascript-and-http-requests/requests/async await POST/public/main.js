@@ -9,7 +9,7 @@ const responseField = document.querySelector('#responseField');
 
 // Asynchronous functions
 const shortenUrl = async () => {
-	const urlToShorten = inputField.value;
+  const urlToShorten = inputField.value;
   const data = JSON.stringify({destination: urlToShorten});
   try {
     const response = await fetch(url, {
