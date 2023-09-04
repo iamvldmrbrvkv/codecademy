@@ -1,0 +1,748 @@
+What Is Routing?
+Routing is the process by which a web application uses the current browser URL (Uniform Resource Locator) to determine what content to show a user. For example, a user visiting Wikipedia’s /wiki/Node.js https://en.wikipedia.org/wiki/Node.js page would expect to see something different from the /wiki/React_(JavaScript_library) page https://en.wikipedia.org/wiki/React_(JavaScript_library).
+
+By organizing an application’s content and displaying only what the user has requested to see, routing allows for rich, engaging, and clear user experiences.
+
+Before we dive into the lesson, let’s briefly go over the basic structure of URLs. Consider this URL:
+
+URL breakdown
+
+Every URL is essentially a request for some resource and each component of the URL serves to specify which resource is desired. URLs consist of several components, some of which are mandatory and some of which are optional:
+
+The scheme (eg. HTTP, HTTPS, mailto, etc), which specifies what protocol https://www.codecademy.com/articles/http-requests should be used to access the resource.
+The domain (eg. codecademy.com), which specifies the website that hosts the resource. The domain serves as the entry point for your application.
+The path (eg. /articles), which identifies the specific resource or page to be loaded and displayed to the user. This is where routing begins!
+The optional query string (eg. ?search=node), which appears after a ‘?’ and assigns values to parameters. Common uses of query strings include search parameters and filters.
+Depending on the kind of application you build, there are different ways to handle the requests coming into your server. A popular back-end solution is to use the Express https://www.codecademy.com/learn/learn-express routing framework. In this lesson, we will cover React Router https://reactrouter.com/en/main/, a popular front-end routing solution designed specifically for React applications.
+
+Instructions
+Each exercise in this lesson will feature a video https://youtu.be/mSplGHfTkOE that will guide you through the process of implementing routing in a React application with React Router – all on your own computer!
+
+To get started, click on the video to learn about the application you will be building.
+
+Before we begin learning about React Router, click on the link below to download the starter code .zip file for the project you will be working on. Make sure to store this file in a location that you can find easily before unzipping it! Then, move on to the next exercise.
+
+react-router-lesson-starter-code.zip https://static-assets.codecademy.com/Courses/React-Router-v6/react_router_v6_lesson_starting_code.zip?_gl=1*1mrvhky*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTY5MzgxNTQzNS40OTguMS4xNjkzODE1NDQ2LjQ5LjAuMA..
+
+Here’s an article about unzipping a .zip file https://www.wikihow.com/Unzip-a-File if you need some help!
+
+Installing React Router
+In order to use React Router, you will need to include the react-router-dom package https://www.npmjs.com/package/react-router-dom (the version of React Router built specifically for web browsers) in your project by using npm like so:
+
+npm install --save react-router-dom@6
+
+Once you have added react-router-dom to your project, you can import one of its routers to add routing to your project. React Router provides multiple routers, however, the most common one is createBrowserRouter. The other options, and the reasons you might choose one over the other, are outside the scope of this lesson. If you are interested, you can read more about alternative routing options here https://reactrouter.com/en/main/routers/picking-a-router.
+
+To add a router to our project, we can import it at the top of our file, like so:
+
+import { createBrowserRouter } from 'react-router-dom';
+
+Next, we’ll initialize our router by calling createBrowserRouter. This method accepts a list of JSX components (we’ll discuss this more in the upcoming exercises):
+
+import { createBrowserRouter } from 'react-router-dom';
+const router = createBrowserRouter( /* application routes are defined here */ );
+
+The router serves as the basis for all the React Router logic. Without it, we’d get errors if we tried using React Router components or methods. Let’s practice defining a router for our application.
+
+Instructions
+Task 1
+Before we can install react-router-dom, we need to install all of the dependencies for this project. This can be done by running the command below in your terminal:
+
+npm install
+
+Hint
+
+In the root directory of the project, run the command
+npm install
+
+You should see a folder called node_modules appear in your file system.
+
+Task 2
+Next, install react-router-dom@6.
+
+To verify that you have successfully added the package to your project, navigate to package.json and check that react-router-dom appears in the “dependencies”.
+
+Hint
+
+Your terminal command should look like this:
+npm install --save react-router-dom@6
+
+Providing A Router
+In the React Router paradigm, the different views of your application, also called routes are just React components. To include them in your application, you will need to render them.
+
+The first step is to make our router available to our entire application by using React Router’s RouterProvider.
+
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+const router = createBrowserRouter( /* application routes are defined here */ );
+
+export default function App () {
+  return (
+    <RouterProvider router={ router } />
+  );
+}
+
+createBrowserRouter will define a router that prevents URL changes from causing the page to reload. Instead, URL changes will allow the router to determine which of its defined routes to render while passing along information about the current URL’s path as props. We make our router available application-wide by providing it using RouterProviderat the root of our application.
+
+In the next exercises, we will learn how to define route components so they can make use of this information but for now, let’s add a router to our application.
+
+Instructions
+Task 1
+To add routing to your application, in App.js, import RouterProvider and replace <p>REPLACE ME WITH A ROUTER PROVIDER</p> with a RouterProvider.
+
+Hint
+
+We can import modules from a package using the following syntax:
+import { valueA } from 'package';
+
+Task 2
+Assign the <RouterProvider> component a router prop. Its value should be the previously defined router constant. Don’t worry about seeing a blank page if you run npm start. We’ll fix this in the next exercise when we configure our router.
+
+Hint
+
+At this point, the `App` component should return the following:
+<RouterProvider router={ router } />
+
+Basic Routing with <Route>
+With our router in place, we can begin defining the different views, or routes, that our application will render for various URL paths. For example, we might want to render an About component for the /about path and a SignUp component for the /sign-up path. React Router gives us two options to define routes: JSX or objects. In this lesson, we’ll be learning to implement routes using JSX notation. If you’re interested, you can learn more about object notation here https://reactrouter.com/en/main/route/route.
+
+The .createBrowserRouter method accepts an array of <Route> objects, so we’ll need to use React Router’s .createRoutesFromElements method to configure our routes with JSX. We also need to use React Router’s <Route> component to define our routes. These components can be imported from the react-router-dom package, alongside the .createBrowserRouter method, like so:
+
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from `react-router-dom`
+
+The <Route> component is designed to render (or not render) a component based on the current URL path. Each <Route> component should include:
+
+A path prop indicating the exact URL path that will cause the route to render.
+An element prop describing the component to be rendered.
+For example, we can use .createRoutesFromElements to configure a <Route> that renders the <About> component when the URL path matches '/about':
+
+import About from './About.js';
+import { RouterProvider, createBrowserRouter, Route } from 'react-router-dom';
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path='/about' element={ <About/> } />
+));
+
+export default function App () {
+  return (
+    <RouterProvider router={ router } />
+  );
+}
+
+In many cases, there may be certain components, like sidebars, navigation bars, and footers, that we want to render with every page view. We can achieve this by defining a root-level component that contains layout elements we want to render consistently. We can then nest the rest of our routes within this root-level component, like so:
+
+/* imports ... */
+
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path='/' element={ <Root/> }>
+    // nested routes here will render along with the <Root/> component
+  </Route>
+));
+
+With this route configuration, whenever a user navigates to one of the nested routes, that view will render, along with any elements we’ve defined in our <Root/> component. We’ll discuss root-level components and nested components in greater detail in the upcoming exercises. Before we move on, let’s practice adding routes to our application so that our application will render the correct component when we visit certain paths.
+
+Instructions
+Task 1
+Navigate to App.js where we will begin adding routes to our router. First, add createBrowserRouter, createRoutesFromElements and Route to the import statement.
+
+Hint
+
+To import multiple values from a package, you can write something like this:
+import { valueA, valueB } from 'package';
+
+Task 2
+Next, let’s render the main routes of the application. As you can see, at the top of App.js a number of components are being imported but not used. For now, we’ll render the About, SignUp, Articles, Categories, and Profile components.
+
+Using createBrowserRouter, createRoutesFromElements, and Route, let’s define our routes between the opening and closing tags of the Root route (we’ll understand what exactly we’re doing here when we talk about nested routes) for the following components to their respective paths:
+
+About: /about
+SignUp: /sign-up
+Articles: /articles
+Categories: /categories
+Profile: /profile
+Hint
+
+The syntax for using `createBrowserRouter`, `createRoutesFromElements`, and `Route` inside a `Root` `Route` looks like:
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/" element={ <Root/> }>  {/* root route */}
+    <Route path="mypath" element={ <MyComponent/> } />  {/* nested route */}
+    <Route path="myotherpath" element={ <MyOtherComponent/> } />  {/* nested route */}
+  </Route>
+));
+
+Be sure to nest your routes within the Root route.
+
+Task 3
+Test that your code works by navigating to these URLs in your browser. For example, to see the About component, navigate to http://localhost:3000/about.
+
+You should see each component render only when the URL matches the appropriate path. You should see the Header and Footer rendered regardless of the URL.
+
+Linking to Routes
+In the last exercise, you used the URL bar to navigate to a path that matched one of your application’s routes. But how do you navigate from within the app itself?
+
+When building a website using HTML, we use the anchor (<a>) tag to create links to other pages. A side effect of the anchor tag is that it causes the page to reload. This can distract our users from the immersive experience of our smooth React application!
+
+React Router offers two solutions for this: the Link and NavLink components, both of which can be imported from the react-router-dom package.
+
+import { createBrowserRouter, createRoutesFromElement, Route, Link, NavLink } from 'react-router-dom';
+
+Both Link https://reactrouter.com/en/main/components/link and NavLink https://reactrouter.com/en/main/components/nav-link components work much like anchor tags:
+
+They have a to prop that indicates the location to redirect the user to, similar to the anchor tag’s href attribute.
+They wrap some HTML to use as the display for the link.
+<Link to="/about">About</Link>
+<NavLink to="/about">About</NavLink>
+
+Both of the above links will generate anchor (<a>) tags with the text “About”, which take the user to the /about view when clicked. However, the default behavior of an anchor tag – refreshing when the page loads – will be disabled. Note that if we preface the path provided to our to prop with a forward slash, /, as we did in the example above, this path will be treated as an absolute path. That is, React Router will assume this path is navigating from the root directory. We’ll talk more about how to define paths that are relative to our current directory in upcoming exercises.
+
+So, what’s the difference between a Link and a NavLink? When the URL path matches a NavLink component’s to prop, the link will automatically have an 'active' class applied to it. This can be quite useful for building navigation menus, as we can define CSS styles for the .active class name to differentiate between active and inactive links, enabling users to quickly see which content they are viewing. We can also pass a function to className or style to further customize the styling of an active (or inactive) NavLink, like so:
+
+<NavLink 
+  to="about" 
+  className={ ({ isActive }) => isActive? 'activeNavLink' : 'inactiveNavLink'}
+  > About </NavLink>
+
+In the example above we pass a function to the className prop which applies the activeNavLink class if the NavLink is active and inactiveNavLink otherwise.
+
+As we’ve seen in this exercise, NavLink and Link are great tools to use to help our users navigate our website. Let’s practice using Link and NavLink in our application so that our users can have an easier time navigating around.
+
+Instructions
+Task 1
+Head over to Articles.js located in the src/components/. This component renders a list of <a> links for each value in the filteredArticles array. If you try clicking on these links in the running application, you’ll notice a very subtle page reload (pay attention to the “refresh” button in your browser)!
+
+Import the Link component into this file and then replace the <a> tags to eliminate the page reload!
+
+Note: The articles themselves won’t appear yet. We’ll fix that soon!
+
+Hint
+
+Take a look at the Categories.js file to see how this is done. Your code should look something like this:
+
+<Link to='pathToPage'>
+  Link Text
+</Link>
+
+Task 2
+In the running application, try clicking on the links rendered by the Header, such as “Articles”. Again, you may notice a page refresh.
+
+Open up the Header.js file and you’ll see that these links are rendered using plain old <a> tags!
+
+First, import the NavLink component into the Header.js file. Then, inside the return statement of the Header component, replace each instance of the <a> tag with a NavLink component.
+
+Make sure to replace the href attribute with the to prop!
+
+Hint
+
+You will have to import the NavLink component from react-router-dom.
+
+To render a NavLink, include a to prop like so:
+
+<NavLink to="path">Click Me</NavLink>
+
+Task 3
+To verify your work, try clicking on the navigation links. You should notice that the page no longer refreshes! Furthermore, you’ll notice the link you clicked on will be bolded!
+
+Hint
+
+Recall that the .active class is automatically added when the URL matches the to prop of a NavLink. If you open up the public/index.css file, you’ll see that we’ve defined a style for the selector .header a.active.
+
+Dynamic Routes
+So far, all the routes we’ve covered have been static, which means they match a single unique path. This works for predetermined routes that render a consistent view. But what if we need to build a route that is more flexible?
+
+For example, imagine a tech news site where each article is accessible from the path '/articles/' + some-title where some-title is unique for each article. Specifying a distinct route for every article would not only be verbose and time-consuming, but it would also require an impractical amount of maintenance should the path structure ever change or we need to add new articles.
+
+It would be much more convenient to define a single route that can match any path with the pattern '/articles/' + someTitle and know exactly which component to render. React Router allows us to do this by using URL parameters to create dynamic routes.
+
+URL parameters are dynamic segments of a URL that act as placeholders for more specific resources. They appear in a dynamic route as a colon (:) followed by a variable name, like so:
+
+const route = createBrowserRouter(createRoutesFromElement(
+  <Route path='/articles/:title' element={ <Article /> }/>
+))
+
+Let’s break down this short, yet powerful demonstration of URL parameters:
+
+In this example, the path prop 'articles/:title' contains the URL parameter :title.
+This means that when the user navigates to pages such as '/articles/what-is-react' or '/articles/html-and-css', the <Article /> component will render.
+When the Article component is rendered in this way, it can access the actual value of that :title URL parameter (what-is-react or html-and-css) to determine which article to display (more on this in the next exercise). A single route can even have multiple parameters (eg. 'articles/:title/comments/:commentId') or none (eg. 'articles').
+Let’s take advantage of dynamic routes by using URL parameters in our application.
+
+Instructions
+Task 1
+Navigate to App.js. Within the Root Route, add a dynamic route with a URL parameter that renders the Article component whenever the URL path matches paths such as '/articles/objects' or '/articles/browser-compatibility'.
+
+Name the URL parameter in the route’s path prop :title.
+
+To confirm that your code works, navigate to http://localhost:3000/articles/objects or try clicking on one of the links in the /articles page.
+
+Hint
+
+To add a dynamic route, render the Route component and make sure that its path prop includes a dynamic segment (a segment beginning with a colon). Your code should look like this:
+
+<Route path='path/:param' element={ <MyComponent/> }/>
+
+Task 2
+Add another dynamic route within the Root Route with a URL parameter that renders the Author component whenever the URL path matches paths such as '/authors/maria' or '/authors/samir'.
+
+Name the URL parameter in the route’s path prop :name.
+
+To confirm that your code works, navigate to http://localhost:3000/authors/Lily. You should see the header “Articles by REPLACE ME” rather than the articles by the author Lily. In the next exercise, we’ll fix this.
+
+useParams
+It is common to use the value of URL parameters to determine what is displayed in the component that a dynamic route renders. For example, the Article component might need to display the title of the current article.
+
+React Router provides a hook, useParams(), for accessing the value of URL parameters. When called, useParams() returns an object that maps the names of URL Parameters to their values in the current URL.
+
+For example, consider the Articles component below which is rendered by a route with the dynamic URL '/articles/:title'. Consider the following Article component, that will render when a user visits /articles/objects:
+
+import { Link, useParams } from 'react-router-dom';
+
+export default function Article() {
+  
+  let { title } = useParams();
+  // title will be equal to the string 'objects'
+
+  // The title will be rendered in the <h1>
+  return (
+    <article>
+      <h1>{title}</h1>
+    </article>
+  );
+}
+
+Let’s break down the example above.
+
+First, the useParams() hook is imported from react-router-dom.
+Then, inside the Article component, useParams() is called which returns an object.
+Destructuring assignment https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment is then used to extract the value of the URL parameter from that object, storing it in a variable named title.
+Finally, this title value is used to display the name of the article in the <h1> element.
+Let’s practice using URL parameters in our components.
+
+Instructions
+Task 1
+You may have noticed that navigating to the various /articles/:title paths will render an Article component that displays the proper article. However, this doesn’t work as well when navigating to a specific author’s page.
+
+Take a look at the Article.js file and you can see that the useParams() hook has been imported and used. Let’s do the same thing with the Author.js file.
+
+First, in Author.js, import useParams from 'react-router-dom'.
+
+Hint
+
+Use the named import syntax:
+
+import { value } from 'name-of-package';
+
+Task 2
+Now, at the top of the Author component, call useParams() to get the value of the :name URL parameter. You should use destructuring syntax to extract the value into a variable called name.
+
+Hint
+
+To get the value of a particular URL parameter, use destructuring assignment like so:
+
+const { nameOfParameter } = useParams();
+
+Task 3
+Now that you have the value of name, let’s use it to display the correct data in the Author component.
+
+First, on the line where we define author, replace the string "replace me" with the variable name.
+
+Next, in between the <h1> tags we’ve provided, replace the text “REPLACE ME” with {name}.
+
+To test that your code works, navigate to an article and click on its author. The Authors page should display the name that you just clicked on.
+
+Hint
+
+Watch the video to see how to complete this step!
+
+Nested Routes
+Up to this point, we’ve been working with routers that are relatively small. As our application grows and we add more features, we may want additional components to render within our defined views depending on user actions.
+
+For example, suppose that we have an About page that will be rendered if we hit the path /about. We’d like to implement a new feature that will display a secret message in About if the path changes to /about/secret. We might try and do this:
+
+/* imports ... */
+const router = createBrowserRouter(createRoutesFromElement([
+  <Route path='/about' element={ <About/> }>  />,
+  <Route path='/about/secret' element={ <Secret/> }>  />
+]));
+
+Since React Router matches paths exactly, if we go to the path /about/secret, it will only render Secret and not About. We’d like to render About when we hit /about and also render Secret below About when we hit /about/secret. We can do this using nested routes.
+
+A nested route, as the name suggests, is a Route within a Route. A Route containing one or more Routes nested within it is known as the parent route and a Route that is contained within another Route is known as the child route. When nesting Routes, the child Route path is relative to the parent Route‘s path so we shouldn’t include the parent path in its path prop.
+
+For example, we can create a nested route by refactoring the code above, like so:
+
+/* imports ... */
+const router = createBrowserRouter(createRoutesFromElement(
+  <Route path='/about' element={ <About/> }> {/* About renders if path starts with /about */}
+    <Route path='secret' element={ <Secret/> }>  />  {/* we can exclude /about from this path since it is relative to its parent */}
+  </Route> 
+));
+
+Using this nested route, the About component will render when the path starts with /about. If the path matches /about/secret, the Secret component will render in addition to the About component. Remember that a Route can be both a parent and child route if it is nested within a route and contains nested routes within it. The same parent/child properties would apply.
+
+Our router is configured to render our nested route, but if we ran this code we still wouldn’t see Secret rendered below About. That’s because we haven’t told About where to render its child route element. To do this we need to make use of the React Router Outlet component in the parent About component, like so:
+
+import { Outlet } from 'react-router-dom';
+
+// Rendered when the user visits '/about'
+export default function About() {
+  return (
+    <main>
+       <h1>Lorem ipsum dolor sit amet.</h1>
+       <Outlet/>  {/* renders child element when user visits /about/secret */}
+    <main/>   
+  );
+}
+
+Now when we visit /about/secret our router will render About and its child route component, Secret, wherever the Outlet component is defined in the parent. You can think of it as the router replacing Outlet with our defined child route.
+
+When using nested routes we can also make use of index routes. An index route is a Route that uses the index prop instead of a path prop and is special because it renders on its parent’s path. For example:
+
+/* imports ... */
+const router = createBrowserRouter(createRoutesFromElement(
+  <Route path='/about' element={ <About/> }> {/* About renders if path starts with /about */}
+    <Route index element={ <IndexComponent/> }>  />  {/* Will render when the path is /about */}
+    <Route path='secret' element={ <Secret/> }>  />  {/* Will render when the path is /about/secret */}
+  </Route> 
+));
+
+We can think of an index route as a default Route that will render in its parent’s Outlet when the path matches the parent path exactly so there’s some content in that space.
+
+Nested routes give us fine-tuned control over what, when, and where certain elements appear within their parent Route. Let’s practice what we’ve learned by adding some nested routes to our application.
+
+Instructions
+Task 1
+In the running application, navigate to the sign-up form and choose a username. Then navigate to the new “Profile” link that will appear. The URL will change to /profile and we should see the username we just entered, followed by a link to an “Edit” page. Try clicking on this link – we’ll notice that the URL changes, but we get a 404 error.
+
+The EditProfileForm component should render when the URL changes to /profile/edit but it is currently not being rendered by the application. Let’s fix that with a nested routing approach.
+
+First, in App.js, let’s define a Profile child Route for the path /profile/edit that should render EditProfileForm. Note that navigating to /profile/edit still won’t render correctly (we’ll fix this next).
+
+Hint
+
+Recall that we can define a nested Route like:
+
+<Route path="/icecream" element={ <Icecream />} >  {/* renders when path starts with /icecream */}
+  <Route path="flavors" element={ <Flavors/> } />  {/* renders on path /icecream/flavors*/}
+</Route>
+
+Notice that child Route path prop is relative to parents.
+
+Task 2
+When running the application and navigating to /profile/edit we’ll notice that we get no error (404) but the EditProfileForm still isn’t rendering alongside Profile. Let’s fix this by adding an Outlet in Profile. Navigate to Profile.js and import Outlet from react-router-dom.
+
+After importing Outlet, add the Outlet component under the Link component. In the running application if we navigate to /profile we’ll see an “Edit” link which we can click and see the EditProfileForm render under it. If we fill out the username input and click “Edit” we’ll see the Profile and EditProfileForm rendered together.
+
+Hint
+
+Recall that when using nested routes we need to specify where the child route needs to be rendered in the parent route. For example:
+/* In App.js */
+<Route path="/icecream" element={ <Icecream />} >  {/* renders when path starts with /icecream */}
+  <Route path="flavors" element={ <Flavors/> } />  {/* renders on path /icecream/flavors*/}
+</Route>
+
+/* In IceCream.js */
+export default function IceCream() {
+  render (
+    <div>
+      <h1>IceCream<h1/>
+      <Outlet/>  {/* Where child route component should be rendered */}
+    </div>
+  );
+}
+
+Task 3
+In the running application, when we navigate to /categories we see a list of article categories rendered. When we try to click on one of these links (like html) notice your path changes to /categories/html and we get 404 error. If we look at the Categories.js component we’ll notice an Outlet defined but in App.js we haven’t defined a Route for the Category component. Let’s fix that.
+
+In App.js, define a child Route for the Category Route that renders when the path matches a path like /categories/html or /categories/javascript.
+
+Hint
+
+Recall that nested routes are relative to their parents so we don't need to include its parent `path` in its `path` prop. We can use nesting with URL params like:
+<Route path="/icecream" element={ <Icecream />} >  {/* renders when path starts with /icecream */}
+  <Route path=":flavor" element={ <Flavor/> } />  {/* renders on path /icecream/peacan or /icecream/vanilla*/}
+</Route>
+
+<Navigate>
+If you take anything away from this lesson, it should be that React Router treats everything as a component. To get fully comfortable using React Router in your code, you have to embrace this idea and the declarative coding style that follows from it. For the most part, this is pretty intuitive, but it can feel a bit counterintuitive when it comes to redirecting users.
+
+To appreciate the declarative pattern, consider a common case for redirecting a user: a user wants to access a /profile page that requires authentication but is not currently signed in.
+
+The Navigate component provided by React Router makes this easy! Like a Link or NavLink, the Navigate component has a to prop. However, where Link and NavLink must be clicked to navigate the user, once the Navigate component is rendered, the user will automatically be taken to the location specified by the to prop:
+
+import { Navigate } from 'react-router-dom';
+
+const UserProfile = ({ loggedIn }) => {
+  if (!loggedIn) {
+    return (
+      <Navigate to='/' />
+    )
+  }
+
+  return (
+    // ... user profile content here
+  )  
+}
+
+In this example, when the UserProfile component renders, if the loggedIn prop is false, then the Navigate component will be returned and then rendered, sending the user to the / page. Otherwise, the component will render normally.
+
+Let’s practice declaratively redirecting non-logged-in users in our application.
+
+Instructions
+Task 1
+If you previously signed in, press the “Log Out” button. Then, manually navigate to http://localhost:3000/profile/ which will render the Profile component.
+
+As you can see, the component will render but there will be no username to show. Instead, the Profile component should only be viewable if there is a user logged in and it should redirect the user to the SignUp page otherwise.
+
+First, in Profile.js, import Navigate from react-router-dom.
+
+Hint
+
+You may either add Navigate to the existing list of imports or you can import it on its own.
+
+Task 2
+Now, above the return statement in the Profile component, return a Navigate that replaces the current URL with the path '/sign-up' if loggedIn is false.
+
+Test that your code works by first making sure that you are signed out. Then by revisiting /profile. You should be redirected to the /sign-up page.
+
+useNavigate
+In the previous exercise, you learned how to redirect declaratively by rendering a Navigate component that updates the browser’s current location. Though this approach follows React Router’s declarative coding style, it does introduce a few extra steps in the React rendering lifecycle:
+
+The Navigate component must be returned.
+The Navigate component is then rendered.
+The URL is updated.
+And finally the appropriate route is rendered.
+React Router also provides a mechanism for updating the browser’s location imperatively using the useNavigate hook.
+
+import { useNavigate } from 'react-router-dom';
+
+The useNavigate() function returns a navigate function that allows us to specify a path where we’d like to navigate.
+
+Consider this example which immediately triggers a redirect back to the / page after a user successfully submits a <form>:
+
+import { useNavigate } from `react-router-dom`;
+
+export const ExampleForm = () => {
+
+  const navigate = useNavigate()
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    navigate('/')
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* form elements */ }
+    </form>
+  )
+}
+
+By enabling imperative updates to the browser location, the navigate function allows you to respond immediately to user input without having to wait.
+
+The useNavigate() function also gives us the ability to programmatically navigate our users through their history https://developer.mozilla.org/en-US/docs/Web/API/Window/history stack. Scenarios like enabling users to go forward or backward in an application, or redirecting users to their previous page after they’ve logged in, are great use cases for this functionality. To navigate a user through their history stack using useNavigate(), we’d pass in an integer to indicate where in the history we’d like to travel. A positive integer navigates forward and a negative integer navigates backward.
+
+For example:
+
+navigate(-1) - navigate to the previous URL in the history stack.
+navigate(1) - navigate to the next URL in the history stack.
+navigate(-3) - navigate 3 URLs back in the history stack.
+Below, we can see how the navigate() function is used to enable a “Go Back” button:
+
+import { useNavigate } from `react-router-dom`
+
+export const BackButton = () => {
+  const navigate = useNavigate()
+
+  return (
+    <button onClick={() => navigate(-1)}>
+      Go Back
+    </button>
+  )
+}
+
+Let’s practice using useNavigate to give our users the ability to navigate backward and forward no matter where they are in our application.
+
+Instructions
+Task 1
+So far, you may have noticed the “Back” and “Forward” buttons in the Footer component. However, if you try clicking on them, nothing will happen. Let’s fix that using the navigate hook.
+
+First, navigate to Footer.js and import the useNavigate hook.
+
+Hint
+
+Use the named import syntax to import the useNavigate method from 'react-router-dom':
+
+import { value } from 'package-name';
+
+Task 2
+Next, inside the Footer component, call useNavigate() to get the navigate function.
+
+Hint
+
+Your code should look like this:
+
+const navigate = useNavigate();
+
+Task 3
+Finally, modify the goBack and goForward click handlers such that they imperatively redirect the user.
+
+Verify your work by navigating to a few URLs and then using the “Back” and “Forward” buttons in the footer.
+
+Hint
+
+Call navigate with a negative integer to go back 1 URL and a positive integer to go forward 1 URL.
+
+Task 4
+Lastly, let’s add an imperative redirect to the SignUp component such that after a user submits their username they are redirected to the /profile page.
+
+Navigate to SignUp.js and import the useNavigate hook.
+
+Then, use the navigate function to redirect the user to '/profile' at the end of the handleSubmit method.
+
+Test that your code works by signing up and ensuring that you are redirected to the profile page (which you can now view since loggedIn is now true).
+
+Hint
+
+Import the useNavigate hook from react-router-dom and use navigate() with a path like '/profile'.
+
+Query Parameters
+Query parameters appear in URLs beginning with a question mark (?) and are followed by a parameter name assigned to a value. They are optional and are most often used to search, sort and/or filter resources.
+
+For example, if you were to visit the URL below…
+
+https://www.google.com/search?q=codecademy
+
+… you would be taken to Google’s /search page displaying results for the search term codecademy. In this example, the name of the query parameter is q.
+
+Query parameters can be useful in determining which content to display to our user and React Router provides a mechanism for grabbing query parameter values with the useSearchParams() hook. This hook returns a URLSearchParams object and a function we can use to update it.
+
+Consider this example of a SortedList component:
+
+import { useSearchParams } from 'react-router-dom';
+
+// Rendered when a user visits "/list?order=DESC"
+export const SortedList = (numberList) => {
+  const [ searchParams, setSearchParams ] = useSearchParams();
+  const sortOrder = searchParams.get('order');
+  console.log(sortOrder); // Prints "DESC"
+};
+
+Let’s break down this example:
+
+First, we import useSearchParams() and call it within SortedList to get the URLSearchParams object. This object has a .get() method for retrieving query parameter values.
+Finally, to get the value of a specific query parameter, we pass in the name of the query parameter whose value we want to obtain, as a string ('order'), to the queryParams.get() method. The value ('DESC') is then stored in the variable order.
+Let’s expand the SortedList example so that the component uses the order value to render a list of data either in ascending order, in descending order, or in its natural order.
+
+import { useSearchParams } from 'react-router-dom'
+
+// Rendered when a user visits "/list?order=DESC"
+export const SortedList = (numberList) => {
+  const [ searchParams, setSearchParams ] = useSearchParams();
+  const sortOrder = searchParams.get('order');
+
+  if (sortOrder === 'ASC') {
+    // render the numberList in ascending order
+  } else if (sortOrder === 'DESC') {
+    // render the numberList in descending order
+  } else {
+    // render the numberList as is
+  }
+}
+
+Now, if the user were to visit /list?order=DESC, the value 'DESC' would be extracted and we can render the SortedList component in descending order. Likewise, visiting /list?order=ASC will render the list in ascending order. Finally, since query parameters are optional, if we were to visit /list, the SortedList component would render in its natural order.
+
+Imagine we have a List component with a sort button that we wanted to use to update the URL to /list?order=ASC, then render SortedList. We can use the setSearchParams() function to do this. For example:
+
+import { useSearchParams } from 'react-router-dom';
+
+// Rendered when a user visits "/list"
+export const List = (numberList) => {
+  const [ searchParams, setSearchParams ] = useSearchParams();
+
+  // render the numberList in ascending order
+  <button click={ () => setSearchParams( {order: 'ASC'} ) }>
+    Sort 
+  </button>
+}
+
+When a user clicks on the Sort button we’ll update the path to /list?order=ASC, which will cause our SortedList component to render.
+
+useSearchParams works great when we want to access the current path’s query parameters or alter them but what if we want to navigate to a path and include query parameters too? Well, for this scenario we’ll need to use the createSearchParams() utility function from react-router-dom with the useNavigate hook we learned about previously.
+
+For example, if we wanted to directly navigate to /list?order=ASC from the root (/) path we’d do something like this:
+
+import { useNavigate, createSearchParams } from 'react-router-dom';
+// get navigate function
+const navigate = useNavigate();
+
+// define an object where the key is is the query parameter name and value is query parameter value
+const searchQueryParams = {
+  order: 'ASC'
+}
+
+// use createSearchParams which takes an object and transforms it to a query string of the form order=ASC
+const searchQueryString = createSearchParams(searchQueryParams);
+
+// force a navigate by passing in an object with pathname indicating that path to navigate and search indicating the query parameters to append
+navigate({
+  pathname:'/list',
+  search: `?${searchQueryString}`
+})
+
+The important things to note about the example above are that we:
+
+Define an object representing the query parameters we want and call it searchQueryParams.
+Pass searchQueryParams to createSearchParams which will transform it from an object to a query string form.
+Call useNavigate and pass an object with pathname and search keys where pathname is a string indicating where to navigate to and search is a string indicating the query string to append to the path.
+Note that we need to include the ? which is why we use a template string here.
+
+Great job learning about query parameters let’s now practice adding some filtering to our articles by using them.
+
+Instructions
+Task 1
+Now we’ll add a search feature to the Articles page that filters the listed articles by whether or not their titles match the search string. For example, if the path is /articles?title=react, only the articles with 'react' in the title should be displayed.
+
+Navigate to Articles.js and import useSearchParams from react-router-dom.
+
+Hint
+
+Import { useSearchParams } from react-router-dom.
+
+Task 2
+Next, inside the Articles component, call useSearchParams() to get access to the current URL’s URLSearchParams object and store it in a variable called searchParams.
+
+Hint
+
+We can use the useSearchParams() hook like this:
+
+const [ searchParams ] = useSearchParams();
+
+Task 3
+Finally, you should see a variable named title declared and assigned to the empty string value ''. Replace this hard-coded '' value with searchParams.get(), passing in the name of the query parameter whose value we would like to extract.
+
+Verify your code works by navigating to /articles?title=browser and ensuring that only articles with “browser” in the title show up on the page.
+
+Hint
+
+The query parameter we want to extract is called ?title so your code should look like this:
+
+const title = searchParams.get('title');
+
+Review
+Great work! You’ve learned everything you need to know to add front-end routing to your React applications using React Router! To recap, you’ve learned how to:
+
+Install react-router-dom and add it to a React application.
+Enable routing by using RouterProvider and providing a router.
+Creating a router using createBrowserRouter().
+Use createRoutesFromElements() to configure a router.
+Use the Route component to add static and dynamic routes to an application.
+Use Link and NavLink components to add links to an application.
+Access the values of URL parameters using React Router’s useParams hook.
+Create nested routes using Route, Outlet, and relative paths.
+Declaratively redirect users by rendering React Router’s Navigate component
+Imperatively redirect users via the useNavigate hook.
+Access and set the value of query parameters using React Router’s useSearchParams hook.
+Great job learning about React Router. You’ve learned a lot of about React Router’s core functionality. If you’d like to explore more you can check out the official docs here.
+
+We encourage you to continue practicing what you’ve learned and experimenting with the React Router on your own.
+
+Instructions
+If you’d like to compare your solution to ours, you can download our solution here https://static-assets.codecademy.com/Courses/react-router/react-router-lesson-solution-1.zip?_gl=1*1xs6kg2*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTY5MzgzNDcyNS41MDAuMS4xNjkzODM4MDM2LjQ5LjAuMA...
