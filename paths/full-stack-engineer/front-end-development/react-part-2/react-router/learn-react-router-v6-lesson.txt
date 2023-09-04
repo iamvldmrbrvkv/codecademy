@@ -740,7 +740,7 @@ Create nested routes using Route, Outlet, and relative paths.
 Declaratively redirect users by rendering React Router’s Navigate component
 Imperatively redirect users via the useNavigate hook.
 Access and set the value of query parameters using React Router’s useSearchParams hook.
-Great job learning about React Router. You’ve learned a lot of about React Router’s core functionality. If you’d like to explore more you can check out the official docs here.
+Great job learning about React Router. You’ve learned a lot of about React Router’s core functionality. If you’d like to explore more you can check out the official docs here https://reactrouter.com/en/main/start/overview.
 
 We encourage you to continue practicing what you’ve learned and experimenting with the React Router on your own.
 
