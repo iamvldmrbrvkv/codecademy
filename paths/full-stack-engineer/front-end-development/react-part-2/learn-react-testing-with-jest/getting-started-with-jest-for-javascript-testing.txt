@@ -1,0 +1,79 @@
+Getting Started with Jest for JavaScript Testing
+In this article, you will learn about structuring unit testing of JavaScript code using the popular Jest JavaScript library.
+
+→ Getting Started with Jest for JavaScript Testing https://www.valentinog.com/blog/jest/
+
+In this article, you will learn about structuring unit testing of JavaScript code using the popular Jest JavaScript library. This is helpful if you would like to get comfortable using Jest for basic JavaScript testing before unit testing in React. After you finish reading the article, return to this page and complete the following assessments.
+
+Multiple choice
+In Jest, which function is the actual test most immediately wrapped in?
+
+
+test("string for describing the test suite", () => {
+  // test code
+});
+
+(Selected)Correct:
+expect(functionName(inputs)).toEqual(output);
+
+
+it('string for describing the test suite', () => {
+  // test code
+});
+
+
+describe("Function description", () => {
+  // test code
+});
+
+👏
+Correct! The expect function performs the actual test by specifying the expected output of a function given a specified input.
+Multiple choice
+Which line(s) of code in the function filterByTerm are not covered in the testing block?
+
+//function
+function filterByTerm(inputArr, searchTerm) {
+  if (!searchTerm) throw Error("searchTerm cannot be empty");
+  if (!inputArr.length) throw Error("inputArr cannot be empty");
+  return inputArr.filter(function(arrayElement) {
+    return arrayElement.url.match(searchTerm);
+  });
+}
+
+//testing block
+describe("Filter function", () => {
+  test("it should filter by a search term (link)", () => {
+    const input = [
+      { id: 1, url: "https://www.url1.dev" },
+      { id: 2, url: "https://www.url2.dev" },
+      { id: 3, url: "https://www.link3.dev" }
+    ];
+    const output = [{ id: 3, url: "https://www.link3.dev" }];
+    expect(filterByTerm(input, "link")).toEqual(output);
+  });
+  test("it should throw when searchTerm is empty string", () => {
+    const input = [];
+    expect(() => {
+      filterByTerm(input, "");
+    }).toThrowError(Error("searchTerm cannot be empty"));
+  });
+});
+
+
+There is full code coverage in the testing block.
+
+(Selected)Correct:
+if (!inputArr.length) throw Error("inputArr cannot be empty");
+
+
+if (!searchTerm) throw Error("searchTerm cannot be empty");
+
+and
+
+if (!inputArr.length) throw Error("inputArr cannot be empty");
+
+
+if (!searchTerm) throw Error("searchTerm cannot be empty");
+
+👏
+Correct! The testing block does not check for throws if the array is empty. Jest’s built-in code coverage feature can help you to identify this oversight.
