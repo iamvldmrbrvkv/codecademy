@@ -533,7 +533,7 @@ export const generateUniqueId = (timestamp, random) => {
 const App = () => {
   //Make your function calls here
   const result = removeItemAtIndex(['a', 'b', 'c', 'd'], 1);
-  const uniqueId = generateUniqueId();
+  const uniqueId = generateUniqueId(timestamp, random);
   
   //Don't touch the content below this!
   return (
