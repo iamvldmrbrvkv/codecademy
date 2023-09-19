@@ -1,0 +1,593 @@
+Introduction to Redux
+Imagine you are creating a calendar app with various functionalities. One part of the app displays events; another lets users filter which types of events are shown, a third part of the app sets the current time zone, and a fourth part creates new events. To make these functionalities possible, you’d have to manage shared data and updates across these components. Without proper management, the complexity of these tasks can quickly escalate.
+
+That’s where Redux https://redux.js.org/ comes in. Redux is a state management library that follows a pattern known as the Flux architecture https://facebookarchive.github.io/flux/docs/in-depth-overview/. In Flux and Redux, shared information is consolidated within a single object instead of being scattered across individual components. Components receive data to render and can request changes using actions, which are events triggered by user interactions or other events. The state is available throughout the application, and updates are handled in a predictable manner, with components being notified whenever a change occurs.
+
+To put it another way, here’s the description from the Redux documentation https://redux.js.org/tutorials/fundamentals/part-1-overview#why-should-i-use-redux: “The patterns and tools provided by Redux make it easier to understand when, where, why, and how the state in your application is being updated, and how your application logic will behave when those changes occur. Redux guides you towards writing code that is predictable and testable, which helps give you confidence that your application will work as expected.”
+
+There are similar tools like Recoil https://recoiljs.org/, MobX https://mobx.js.org/README.html, and Apollo Client https://www.apollographql.com/docs/react/, but Redux is the tried-and-true tool for state management in React applications. It’s more popular in the developer community and well-supported with documentation and online tutorials.
+
+This lesson will cover the core concepts of Redux: how Redux works and the basic terminology used to describe a Redux app. It assumes you know JavaScript functions, arrays, and objects. If you need to review these, check out the corresponding units in our Learn JavaScript course https://www.codecademy.com/learn/introduction-to-javascript.
+
+One-Way Data Flow
+In most applications, there are three parts:
+
+State – the current data used in the app
+View – the user interface displayed to users
+Actions – events that a user can take to change the state
+The flow of information would go like this:
+
+The state holds the current data used by the app’s components.
+The view components display that state data.
+When a user interacts with the view, like clicking a button, the state will be updated in some way.
+The view is updated to display the new state.
+With plain React, these three parts overlap quite a bit. Components not only render the user interface, but they also may manage their own state. When actions that may change the state occur, components need to directly communicate these changes to each other.
+
+Redux helps separate the state, the view, and actions by requiring that the state be managed by a single source. Requests to change the state are sent to this single source by view components in the form of an action. Any components of the view that would be affected by these changes are informed by this single source. By imposing this structure, Redux makes our code more readable, reliable, and maintainable.
+
+State
+State in a web application represents the current information that drives the application’s behavior and appearance. It acts as a centralized source of data, storing the essential details of the application at any given moment.
+
+For example, in a calendar application, the state would include events (name, date, label), the current timezone, and display filters. In a to-do app, the state would consist of to-do items (description, completed/not completed), the existing order of the items, and display filters. In a Word editor, the state would encompass the contents of the document, print settings, and comments.
+
+Complex apps have a multitude of states to keep track of, and passing states down the component tree can become tedious and inefficient. Redux, as a valuable tool, enhances JavaScript frameworks and libraries by offering a consistent and predictable solution for state management.
+
+With Redux, the state can be any JavaScript type, including number, string, boolean, array, and object.
+
+Here’s an example state for a to-do app:
+
+const state = [ 'Print trail map', 'Pack snacks', 'Summit the mountain' ];
+
+Each piece of information in this state—an array in this case-would inform some part of the user interface.
+
+Instructions
+1.
+Over the next few exercises, you’ll see firsthand how Redux manages the state and provides us with a set of tools to save, interact, and update the state. Let’s lay the groundwork first. We’ll need a state for Redux to operate on.
+
+Define the state of a playlist application in a state array. It should represent this playlist:
+
+Take Five
+Clair de Lune
+Respect
+Checkpoint 2 Passed
+
+Hint
+Here’s a similar example:
+
+const differentState = [ 'eenie', 'meenie', 'miney' ];
+
+const state = [ 'Take Five', 'Clair de Lune', 'Respect' ];
+
+Actions
+Most well-designed applications will have separate components that need to communicate and share data.
+
+A to-do list might have an input field where the user can type in a new to-do item. The application might transfer this data from the input field, add it to an array of all to-dos, and render them as text on the screen. This entire interaction can be defined as an action. Actions describe an event or an action that has occurred and provide information about what needs to be updated in the application’s state. In short, actions are how Redux manages and update the state.
+
+In Redux, actions are represented as plain JS objects. Here’s what that action might look like:
+
+const action = {
+  type: 'todos/addTodo',
+  payload: 'Take selfies'
+};
+
+Every action must have a type property with a string value. This describes the action.
+Typically, an action has a payload property with an object value. This includes any information related to the action. In this case, the payload is the to-do text.
+When an action is generated and notifies other parts of the application, we say that the action is dispatched.
+Here are two more example actions:
+
+“Remove all to-dos”. This requires no payload because no additional information is needed:
+
+const action = {
+  type: 'todos/removeAll'
+}
+
+“Remove the ‘Pack snacks’ to-do”:
+
+const action = {
+  type: 'todos/removeTodo',
+  payload: 'Pack snacks'
+}
+
+Instructions
+1.
+With the understanding that actions in Redux represent specific events that occur, we can begin defining some actions that capture the possible changes that can be made to the state of the song collection.
+
+Define an action object named addNewSong that represents adding a new song to the playlist.
+
+It should have the following information:
+
+A type of 'songs/addSong'
+A payload of 'Halo', the title of the song to add
+Note: You may have noticed that this action only adds the song ‘Halo’. In a real-world application, actions would be broader and representative of the potential changes. For the sake of our lesson, we’ll stick to creating a specific action that adds ‘Halo’.
+
+
+Hint
+As a reminder, here’s the structure of an action object:
+
+const action = {
+  type: 'action type', //a descriptive string that specifies the type of action being done.
+  payload: 'additional data' //an optional value that has specific info required to perform the operation
+};
+
+Make sure to add the correct values for type and payload as specified in the instructions!
+
+2.
+If we can add a new song, you should be able to remove individual songs as well.
+
+Define an action named removeSong that represents removing a song from the playlist.
+
+It should have the following information:
+
+A type of 'songs/removeSong'
+A payload of 'Take Five', the title of the song to remove
+
+Stuck? Get a hint
+3.
+Last, let’s make it possible to wipe all songs.
+
+Define an action named removeAll that represents removing all songs from the playlist.
+
+It should have the following information:
+
+A type of 'songs/removeAll'
+
+Hint
+Not every action needs a payload property.
+
+const addNewSong = {
+  type: 'songs/addSong',
+  payload: 'Halo'
+}
+
+const removeSong = {
+  type: 'songs/removeSong',
+  payload: 'Take Five'
+}
+
+const removeAll = {
+  type: 'songs/removeAll'
+}
+
+Reducers
+So far, we’ve defined the state of our application and the actions representing requests to change that state, but we haven’t seen how these changes are carried out in JavaScript. The answer is a reducer.
+
+A reducer, or reducer function, is a plain JavaScript function that defines how the current state and an action are used in combination to create the new state.
+
+Here’s an example of a reducer function for a todo app:
+
+const initialState = [ 'Print trail map', 'Pack snacks', 'Summit the mountain' ];
+
+const todoReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'todos/addTodo': {
+      return [ ...state, action.payload];
+    }
+    case 'todos/removeAll': {
+      return [];
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
+There are a few things about this reducer that are true for all reducers:
+
+It’s a plain JavaScript function
+It defines the application’s next state given a current state and a specific action
+It returns a default initial state if no action is provided
+It returns the current state if the action is not recognized
+There are two intermediate JavaScript syntaxes used here:
+
+We use the equals sign = to supply a default value https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters for the state parameter.
+We use the spread operator (...) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax to copy the current state and any changed values into a new object, not the existing state argument. We’ll explain why in the next exercise.
+Instructions
+1.
+Let’s start building a reducer for our playlist application. This will allow us to update the state based on what action was taken.
+
+For this first task, it should:
+
+Be named reducer
+Accept state and action arguments
+Default state to initialState if no value is provided
+Use a switch statement on the action.type property
+Always return state as the default case
+
+Hint
+Here’s the outline for a reducer function:
+
+const appReducer = (state = initialState, action) => {
+  switch (action.type) {
+    default: {
+      return state;
+    }
+  }
+}
+
+2.
+Add a case for the 'songs/addSong' action type.
+
+If the action.type is 'songs/addSong', return a copy of the state object with the new song added.
+
+You can expect an action like this:
+
+{ 
+  type: 'songs/addSong', 
+  payload: 'Take Five'
+}
+
+
+Hint
+Make sure to return a new copy of the state object. Follow the to-do example in the narrative.
+
+3.
+Add a case for the 'songs/removeSong' action type.
+
+If the action.type is 'songs/removeSong', return a copy of the state object with the specified song removed. Use the array filter() method https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter.
+
+You can expect an action like this:
+
+{ 
+  type: 'songs/removeSong', 
+  payload: 'Respect'
+}
+
+
+Hint
+Use the filter() method https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter to make a copy of state without the specified song.
+
+The function passed to filter() should return true if the current song does not equal the action payload.
+
+For example, smallNums will include numbers that are less than 6:
+
+const nums = [0, 3, 2, 4, 10, 6];
+
+const smallNums = nums.filter(num => num < 6);
+
+// Define reducer here
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'songs/addSong': {
+      return [...state, action.payload]
+    }
+    case 'songs/removeSong': {
+      return state.filter(song => song !== action.payload);
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
+
+const initialState = [ 'Take Five', 'Claire de Lune', 'Respect' ];
+
+const addNewSong = {
+  type: 'songs/addSong',
+  payload: 'Halo'
+};
+
+const removeSong = {
+  type: 'songs/removeSong',
+  payload: 'Take Five'
+};
+
+const removeAll = {
+  type: 'songs/removeAll'
+}
+
+Rules of Reducers
+In the previous exercise, we wrote reducers that returned a new copy of the state rather than editing it directly. We did this to adhere to the rules of reducers provided by the Redux documentation https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers#rules-of-reducers:
+
+They should only calculate the new state value based on the state and action arguments.
+They are not allowed to modify the existing state. Instead, they must copy the existing state and make changes to the copied values.
+They must not do any asynchronous logic or have other “side effects”.
+By asynchronous logic or “side effects”, we mean anything that the function does aside from returning a value, e.g., logging to the console, saving a file, setting a timer, making an HTTP request, and generating random numbers.
+
+By adhering to these rules, Redux promotes a clean separation of concerns, improves the maintainability of the codebase, and allows for efficient debugging and testing.
+
+Instructions
+1.
+Let’s take a look at some reducers that are breaking the rules and practice implementing good usage patterns.
+
+The reducer in app1.js violates the first rule of reducers: line 9 calculates the new state based on something other than the current state and action arguments. This can introduce unpredictability into our code.
+
+Fix this by assuming that the song being added will be passed into the reducer as the payload of the action object.
+
+
+Hint
+If a reducer is using global variables to calculate its next state, then it is using something other than the passed arguments.
+
+After making your changes, the reducer should work given an action and function call like this:
+
+addGlobalAction = { 
+  type: 'songs/addGlobalSong', 
+  payload: 'We are the World' 
+};
+const newPlaylist = playlistReducer(undefined, addGlobalAction);
+
+2.
+The reducer in app2.js violates the second rule of reducers: it modifies the existing state. As a side effect of modifying the state directly, the state becomes less predictable. This makes it difficult to track the changes to our state throughout the lifecycle of our application.
+
+Fix this by using the spread operator ... to create a new copy of the state array and append the action.payload instead of using push() on the existing state. This way, we can keep the original state untouched.
+
+
+Hint
+Using state.push() modifies the existing state. Use the spread operator (...state) instead. Refer to mdn web docs https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax for a review on the spread operator.
+
+3.
+The reducer in app3.js violates the third rule of reducers: it has a side effect. Redux expects reducers to produce the same output given the same state and action. If there is a side effect, the initial state can differ each time which makes it unpredictable.
+
+Fix this by assuming that the random value will be provided as the payload of the action object.
+
+Note that this reducer is called with undefined. In this case, the default parameter will be used to set state.
+
+
+Hint
+Calling Math.random() is a side effect, making the reducer unpredictable and hard to test. If we test this reducer today, it will behave differently tomorrow!
+
+After making your changes, the reducer should work given an action and function call like this:
+
+const addRandomAction = { type: 'numbers/addRandom', payload: Math.random() };
+const newState = reducer(undefined, addRandomAction);
+
+app1.js
+// Reducer violates rule 1: 
+// They should only calculate the new state value based on the state and action arguments.
+ 
+const globalSong = 'We are the World';
+
+export const playlistReducer = (state = [], action) => {
+ switch (action.type) {
+   case 'songs/addGlobalSong': {
+     return [...state, action.payload];
+   }
+   default:
+     return state;
+ }
+}
+ 
+// Example call to reducer
+const state = [ 'Take Five', 'Claire de Lune', 'Respect' ];
+const addAction = { type: 'songs/addGlobalSong', payload: 'We are the World' };
+const newState = playlistReducer(state, addAction);
+
+app2.js
+// Reducer violates rule 2: 
+// They are not allowed to modify the existing state. 
+// Instead, they must copy the existing state and make changes to the copied values.
+
+export const todoReducer = (state = [], action) => {
+ switch (action.type) {
+   case 'todos/addTodo': {
+     return [...state, action.payload];
+   }
+   case 'todos/removeAll': {
+     return [];
+   }
+   default: {
+     return state;
+   }
+ }
+}
+
+// Example call to reducer
+const state = [ 'Print trail map', 'Pack snacks', 'Summit the mountain' ];
+const addTodoAction = { type: 'todos/addTodo', payload: 'Descend' };
+const newState = todoReducer(state, addTodoAction);
+
+app3.js
+ // Reducer violates rule 3:
+ // They must not do any asynchronous logic or have other “side effects”.
+
+const initialState = [0, 1, 2];
+
+export const reducer = (state = initialState, action) => {
+ switch (action.type) {
+   case 'numbers/addRandom': {
+     return [...state, action.payload];
+   }
+   default: {
+     return state;
+   }
+ }
+}
+ 
+// Example call to reducer
+const randomAction = { type: 'numbers/addRandom', payload: Math.random() };
+const newState = reducer(undefined, randomAction);
+
+Immutable Updates and Pure Functions
+In programming, the three rules of reducers in Redux can be described more broadly. These rules state that reducers must perform immutable updates and be pure functions.
+
+When a function makes immutable updates to its arguments, it doesn’t directly modify the original argument. Instead, it creates a copy and modifies that copy. This process is referred to as immutable updating because the function doesn’t alter or mutate the original arguments.
+
+This function mutates its argument:
+
+const mutableUpdater = (obj) => {
+  obj.completed = !obj.completed;
+  return obj;
+}
+
+const task = { text: 'do dishes', completed: false };
+const updatedTask = mutableUpdater(task);
+console.log(updatedTask); 
+// Prints { text: 'do dishes', completed: true };
+
+console.log(task); 
+// Prints { text: 'do dishes', completed: true };
+
+Meanwhile, this function “immutably updates” its argument:
+
+const immutableUpdater = (obj) => {
+  return {
+    ...obj,
+    completed: !obj.completed
+  }
+}
+
+const task = { text: 'iron clothes', completed: false };
+const updatedTask = immutableUpdater(task);
+console.log(updatedTask); 
+// Prints { text: 'iron clothes', completed: true };
+
+console.log(task); 
+// Prints { text: 'iron clothes', completed: false };
+
+By copying the contents of the argument obj into a new object ({...obj}) and updating the completed property of the copy, the argument obj will remain unchanged.
+
+Note that plain strings, numbers, and booleans are immutable in JavaScript, so we can just return them without making a copy:
+
+const immutator = (num) => num + 1;
+const x = 5;
+const updatedX = immutator(x);
+
+console.log(x, updatedX); // Prints 5, 6
+
+If a function is pure, then it will always have the same outputs given the same inputs.
+
+This is a combination of rules 1 and 3:
+
+Reducers should only calculate the new state value based on the state and action arguments.
+Reducers must not do any asynchronous logic or other “side effects”.
+In this example, the function is not a pure function because its returned value depends on the status of a remote endpoint.
+
+const addItemToList = (list) => {
+  let item;
+  fetch('https://anything.com/endpoint')
+    .then(response => {
+      if (!response.ok) {
+        item = {};
+      }
+      
+      item = response.json();
+   });
+
+   return [...list, item];  
+};
+
+The function can be made pure by pulling the fetch() statement outside of the function.
+
+let item;
+  fetch('https://anything.com/endpoint')
+    .then(response => {
+      if (!response.ok) {
+        item = {};
+      }
+      
+      item = response.json();
+   });
+
+const addItemToList = (list, item) => {
+    return [...list, item];
+};
+
+Instructions
+1.
+The function removeItemAtIndex() mutates its arguments because it uses the array splice() function. Rewrite it using the slice() method https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice and the spread operator https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax.
+
+If done correctly, the output should still be:
+
+[ 'a', 'c', 'd' ]
+
+
+Hint
+splice() changes the array it is called upon. slice() and the spread operator can copy the contents of an array into a new array.
+
+Here’s an example that cuts out the third item in a list:
+
+const removeItemAtThree = (list) => {
+  return [
+    ...list.slice(0,3),
+    ...list.slice(4)
+  ];
+};
+
+2.
+The function generateUniqueId() is impure because it relies on the internal state of the system (current timestamp and random number generation) rather than accepting those values as parameters. Remember, a pure function’s output is purely determined by its inputs only!
+
+Make generateUniqueId() pure by rewriting it to explicitly accept the timestamp and random values as parameters. Then, call the timestamp and number generation functions inside of App() instead, and pass it to generateUniqueId().
+
+
+Hint
+Instead of making timestamp and random inside the function:
+
+Change the generateUniqueId() reducer to accept timestamp and random as parameters
+Call Date.now() and Math.floor(Math.random() * 1000) externally
+Pass it to generateUniqueId()
+
+import React from 'react';
+
+//Modify mutable function
+export const removeItemAtIndex = (list, index) => {
+ return [...list.slice(0, index), ...list.slice(index + 1, list.length)];
+};
+
+//Modify impure function
+const timestamp = Date.now();
+const random = Math.floor(Math.random() * 1000);
+export const generateUniqueId = (timestamp, random) => {
+  return timestamp + random;
+};
+
+const App = () => {
+  //Make your function calls here
+  const result = removeItemAtIndex(['a', 'b', 'c', 'd'], 1);
+  const uniqueId = generateUniqueId();
+  
+  //Don't touch the content below this!
+  return (
+    <div>
+      <h1>Remove Item at Index</h1>
+      <p>Output: {result.join(', ')}</p>
+      <h1>Unique ID:</h1>
+      <p>Output: {uniqueId}</p>
+    </div>
+  );
+};
+
+export default App;
+
+Store
+So far we have covered state, actions, reducers, and how they participate in the one-way data flow. Where does all of this take place?
+
+Redux uses a special object called the store. The store serves as a container for the state, and it is the centerpiece of your application and the single source of truth. The store is in charge of facilitating the dispatching of actions, and triggering the reducer when actions are dispatched. In most Redux applications, there is typically only one store.
+
+Let’s rephrase the data flow using the new term:
+
+The store initializes the state with a default value.
+The view displays that state to the user.
+When a user interacts with the view, such as clicking a button, an action is dispatched to the store.
+The store’s reducer combines the dispatched action and the current state to determine the next state.
+The view is updated to display the new state.
+While we won’t be writing any code for the store during this lesson, it is essential that you understand the state, actions, reducers, and their role in the one-way data flow.
+
+Instructions
+Follow the diagram’s one-way data flow. Notice how the store contains the reducer and state. It receives actions and calls the reducer with the action and current state.
+
+Review
+Congratulations! In this lesson, you’ve built a strong conceptual foundation of Redux and built a state object, some actions, and a reducer along the way. Here’s what else you learned:
+
+Redux is a library for managing and updating application state based on the Flux architecture
+
+Redux makes code more predictable, testable, and maintainable by consolidating state in a single object. Components are just given data to render and can request changes using events called actions.
+
+In a Redux application, data flows in one direction: from state to view to action back to state, and so on.
+
+State is the current information behind a web application.
+
+An action is an object describing an event in the application. It must have a type property and it typically has a payload property as well.
+
+A reducer is a function that determines the application’s next state given a current state and a specific action. It returns a default initial state if none is provided and returns the current state if the action is not recognized
+
+A reducer must follow these three rules:
+
+They should only calculate the new state value based on the existing state and action.
+They are not allowed to modify the existing state. Instead, they must copy the existing state and make changes to the copied values.
+They must not do any asynchronous logic or other “side effects”.
+In other words, a reducer must be a pure function, and it must update the state immutably.
+
+The store is a container for state, it provides a way to dispatch actions, and it calls the reducer when actions are dispatched. Typically there is only one store in a Redux application.
+
+Instructions
+Take another look at the diagram depicting data flow in a Redux application. Make sure you can explain every part of this diagram before moving on.
