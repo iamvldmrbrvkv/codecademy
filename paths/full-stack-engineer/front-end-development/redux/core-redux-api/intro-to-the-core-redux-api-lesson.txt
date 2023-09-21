@@ -1,0 +1,705 @@
+What is the Redux API?
+In this lesson, you will learn how to apply the core concepts of Redux to a real Redux application.
+
+Remember, Redux applications are built upon a one-way flow of data model and are managed by the store:
+
+The state is the set of data values that describes the application. It is used to render the user interface (UI).
+Users interact with the UI, which dispatches actions to the store. An action is an object that expresses a desired change to the state.
+The store generates its next state using a reducer function, which receives the most recent action and the current state as inputs.
+Finally, the UI is re-rendered based on the new state of the store, and the entire process can begin again.
+Building an application that follows the core principles of Redux can be done without external libraries. However, the dedicated Redux library https://redux.js.org/ provides some very useful tools for handling the most common aspects of building a Redux application and helps ensure that the core Redux principles are enforced.
+
+This lesson will focus on creating a basic Redux application with the createStore() method from the Redux API and the following related store methods:
+
+store.getState()
+store.dispatch(action)
+store.subscribe(listener)
+Note: The store method store.replaceReducer(nextReducer) is an advanced method and will not be covered in this course.
+
+Instructions
+Before continuing on to the rest of the lesson, review the contents of the Core Concepts page of the Redux documentation https://redux.js.org/introduction/core-concepts in the connected browser.
+
+To get the most out of the docs, expand the browser window to full screen.
+
+Create a Redux Store
+Every Redux application uses a reducer function that describes which actions can update the state and how those actions lead to the next state.
+
+For example, suppose you wanted to build an application for a light switch. Its reducer might look like this:
+
+const initialState = 'on';
+const lightSwitchReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'toggle':
+      return state === 'on' ? 'off' : 'on';
+    default:
+      return state;
+  }
+}
+
+This reducer handles a single action type 'toggle' and returns the next state of the store: 'on' if it had been 'off' and vice-versa. If an unrecognized action is received, the current state of the store is returned.
+
+The programmer could manually execute the reducer with the current state of the store and the desired action to perform like so:
+
+let state = 'on';
+state = lightSwitchReducer(state, { type: 'toggle' });
+console.log(state); // Prints 'off'
+
+However, this is the main responsibility of the store. The store is an object that enforces the one-way data flow model that Redux is built upon. It holds the current state inside, receives action dispatches, executes the reducer to get the next state, and provides access to the current state for the UI to re-render.
+
+Redux exports a valuable helper function for creating this store object called createStore(). The createStore() helper function has a single argument, a reducer function.
+
+To create a store with lightSwitchReducer, you could write:
+
+import { createStore } from 'redux'
+
+const initialState = 'on';
+const lightSwitchReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'toggle':
+      return state === 'on' ? 'off' : 'on';
+    default:
+      return state;
+  }
+}
+
+const store = createStore(lightSwitchReducer);
+
+For the remainder of this lesson, you will be using Redux to build a simple counter application in which the state is a single number.
+
+In the code editor, you will find the initialState value as well as countReducer, which describes how the state can be updated in response to an 'increment' action.
+
+Instructions
+1.
+First, import the createStore method from redux.
+
+
+Hint
+To import the createStore method from Redux, you’ll write a line that looks like this:
+
+import { createStore }  from 'redux';
+
+2.
+Now, below the countReducer function, declare and export a constant called store.
+
+Then, call createStore() with countReducer as the argument. Assign the returned value to store.
+
+
+Hint
+The syntax for using createStore() looks like this:
+
+export const store = createStore(reducerFunction);
+
+Dispatch Actions to the Store
+The store object returned by createStore() provides a number of useful methods for interacting with its state as well as the reducer function it was created with.
+
+The most commonly used method, store.dispatch(), can be used to dispatch an action to the store, indicating that you wish to update the state. Its only argument is an action object, which must have a type property describing the desired state change.
+
+const action = { type: 'actionDescriptor' }; 
+store.dispatch(action);
+
+Each time store.dispatch() is called with an action object, the store’s reducer function will be executed with the same action object. Assuming that the action.type is recognized by the reducer, the state will be updated and returned.
+
+Let’s see how this works in the lightswitch application from the last exercise:
+
+import { createStore } from 'redux';
+
+const initialState = 'on';
+const lightSwitchReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'toggle':
+      return state === 'on' ? 'off' : 'on';
+    default:
+      return state;
+  }
+}
+
+const store = createStore(lightSwitchReducer);
+
+console.log(store.getState()); // Prints 'on'
+
+store.dispatch({ type: 'toggle' }); 
+console.log(store.getState()); // Prints 'off'
+
+store.dispatch({ type: 'toggle' });
+console.log(store.getState()); // Prints 'on'
+
+In this example, you can also see another store method, store.getState(), which returns the current value of the store’s state. Printing its value between each dispatched action allows us to see how the store’s state changes.
+
+Internally, when the store executes its reducer, it uses store.getState() as the state argument. Though you won’t see it, you can imagine that when an action is dispatched like this…
+
+store.dispatch({ type: 'toggle'});
+
+…the store calls the reducer like this:
+
+lightSwitchReducer(store.getState(), { type: 'toggle' });
+
+Instructions
+1.
+Let’s get back to our counter application. The count starts at 0 and we want to increment it up to 2.
+
+At the bottom of store.js dispatch two actions with a type of 'increment' using the store.dispatch() method.
+
+
+Hint
+To dispatch an action, you can use the following syntax:
+
+store.dispatch({ type: 'actionType' })
+
+Make sure that the type value should match the name of the action in the reducer. In this case, the type of the action should be 'increment'.
+
+2.
+At the bottom of store.js, confirm that the current state of the store is 2 by printing out the current value of the state to the console.
+
+
+Hint
+To get the current state of the store, use store.getState()
+
+3.
+Let’s modify the countReducer function so that it can handle 'decrement' actions as well.
+
+Add an additional case to the countReducer function that handles 'decrement' action types and returns state - 1.
+
+
+Hint
+Your countReducer function should look like this:
+
+const countReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1;
+    case 'decrement':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+4.
+Now, let’s dispatch some 'decrement' action to the store.
+
+At the bottom of store.js , dispatch 3 actions with a type of 'decrement'.
+
+
+Hint
+To dispatch an action of any given type you can write:
+
+store.dispatch({ type: 'actionType' });
+
+5.
+Finally, print to the console the final value of store.getState(). The final state should be -1.
+
+import { createStore } from 'redux';
+
+const initialState = 0;
+const countReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1;
+    case 'decrement':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+export const store = createStore(countReducer);
+
+// Dispatch your actions here.
+store.dispatch({type: 'increment'});
+store.dispatch({type: 'increment'});
+console.log(store.getState());
+store.dispatch({type: 'decrement'});
+store.dispatch({type: 'decrement'});
+store.dispatch({type: 'decrement'});
+console.log(store.getState());
+
+Action Creators
+As you saw in the last exercise, you are likely to dispatch actions of the same type multiple times or from multiple places. Typing out the entire action object can be tedious and creates opportunities to make an error.
+
+For example, in the light switch application, whose reducer accepts 'toggle' actions to turn the light 'on' or 'off', you might write:
+
+store.dispatch({Type:'toggle'});
+store.dispatch({type:'toggel'});
+store.dispatch({typo:'toggle'});
+
+Did you spot the errors?
+
+In most Redux applications, action creators are used to reduce this repetition and to provide consistency. An action creator is simply a function that returns an action object with a type property. They are typically called and passed directly to the store.dispatch() method, resulting in fewer errors and an easier-to-read dispatch statement.
+
+The above code could be rewritten using an action creator called toggle() like so:
+
+const toggle = () => {
+  return { type: "toggle" };
+}
+store.dispatch(toggle()); // Toggles the light to 'off'
+store.dispatch(toggle()); // Toggles the light back to 'on'
+store.dispatch(toggle()); // Toggles the light back to 'off'
+
+Though not necessary in a Redux application, action creators save us the time needed to type out the entire action object, reduce the chances of making a typo, and improve the readability of our application.
+
+Often, before the reducer of an application is even written, Redux programmers will write action creators as a way of planning out which actions will be available to dispatch to the store.
+
+Instructions
+1.
+Let’s add some action creators into the counter application. The two actions that the countReducer can handle are 'increment' and 'decrement'.
+
+First, at the top of the store.js file, create and export an action creator function called increment() that returns an object with a type: 'increment' property.
+
+
+Hint
+A generic action creator function may look like this:
+
+export const actionType = () => {
+  return { type: 'actionType' }; 
+}
+
+2.
+Well done! Now, after the increment() action creator and before the countReducer, add in and export a second action creator named decrement() that returns an action object with the 'decrement' action type.
+
+
+Hint
+If increment() action creator looks like this…
+
+export const increment = () => {
+  return { type: 'increment' };
+}
+
+…then what would the decrement() action creator look like?
+
+3.
+In store.js, actions are being dispatched to the store like so:
+
+store.dispatch({ type: 'increment' });
+store.dispatch({ type: 'decrement' });
+
+For each existing call to store.dispatch(), replace the typed-out action objects with function calls to the appropriate action creator.
+
+
+Hint
+Action creators can be passed directly to the store.dispatch() method as an argument:
+
+store.dispatch(actionCreator());
+
+Make sure to replace all 5 store.dispatch() arguments!
+
+import { createStore } from 'redux';
+
+// Create your action creators here.
+export const increment = () => {
+  return { type: 'increment' };
+}
+export const decrement = () => {
+  return { type: 'decrement' };
+}
+const initialState = 0;
+const countReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1;
+    case 'decrement':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+const store = createStore(countReducer);
+
+// Modify the dispatches below.
+store.dispatch(increment());
+store.dispatch(increment());
+console.log(store.getState());
+
+store.dispatch(decrement());
+store.dispatch(decrement());
+store.dispatch(decrement());
+console.log(store.getState());
+
+Respond to State Changes
+In a typical web application, user interactions that trigger DOM events https://developer.mozilla.org/en-US/docs/Web/Events ("click", "keydown", etc…) can be listened for and responded to using an event listener https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener.
+
+Similarly, in Redux, actions dispatched to the store can be listened for and responded to using the store.subscribe() method. This method accepts one argument: a function, often called a listener, that is executed in response to changes to the store‘s state.
+
+const reactToChange = () => console.log('change detected!');
+store.subscribe(reactToChange);
+
+In this example, each time an action is dispatched to the store, and a change to the state occurs, the subscribed listener, reactToChange(), will be executed.
+
+Sometimes it is useful to stop the listener from responding to changes to the store, so store.subscribe() returns an unsubscribe function.
+
+We can see this in action in the light switch application:
+
+// lightSwitchReducer(), toggle(), and store omitted...
+
+const reactToChange = () => {
+  console.log(`The light was switched ${store.getState()}!`);
+}
+const unsubscribe = store.subscribe(reactToChange);
+
+store.dispatch(toggle());
+// reactToChange() is called, printing:
+// 'The light was switched off!'
+
+store.dispatch(toggle());
+// reactToChange() is called, printing:
+// 'The light was switched on!'
+
+unsubscribe(); 
+// reactToChange() is now unsubscribed
+
+store.dispatch(toggle());
+// no print statement!
+
+console.log(store.getState()); // Prints 'off'
+
+In this example, the listener function reactToChange() is subscribed to the store.
+Each time an action is dispatched, reactToChange() is called and prints the current value of the light switch. It is common for callbacks subscribed to the store to use store.getState() inside them.
+After the first two dispatched actions, unsubscribe() is called causing reactToChange() to no longer be executed in response to further dispatches made to store.
+Note: It is not always required to use the unsubscribe() function returned by store.subscribe(), though it is useful to know that it exists.
+
+Now, take a look at store.js in the code editor. You will see that a few actions have been dispatched to the store of the counter application. Suppose you wanted to print the current value of store.getState() each time the state changes. While you could write something like this…
+
+store.dispatch(decrement());
+console.log(`The count is ${store.getState()}`);
+store.dispatch(increment());
+console.log(`The count is ${store.getState()}`);
+store.dispatch(increment());
+console.log(`The count is ${store.getState()}`);
+
+…we know that this approach is repetitive. Instead, you can subscribe a change listener to print out the current state in response to state changes automatically.
+
+Instructions
+1.
+The first thing to do is to define a state change listener. You’ll notice that we’ve imported the store and increment() action creator from store.js.
+
+In menu.js, define a function called printCountStatus() with no arguments. It should print to the console the following message:
+
+console.log(`The count is ${REPLACE_WITH_CURRENT_STATE}`);
+
+Make sure to replace REPLACE_WITH_CURRENT_STATE with the proper code for getting the current state from the store.
+
+
+Hint
+Your printCountStatus() function should look like this:
+
+const printCountStatus = () => {
+  console.log(`The count is ${store.getState()}`);
+}
+
+2.
+Now that you have a change listener function, subscribe it to the store so that it is called each time the state changes.
+
+If done correctly, you should see this in the console output:
+
+The count is -1
+The count is 0
+The count is 1
+
+
+Hint
+To subscribe a change listener to the store, you can write:
+
+Make sure not to call the listener when you pass it to store.subscribe()!
+
+store.subscribe(listener);
+
+main.js
+import { store, increment, decrement } from "./store"
+
+// Define your change listener function here.
+const printCountStatus = () => {
+  console.log(`The count is ${store.getState()}`);
+}
+// Subscribe change listener function to the store here
+store.subscribe(printCountStatus);
+store.dispatch(decrement()); // store.getState() === -1
+store.dispatch(increment()); // store.getState() === 0
+store.dispatch(increment()); // store.getState() === 1
+
+store.js
+import { createStore } from 'redux';
+
+export const increment = () => {
+  return { type: 'increment' }
+}
+
+export const decrement = () => {
+  return { type: 'decrement' }
+}
+
+const initialState = 0;
+const countReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1;
+    case 'decrement':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+export const store = createStore(countReducer);
+
+Connect the Redux Store to a UI
+Up until now, you have built a working counter application using Redux that lacks a proper user interface (UI). Let’s change that!
+
+Redux and React can be used together to create a highly interactive application. Although we’ll be using React, Redux is not just limited to React; it can be used within the context of any UI framework. Nevertheless, Redux is most commonly paired with React. This makes sense, considering that React and Redux were both developed by engineers at Facebook https://en.wikipedia.org/wiki/Redux_(JavaScript_library)#History.
+
+The UI for our counter application should display the current count number and allow the user to increment or decrement this value using the buttons provided. Take a look at the connected web browser window, and you can see that the elements for such an interface are present, but they haven’t been connected to the Redux store yet.
+
+Connecting a Redux store with any UI requires a few consistent steps, regardless of how the UI is implemented:
+
+Create a Redux store
+Render the initial state of the application.
+Subscribe to updates. Inside the subscription callback:
+Get the current store state
+Select the data needed by this piece of UI
+Update the UI with the data
+Respond to UI events by dispatching Redux actions
+These same steps are followed when building an interface using React, Angular, or jQuery. For this exercise, we’ve set up a simple React application. Our focus will be on updating a UI using a Redux store so we won’t be covering some of the interactions between React and Redux in this exercise (we’ll dive deeper in the next exercise).
+
+Now, open up store.js, where you will find the pieces of Redux code that you have built throughout this lesson: the action creators increment() and decrement(), the reducer countReducer, and the store that ties it all together.
+
+In App.js, you’ll notice:
+
+We’ve imported the action creators, increment and decrement.
+An App component that expects two props, state and dispatch, which be passed in from the store.
+The App component renders a <p> element and two <button> elements. It also contains a couple of click handlers: incrementorClicked and decrementorClicked.
+Finally, in index.js:
+
+The store is imported.
+A render function is defined and called.
+Using the App component and render function will allow us to plug the Redux store into the UI. Let’s begin.
+
+Instructions
+1.
+If you look at the browser, it should display the current value of the store, but currently, it is showing the message “Waiting for current state.”
+
+In App.js, let’s change the content of the <p> element to the state prop.
+
+Note that if you click “Run”, the UI won’t display the actual state of the store yet. We’ll fix that in the next step.
+
+
+Hint
+Your code should look like this:
+
+function Component({ name }) {
+  return (
+    <p>{name}</p>
+  )
+}
+
+2.
+Now that <p> element is set up to render the state prop, lets pass in the store state and dispatch function as props to App.
+
+In index.js, in the body of render(), add the state and dispatch props to the App component in root.render(). The state prop should be set to the store‘s current state and the dispatch prop should be set to the store‘s dispatch function (Do not call the function).
+
+Click “Run” and you should see “0” displayed in the UI.
+
+
+Stuck? Get a hint
+3.
+In App.js, the App component defines an incrementerClicked() function which will be called each time the incrementer button is clicked by the user. When this happens, the store should be notified, and the state should be incremented by 1.
+
+Inside incrementerClicked(), use the dispatch prop and the appropriate action creator to tell the store to increase its state by 1.
+
+Note the “+” button still won’t work until we subscribe to state changes. We’ll do this in the next step.
+
+
+Hint
+To dispatch an action to the store using store.dispatch() and an actionCreator() function, write:
+
+store.dispatch(actionCreator());
+
+You’ll want to use the dispatch prop and increment() action creator for this one!
+
+4.
+Pressing the incrementer button will send a { type: 'increment' } action object to the store which increases the value of the state to 1. But, the UI doesn’t seem to be updating.
+
+In order for the UI to react to changes to the state of the store, you have to subscribe a change listener to the store using store.subscribe()! Let’s open index.js to get started.
+
+Below the declaration of the render() function, call store.subscribe() and pass in render as the argument so that the UI re-renders each time the state of the store changes.
+
+Click “Run” and in the browser, if you click on “+”, you’ll notice the count increase. Note that the “-“ button does not work yet. We’ll fix that in the next step.
+
+
+Hint
+To subscribe a change listener, you can write:
+
+store.subscribe(listener);
+
+5.
+Nicely done! Press the incrementer button and you should see the counter increase in the UI! All that’s left to do is get the decrementer button’s event handler to work.
+
+Within decrementerClicked(), dispatch a "decrement" type action to the store.
+
+
+Hint
+To dispatch a decrement() action to the store, you can write:
+
+dispatch(decrement());
+
+App.js
+import React from "react";
+import { increment, decrement } from "./store";
+
+function App({ state, dispatch}) {
+  // Dispatch increment action
+  const incrementerClicked = () => {
+    dispatch(increment());
+  }
+  // Dispatch decrement action
+  const decrementerClicked = () => {
+    dispatch(decrement());
+  }
+
+  return(
+    <main>
+      <p id='counter'>{state}</p>
+      <button id='incrementer' onClick={incrementerClicked}>+</button>
+      <button id='decrementer' onClick={decrementerClicked}>-</button>
+    </main>
+  )
+}
+
+export default App;
+
+store.js
+import { createStore } from 'redux';
+
+// Action Creators
+export function increment() { 
+  return {type: 'increment'}
+}
+
+export function decrement() { 
+  return {type: 'decrement'}
+}
+
+// Reducer / Store
+const initialState = 0;
+const countReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1; 
+    case 'decrement':
+      return state - 1; 
+    default:
+      return state;
+  }
+};  
+export const store = createStore(countReducer);
+
+index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main id="app"/>
+	<script src="https://content.codecademy.com/courses/React/react-18-course-bundle.min.js"></script>
+  <script src="index.compiled.js"></script>
+</body>
+</html>
+
+index.js
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.js"
+import { store } from "./store.js"
+
+const root = createRoot(document.getElementById("app"));
+
+// Store State Change Listener
+const render = () => {
+  root.render(<App state={store.getState()} dispatch={store.dispatch} />);
+}
+
+render();
+
+// Subscribe to state changes
+store.subscribe(render);
+
+Review
+Congratulations! You were able to apply the core concepts of the Redux framework by implementing an application using the Redux library.
+
+By completing this lesson, you are now able to:
+
+Import the createStore() helper function from the 'redux' library.
+Create a store object that holds the entire state of your Redux application using createStore().
+Get the current state of the store using store.getState().
+Dispatch actions to the store using store.dispatch(action).
+Create action creators to reduce the repetitive creation of action objects.
+Register a change listener function to respond to changes to the store using store.subscribe(listener).
+Recognize the pattern for connecting Redux to any user interface.
+Throughout this lesson, you may have thought that Redux adds a lot of unnecessary complexity to these simple applications. We implemented Redux in a very basic way, which is useful for learning but not how it’s done in the real world.
+
+Redux shines when it is used in applications with many features and a lot of data, where having a centralized store to keep it all organized is advantageous. In the next lesson, you will learn how to build and organize Redux applications with complex state.
+
+store.js
+import React from 'react';
+import { createRoot } from 'react-dom';
+import { createStore } from 'redux';
+
+// REDUX CODE
+///////////////////////////////////
+
+const increment = () => {
+  return {type: 'increment'} 
+}
+
+const decrement = () => { 
+  return {type: 'decrement'}
+}
+
+const initialState = 0;
+const counterReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1;
+    case 'decrement':
+      return state - 1;
+    default:
+      return state; 
+  }
+} 
+
+const store = createStore(counterReducer);
+
+// REACT CODE
+///////////////////////////////////
+const root = createRoot(document.getElementById('root'));
+const render = () => {
+  root.render(
+    <CounterApp 
+      state={store.getState()}
+    />,
+  )
+}
+render();
+store.subscribe(render);
+
+function CounterApp(props) {
+  
+  const state = props.state;
+
+  const onIncrementButtonClicked = () => {
+    store.dispatch(increment());
+  }
+ 
+  const onDecrementButtonClicked = () => {
+    store.dispatch(decrement());
+  }
+  
+  return (   
+    <div>
+      <h1> {state} </h1>
+      <button onClick={onIncrementButtonClicked}>+</button> 
+      <button onClick={onDecrementButtonClicked}>-</button>
+    </div>
+  )
+}
