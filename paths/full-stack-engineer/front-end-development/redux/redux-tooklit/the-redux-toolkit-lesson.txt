@@ -1,0 +1,554 @@
+Intro to Redux Toolkit
+You’ve probably noticed that working with Redux can become quite verbose and complex. If you’re overwhelmed by all the moving parts and details to remember, you’re not alone.
+
+Common issues and grievances that people encounter when working with Redux include:
+
+“Setting up a Redux store is overly complex.”
+“I have to add a lot of packages to get Redux to do anything useful.”
+“Redux requires too much boilerplate code.”
+“Writing immutable updates is too error-prone.”
+Fortunately, the Redux team created Redux Toolkit https://redux-toolkit.js.org/ to address these challenges!
+
+Redux Toolkit contains packages and functions tailored for constructing a Redux application. It incorporates best practices, simplifies most Redux tasks, prevents common mistakes, and makes it easier to write Redux applications.
+
+Because of how effective it has proven to be at addressing the concerns of the verbose “hand-written” logic of the past, Redux Toolkit has become the preferred way to write Redux application logic.
+
+In this lesson, we’ll dive into the powerful features of the Redux Toolkit that will enable you to refactor and simplify your existing Redux logic. You’ll test out two essential methods, createSlice() and configureStore(), and learn how to integrate them into your application. To explore the full array of methods that Redux Toolkit offers, see the Redux Toolkit docs https://redux-toolkit.js.org/.
+
+If you want to test out the code locally while working through this lesson, use this command to install the Redux Toolkit package into your application:
+
+npm install @reduxjs/toolkit
+
+Instructions
+In the code editor, take a moment to look at the contents of favoriteRecipesSlice.js and store.js. Familiarize yourself with the reducer, action creators, selectors, and the store object.
+
+"Slices" of State
+Before we dive deeper into this lesson, let’s refresh our memory about what we’re referring to when talking about a “slice” of state. A “slice” of state is a segment of the global state that focuses on a particular feature. It encompasses the related data, along with its associated reducers, actions, and selectors. Think of it as a self-contained unit dedicated to managing a specific part of your application’s functionality.
+
+In the following example, state.todos and state.visibilityFilter represent distinct slices.
+
+const state = {
+  todos: [
+    {
+      id: 0,
+      text: "Learn Redux-React",
+      completed: true,
+    },
+    {
+      id: 1,
+      text: "Learn Redux Toolkit",
+      completed: false,
+    }
+  ], 
+  visibilityFilter: "SHOW_ALL"
+}
+
+For each slice of the state, we usually define a corresponding reducer. These are known as “slice reducers.” Each reducer is akin to a worker solely responsible for managing the state of its respective slice. This modular approach simplifies complex applications and makes debugging a breeze.
+
+Let’s explore the slice reducer for the state.todos slice:
+
+/* todosSlice.js  */
+const addTodo = (todo) => {
+  return {
+    type: 'todos/addTodo',
+    payload: todo
+  }
+}
+
+const toggleTodo = (todo) => {
+  return {
+    type: 'todos/toggleTodo',
+    payload: todo
+  }
+}
+
+const todos = (state = [], action) => {
+ switch (action.type) {
+   case 'todos/addTodo':
+     return [
+       ...state,
+       {
+         id: action.payload.id,
+         text: action.payload.text,
+         completed: false
+       }
+     ]
+   case 'todos/toggleTodo':
+     return state.map(todo =>
+       todo.id === action.payload.id ? { ...todo, completed: !todo.completed } : todo
+     )
+   default:
+     return state
+ }
+}
+
+Notice that this file exclusively handles the state.todos data and doesn’t interact with the state.visibilityFilter slice. Managing state one slice at a time enables us to more effectively handle the distinct logic of each individual part of our application.
+
+While this example shows reducer logic and action creators together, in larger projects, we often divide these parts into separate files.
+
+There’s a lot of code written just to have some reducers and action creators. Let’s now visit Redux Toolkit’s createSlice() function and see how it streamlines this process.
+
+Instructions
+1.
+At the top of favoriteRecipesSlice.js in the code editor, import createSlice() using a named import from the '@reduxjs/toolkit' library.
+
+
+Hint
+To import the createSlice() method from Redux Toolkit, you’ll write a line that looks like this at the top of the file:
+
+import { createSlice }  from '@reduxjs/toolkit';
+
+Refactoring with createSlice()
+Now that we’ve looked at one way to define a slice reducer and the associated action creators, we can look into using createSlice() to streamline it. Here’s what our code looked like before:
+
+/* todosSlice.js  */
+const addTodo = (todo) => {
+ // logic omitted...
+}
+
+const toggleTodo = (todo) => {
+  // logic omitted...
+}
+
+const todos = (state = [], action) => {
+  // logic omitted...
+}
+
+From this, we can see that traditional Redux requires writing separate action types, action creators, and reducers. createSlice() streamlines this process by generating all of these based on a single configuration object.
+
+createSlice has one parameter, a configuration object. The object has the following properties:
+
+name: A string that identifies the name of the slice. createSlice() uses this to generate the action types and action creators.
+initialState: The initial state value for the reducer.
+reducers: An object where each key represents an action type, a string identifier for the action. The associated method, known as a “case reducer,” describes how the state should be updated when that action is triggered. These reducers function as sets of instructions, directing the state changes based on the type of action dispatched.
+Let’s see this in action! Review the following example:
+
+/* todosSlice.js */
+//Configuration object for createSlice()
+const options = {
+ name: 'todos', //Name of slice
+ initialState: [], //Initial state of slice
+ reducers: {
+   //Reducer for "addTodo" action
+   addTodo: (state, action) => {
+     return [
+       ...state,
+       {
+         id: action.payload.id,
+         text: action.payload.text,
+         completed: false
+       }
+     ]
+   },
+   //Reducer for "toggleTodo" action
+   toggleTodo: (state, action) => {
+     return state.map(todo =>
+       (todo.id === action.payload.id) ? { ...todo, completed: !todo.completed } : todo
+     )
+   }
+ }
+}
+
+const todosSlice = createSlice(options);
+
+In this example, a configuration object is created with the name options. It is passed to createSlice() to generate components for managing a slice. Using options, createSlice() generates a slice:
+
+named todos,
+initialized with an empty array as its initial state,
+equipped with reducers associated with two action names: addTodo and toggleTodo,
+equipped with action creators automatically generated for each reducer function defined in the reducers object. These generated action creators are named after the reducer keys.
+We can see here that using createSlice() drastically reduces the amount of boilerplate code you need to write!
+
+Over the new few exercises, we’ll explore createSlice() even more deeply. For now, let’s practice calling createSlice().
+
+Instructions
+1.
+Take a look at oldFavoriteRecipesSlice.js to see the old way of creating a reducer and action creators for the state.favoriteRecipes slice. Your job is to rewrite this code using createSlice within favoriteRecipesSlice.js.
+
+First, createSlice() will need an options object to be passed in as an argument. At the top of the file and below the import statements, declare a variable called options. For now, assign to it an empty object.
+
+
+Hint
+Remember, the code for creating a slice using createStore looks like this:
+
+const options = {
+  // name, initialState, and reducers are defined here.
+}
+
+const todosSlice = createSlice(options);
+
+2.
+Next, supply the configuration object options with the following properties and corresponding values:
+
+name: 'favoriteRecipes'
+initialState: an empty array
+reducers: an empty object (for now)
+
+Hint
+The options object passed to createSlice() should look like this:
+
+const options = {
+  name: 'sliceName',
+  initialState: someValue,
+  reducers: {
+    // case reducers go here.
+  }
+}
+
+3.
+The options.reducers property should hold an object containing the case reducers for the slice.
+
+Each value in the options.reducers object should be a function whose name corresponds to an action type that the slice can handle.
+Each case reducer should have two parameters, state and action, and return the next state.
+Using the logic defined in the oldFavoriteRecipesSlice.js file to guide you, add the two methods below to the options.reducers object:
+
+addRecipe
+removeRecipe
+
+Hint
+The following reducer that uses a switch statement…
+
+const counterReducer = (state = 0, action) => {
+  switch(action.type) {
+    case 'increment': 
+      return state + 1;
+    case 'decrement': 
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+…can be rewritten with case reducers like so:
+
+const options = {
+  name: 'counter',
+  initialState: 0,
+  reducers: {
+    increment: (state, action) => {
+      return state + 1;
+    },
+    decrement: (state, action) => {
+      return state - 1;
+    }  
+  } 
+}
+
+4.
+Well done! The final step is to call createSlice() with the options object as an argument and export the result.
+
+Below the options object,
+
+Declare a new variable called favoriteRecipesSlice
+Call createSlice() with options as the only argument and assign the result to favoriteRecipesSlice
+Export favoriteRecipesSlice
+
+Hint
+Your code should look like this:
+
+export const mySlice = createSlice(options);
+
+Writing "Mutable" Code with Immer
+One of the most crucial rules for Redux reducers is to avoid changing the state directly. This means that we need to make copies of each level of nesting to be updated. We usually achieve this by using JavaScript’s array and object spread operators, as well as other functions that create copies of the original values.
+
+Adhering to this principle can get quite complex, so the most common mistake made by Redux users is accidentally modifying the state within reducers!
+
+Redux Toolkit has a solution to this conundrum! createSlice() uses a library called Immer https://immerjs.github.io/immer/ to help avoid this mistake!
+
+Immer uses a special JS object called a Proxy to wrap the data you provide and lets you write code that “mutates” that wrapped data. Immer does this by tracking all the changes you’ve made and then uses that list of changes to return an immutably updated value as if you’d written all the immutable update logic by hand.
+
+Immer is used internally automatically, so there is nothing for you to do on your part to make sure it updates immutably!
+
+So, instead of this:
+
+const todosSlice = createSlice({
+  name: 'todos',
+  initialState: [],
+  reducers: {
+    addTodo: (state, action) => {
+      return [
+        ...state,
+        {
+          ...action.payload,
+          completed: false
+        }
+      ]
+    },
+    toggleTodo: (state, action) => {
+      return state.map(todo =>
+        todo.id === action.payload.id ? { ...todo, completed: !todo.completed } : todo
+      )
+    }
+  }
+})
+
+You can write code that looks like this:
+
+const todosSlice = createSlice({
+  name: 'todos',
+  initialState: [],
+  reducers: {
+    addTodo: (state, action) => {
+      state.push({ 
+        ...action.payload, 
+        completed: false 
+      })
+    },
+    toggleTodo: (state, action) => {
+      const todo = state.find(todo => todo.id === action.payload.id)
+      if (todo) {
+        todo.completed = !todo.completed
+      }
+    }
+  }
+})
+
+addTodo is calling state.push() here, which is normally bad because the array.push() function mutates the existing array. Similarly, toggleTodo is simply finding the matching todo object, and then mutating it by reassigning its value.
+
+Thanks to Immer, however, this code will work just fine!
+
+You don’t need to learn the Immer library. All you do need to know is that createSlice() takes advantage of it, allowing us to safely “mutate” our state. You may find it useful to look through some of the common update patterns used with Immer https://immerjs.github.io/immer/docs/update-patterns.
+
+Instructions
+1.
+Inside of the options object, rewrite the logic for the addRecipe case reducer so that it uses .push() instead of the spread operator to add a new recipe.
+
+
+Hint
+The updated logic should look like the following:
+
+reducers: {
+   addTodo: (state, action) => {
+      state.todos.push(action.payload);
+   },
+   ...
+}
+
+Returned Objects and Auto-Generated Actions
+So far, we’ve covered the object passed to createSlice(). Now, let’s dive into what this function actually returns.
+
+Take the todosSlice example we’ve been working with. When you apply createSlice(), it gives you back an object like this:
+
+const todosSlice = createSlice({
+ name: 'todos',
+ initialState: [],
+ reducers: {
+   addTodo(state, action) {
+     const { id, text } = action.payload
+     state.push({ id, text, completed: false })
+   },
+   toggleTodo(state, action) {
+     const todo = state.find(todo => todo.id === action.payload)
+     if (todo) {
+       todo.completed = !todo.completed
+     }
+   }
+ }
+})
+
+/* Object returned by todosSlice */
+{
+ name: 'todos',
+ reducer: (state, action) => newState,
+ actions: {
+   addTodo: (payload) => ({type: 'todos/addTodo', payload}),
+   toggleTodo: (payload) => ({type: 'todos/toggleTodo', payload})
+ },
+ // case reducers field omitted
+}
+
+Let’s break this down:
+
+name: This holds a string used as the prefix for generated action types.
+reducer: This is the completed reducer function.
+actions: These are auto-generated action creators.
+So, what do these auto-generated action objects look like?
+
+By default, each action creator accepts one argument, which becomes the action.payload. The action.type string is formed by combining the slice’s name with the case reducer function’s name.
+
+For instance:
+
+console.log(todosSlice.actions.addTodo('walk dog'))
+// {type: 'todos/addTodo', payload: 'walk dog'}
+
+With these auto-generated action creators, we can export them and use them in other files. Theoretically, you could export the entire slice object returned by createSlice(). But, following the Redux community’s “ducks” pattern https://redux.js.org/style-guide/style-guide#structure-files-as-feature-folders-or-ducks pattern, we suggest exporting named action creators separately from the reducer:
+
+export const { addTodo, toggleTodo } = todosSlice.actions
+
+Once we export the action creators, we can use them to dispatch actions in a structured way throughout our application.
+
+Instructions
+1.
+Take a look at our Redux slice called favoriteRecipes. Pay attention to the reducer section, which contains two reducer functions: addRecipe and removeRecipe. Keep in mind that when you use the createSlice() function, it automatically creates action creators based on these reducer functions, using their names.
+
+Export these generated action creators. Be sure to use named exports for each of them. This will make these action creators available for use in other parts of your application.
+
+
+Hint
+Using the todos slice as an example, exporting the actions will look similar to the following:
+
+export const {
+   addTodo,
+   toggleTodo,
+} = todosSlice.actions;
+
+Returned Objects and Reducers
+Let’s now take a closer look at the reducer within the object returned by createSlice().
+
+const options = {
+  // options fields omitted.
+}
+const todosSlice = createSlice(options);
+
+/* Object returned by todosSlice */
+{
+ name: 'todos',
+ reducer: (state, action) => newState,
+ actions: {
+   addTodo: (payload) => ({type: 'todos/addTodo', payload}),
+   toggleTodo: (payload) => ({type: 'todos/toggleTodo', payload})
+ },
+ // case reducers field omitted
+}
+
+todosSlice.reducer is the comprehensive reducer function that represents the collection of case reducers, each associated with different actions your slice is meant to handle. Effectively, it combines the case reducers into one. This is commonly referred to as the “slice reducer.”
+
+When an action with the type 'todos/addTodo' is dispatched, todosSlice employs todosSlice.reducer() to check whether the dispatched action’s type aligns with any of the case reducers in todos.actions. If a match is found, the matching case reducer function is executed; if not, the current state is returned. This mirrors the pattern we earlier employed with switch/case statements!
+
+Once auto-generated, todosSlice.reducer needs to be exported so that it can be integrated into the global store and used as the todos slice of state. Per the “ducks” pattern https://redux.js.org/style-guide/style-guide#structure-files-as-feature-folders-or-ducks, we default export todosSlice.reducer.
+
+export const { addTodo, toggleTodo } = todosSlice.actions;
+export default todosSlice.reducer
+
+Exporting the reducer from a slice is like giving each part of your app its own special box with instructions on how to handle its data. This box is stored in a central place, the store, where the data management of your app comes together!
+
+Instructions
+1.
+At the bottom of favoriteRecipesSlice.js, export the reducer as the default export.
+
+
+Hint
+Using the todos slice from the exercise, exporting the reducer will look similar to the following:
+
+export default todosSlice.reducer
+
+Converting the Store to Use `configureStore()`
+In addition to simplifying the logic for actions and reducers, Redux Toolkit has a configureStore() method that simplifies the store setup process. configureStore() wraps around the Redux library’s createStore() method and the combineReducers() method, and handles most of the store set up for us automatically.
+
+For example, take a look at this file, which creates and exports a rootReducer:
+
+// rootReducer.js
+
+import { combineReducers } from 'redux'
+
+import todosReducer from './features/todos/todosSlice'
+import filtersReducer from './features/filters/filtersSlice'
+
+const rootReducer = combineReducers({
+ // Define a top-level state field named `todos`, handled by `todosReducer`
+ todos: todosReducer,
+ visibilityFilter: visibilityFilterReducer
+})
+
+export default rootReducer
+
+…and this file, which creates and exports the store:
+
+// store.js
+        
+import { createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import rootReducer from './reducer'
+import { fetchTodos } from './actions'; 
+
+const store = createStore(rootReducer, composeWithDevTools())
+store.dispatch(fetchTodos());
+export default store
+
+Now, let’s take a look at how we can refactor these two files using configureStore().
+
+configureStore() accepts a single configuration object parameter. The input object should have a reducer property that defines either a function to be used as the root reducer, or an object of slice reducers, which will be combined to create a root reducer.
+
+There are many properties available in this object https://redux-toolkit.js.org/api/configureStore, but for the purposes of this lesson, just the reducer property will be sufficient.
+
+import { configureStore } from '@reduxjs/toolkit'
+
+import todosReducer from './features/todos/todosSlice'
+import filtersReducer from './features/filters/filtersSlice'
+
+const store = configureStore({
+ reducer: {
+   // Define a top-level state field named `todos`, handled by `todosReducer`
+   todos: todosReducer,
+   filters: filtersReducer
+ }
+})
+
+export default store
+
+Note all the work that this one call to configureStore() does for us:
+
+Reducer: It combines todosReducer and filtersReducer into the root reducer function, which will handle a root state that looks like {todos, filters}, removing the need to call combineReducers(). This lowers the amount of boilerplate code we need to write.
+Store: It creates a Redux store using that root reducer, removing the need to call createStore()
+Middleware: It automatically adds middleware to check for common mistakes like accidentally mutating the state. In the traditional manual way, we’d need to set this up ourselves.
+DevTools: It automatically sets up the Redux DevTools Extension connection. In the traditional manual way, we’d also need to set this up ourselves.
+Because of how much boilerplate code we’re able to bypass with configureStore(), we can just import the individual slice reducers straight into this file instead of creating a separate file for the root reducer and having to export/import it.
+
+Since this is as simple as switching out the store setup code, all of the application’s existing feature code will work just fine!
+
+Let’s try this out for ourselves.
+
+Instructions
+1.
+Let’s work on refactoring our store to use configureStore() instead. In the code editor, import configureStore at the top of store.js.
+
+
+Hint
+To import the configureStore() method from Redux Toolkit into the file, you’ll write a line that looks like this:
+
+import { configureStore }  from '@reduxjs/toolkit';
+
+2.
+In addition to simplifying the store, let’s also simplify one of our reducers. In this project workspace, there is a oldFavoriteRecipesSlice.js and a favoriteRecipesSlice.js. The store currently imports the favoriteRecipesReducer from oldFavoriteRecipesSlice.js, which uses the traditional way of defining reducers. Let’s change it to the version that uses createSlice() in favoriteRecipesSlice.js.
+
+Change the favoriteRecipesReducer import so that it’s being imported from ../features/favoriteRecipes/favoriteRecipesSlice.js.
+
+
+Hint
+To import the favoriteRecipes slice reducer, you’ll write a line that looks like this at the top of the file:
+
+import todosReducer from '../features/todos/todosSlice'
+
+3.
+Rewrite the store variable so that it uses configureStore() instead of createStore() to create the store with the given reducers.
+
+When you’re done, save the file and click around the application in the browser to confirm that everything still works!
+
+
+Hint
+Configuring your store const will look similar to this example.
+
+configureStore({
+ reducer: {
+   todos: todosReducer,
+   filters: filtersReducer
+ }
+})
+
+Review
+Congratulations! You’ve learned a whole lot about Redux Toolkit and the essential methods to refactor and simplify existing Redux logic.
+
+Redux Toolkit (RTK) contains packages and functions that build in suggested best practices, simplify most Redux tasks, prevent common mistakes, and make it easier to write Redux applications.
+RTK has a createSlice() function that will help us simplify our Redux reducer logic and actions.
+createSlice() has one parameter, a configuration object, which we call options. In this lesson, we covered three object properties: name, initialState, and reducers. The configuration object has more properties which will be covered in the following lessons.
+A case reducer is a method that can update the state and will be executed when the corresponding action type is dispatched. This is similar to a case in a switch statement.
+You can write code that “mutates” the state inside the case reducers passed to createSlice(), and Immer will safely and accurately return an immutably updated state.
+createSlice() returns an object with the following properties: name, reducer, actions, and caseReducers.
+We typically use a Redux community code convention called the “ducks” pattern when exporting the action creators and the reducer.
+RTK has a configureStore() function that simplifies the store setup process. configureStore() wraps around the Redux core createStore() function and the combineReducers() function, and handles most of the store setup for us automatically.
+Instructions
+If you want to experiment further with the knowledge you’ve learned thus far, check out the challenges below!
+
+Update the application to include a user profile slice to keep track of the favorite recipes.
+Add a new case reducer to handle adding user-created recipes.
+Add a rating system to recipes so the user can “rank” their favorite recipes.
