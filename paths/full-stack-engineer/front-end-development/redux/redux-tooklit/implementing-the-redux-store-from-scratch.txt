@@ -1,0 +1,139 @@
+Implementing the Redux Store from Scratch
+An article on how to implement the Redux store object using vanilla JavaScript.
+
+Who is this article for?
+Though the redux package provides the createStore() method for us, examining how this powerful object can be created using vanilla JavaScript https://www.codecademy.com/resources/docs/javascript will help illuminate how Redux works under the hood. This article is for learners who want to solidify their understanding of the Redux store.
+
+It is assumed that you have some familiarity with the following Redux-related terms and concepts:
+
+The one-way data-flow model (state → view → actions → state)
+Reducer functions
+Action objects
+The createStore() function (by the redux package)
+The store object and its three main methods https://redux.js.org/api/store
+Visit our course on Redux https://www.codecademy.com/learn/learn-redux to learn about or refresh yourself with these terms and concepts.
+
+Part 1: What is the Redux store and how is it used?
+Redux https://redux.js.org/ is a state-management library centered around a single, powerful object called the store. This one object is responsible for holding the entire application’s state, receiving action objects and then executing state changes based on the type of the action received, and informing (executing) listener functions when such changes occur.
+
+To help create this store object, the Redux library provides the createStore() function. This function accepts a reducer function as an argument and returns a store object with three essential methods:
+
+store.getState(): for retrieving the current state value held by the store
+store.dispatch(action): for triggering changes to the state, given an action object
+store.subscribe(listener): for registering listener functions to be called when state changes occur
+All of this can be seen in the example below which implements a simple counting application:
+
+import { createStore } from 'redux';
+
+const countReducer = (state = 0, action) => {
+  switch (action.type) {  
+    case 'increment':  
+      return state + 1;
+    case 'decrement':  
+      return state - 1;
+    default:  
+      return state;  
+  }
+}
+const store = createStore(countReducer);
+
+const render = () => {
+  document.getElementById('count').text = store.getState(); // Display the current state.
+}
+render(); // Render once with the initial state of 0.
+
+store.subscribe(render); // Re-render on state changes.
+
+document.getElementById('plusButton').addEventListener('click', () => {  
+  store.dispatch({ type: 'increment' }); // Request a state change.
+});
+
+With this working knowledge of how to use the createStore() function and the store methods, we can begin to write the outline of this function:
+
+const createStore = (reducer) => {
+  const getState = () => {};
+  const dispatch = () => {};
+  const subscribe = () => {};
+  return { getState, dispatch, subscribe };
+}
+
+Above, we define createStore() simply as a function with a reducer argument that returns an object containing three methods: getState(), dispatch(), and subscribe().
+
+Part 2: Holding the current state of the application
+Let’s now turn our attention to the primary responsibility of the store: to hold the current state of the application and to provide access to this value via the store.getState() method. Implementing this behavior is as simple as storing an encapsulated variable (we can call it state) within the function and returning it with store.getState():
+
+const createStore = (reducer) => {
+  let state;
+  const getState = () => state;
+  const dispatch = () => {};
+  const subscribe = () => {};
+  return { getState, dispatch, subscribe };
+}
+
+Hiding the state behind the API https://www.codecademy.com/resources/docs/general/api of the store avoids common dangers associated with having global variables:
+
+Polluting the global namespace increases the chances of naming collisions.
+Granting variable access to parts of an application while limiting it to others is impossible.
+Debugging is difficult when a variable is referenced in many parts of the application.
+Redux solves these problems by requiring the programmer to use only the store methods to access the state.
+
+Part 3: Managing listener functions
+The state of the store will likely change many times and the features of the application must be notified when those changes occur. The store.subscribe() method allows you to subscribe callback functions, called listeners, to be executed when the state data changes. As in the first example, functions that render the view-layer are often subscribed to the store and use store.getState() to get the most up-to-date state data.
+
+Any number of listeners may be subscribed to the store at once so an array is maintained by the store and the subscribe() method adds provided listeners to that array.
+
+const createStore = (reducer) => {
+  let state;
+  let listeners = [];
+
+  const getState = () => state;
+
+  const dispatch = () => {};
+
+  const subscribe = (listener) => {
+    listeners.push(listener);
+    return () => {  
+      listeners = listeners.filter(l => l !== listener)  
+    }
+  };
+
+  return { getState, dispatch, subscribe };
+}
+
+Also notice that the subscribe() method returns a function. If you no longer want the given listener to be executed in response to state changes, this function can be saved and called to unsubscribe the given listener. For example:
+
+const unsubscribe = store.subscribe(render); // Subscribes `render` to the store.
+
+// somewhere else in the program...
+unsubscribe(); // Unsubscribes `render` from the store.
+
+Part 4: Handling incoming actions
+Redux ensures that the state is maintained reliably by requiring the programmer to dispatch actions to the store if they wish to update the state. The store.dispatch() function accepts an action object as an argument and calculates the next state value by calling the reducer() with the current state and the action:
+
+const createStore = (reducer) => {
+  let state;
+  let listeners = [];
+  
+  const getState = () => state;
+
+  const dispatch = (action) => {
+    state = reducer(state, action);
+    listeners.forEach(listener => listener());
+  };
+
+  const subscribe = (listener) => {
+    listeners.push(listener);
+    return () => {  
+      listeners = listeners.filter(l => l !== listener)  
+    }
+  };
+  
+  dispatch({});
+  return { getState, dispatch, subscribe };
+}
+
+Each listener that has been subscribed to the store (stored in the listeners array) is then executed. Notice that the state is not passed directly to these listeners. It is up to each listener to use store.getState() to get the most up-to-date data.
+
+Finally, notice that before the store object is returned, the function call dispatch({}) is made. This initializes the state value with the default initial state value of the reducer.
+
+Apart from a few details and edge cases, this is the full implementation of the createStore() method provided by the redux package. As you can see, the technology behind the Redux store is not particularly complicated, though the pattern it enforces is incredibly powerful.
