@@ -1,0 +1,608 @@
+Introduction
+By now, we can create an app with Redux state management. But we haven’t covered one of the most common challenges in app development: making asynchronous requests. With a basic Redux store, we can only do synchronous updates. When an action is dispatched, it is immediately processed by a reducer, which updates the store accordingly. But when developing applications, we often want to perform asynchronous operations (such as making API calls) and update the state based on the results.
+
+In this lesson, you will gain the tools necessary to write asynchronous logic that interacts with your Redux store.
+
+First, you will learn about two general concepts in computing: middleware and thunks, and the ways they relate to Redux.
+Next, you will learn about the promise lifecycle and how you can use it to provide a satisfying user experience.
+Finally, you will practice adding asynchronous logic to your Redux apps using tools provided by @reduxjs/redux-toolkit.
+This lesson uses Mock Service Worker https://mswjs.io/ to replicate the functionality of an external API. To use MSW, you’ll want to use Google Chrome and enable third-party cookies https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en.
+
+Instructions
+You’ll notice our familiar recipe app has undergone some exciting changes. The structure of the app remains the same, but the app now contains more and richer data. In addition to titles, the recipes now have images attached. Refresh the browser, and note that this version also displays a loading state before the recipes are displayed.
+
+Middleware in Redux
+Out of the box, Redux may meet most of your app’s state management needs. But every project is different, and so Redux provides some ways to customize its behavior. One of the ways we can customize Redux is by adding middleware.
+
+You may be familiar with middleware from experiences working with other frameworks. As the name suggests, middleware is the code that runs in the middle—usually between a framework receiving a request and producing a response. Middleware is a powerful tool for extending, modifying, or customizing a framework or library’s default behavior to meet an application’s specific needs.
+
+In Redux, middleware runs between when an action is dispatched and when that action is passed along to the reducer. By this point, you’re familiar with the way data flows through Redux: actions are dispatched to the store, where they are processed by reducers that produce a new state; that new state becomes accessible to all the components that reference it, causing those components to update. We’ve rendered that flow in the included diagram and added middleware to help you see where and how it comes into play.
+
+Middleware intercepts actions after they are dispatched and before they are passed along to the reducer. Some common tasks that middleware performs include logging, caching, adding auth tokens to request headers, crash reporting, routing, and making asynchronous requests for data. You can add any of these functionalities to your apps by using popular open-source middleware. Of course, you can also write your own middleware to solve problems that are specific to your application and its architecture.
+
+To make asynchronous requests in our recipe app, we’re using a Redux Toolkit utility function called createAsyncThunk() and the extraReducers option you can pass to the createSlice function. In subsequent exercises, we will walk through how createAsyncThunk() uses middleware and thunks (we’ll discuss these more in the next exercise) to make asynchronous requests possible; for now, you should just understand where middleware sits in Redux’s data flow.
+
+Instructions
+Before moving on, make sure you understand how middleware fits into Redux’s data flow, depicted here for you in an animated diagram. In a project without middleware, Redux immediately passes dispatched actions to the store’s reducer. But when we add middleware to a Redux project, Redux passes dispatched actions to the middleware before passing them to the reducers.
+
+Here are some focusing questions to think about during this lesson: What step in Redux’s data flow happens right before middleware runs? What step in the Redux data flow happens right after middleware runs?
+
+Write Your Own Middleware
+Let’s solidify our understanding of how middleware fits into Redux’s data flow. We’ll explore how middleware actually gets invoked in Redux, so that we know how a middleware should be structured. After that, we’re going to write a simple middleware from scratch.
+
+But first, you’ll recall from the previous exercise that middleware runs after an action is dispatched and before that action is passed along to the reducer. How does this actually work?
+
+To add a middleware to our project, we use Redux’s applyMiddleware function like so.
+
+import { createStore, applyMiddleware } from 'redux';
+import { middleware1, middleware2, middleware3 } from './exampleMiddlewares';
+import { exampleReducer } from './exampleReducer';
+import { initialState} from './initialState';
+
+const store = createStore(
+  exampleReducer, 
+  initialState, 
+  applyMiddleware(
+    middleware1, 
+    middleware2, 
+    middleware3
+  )
+);
+
+The specifics of how applyMiddleware works are outside the scope of this lesson. All you need to know is that once middleware has been added to a Redux project, calls to dispatch are actually calls to the middleware pipeline (the chain of all added middlewares). This means that any actions we dispatch will be passed from middleware to middleware before they hit an app’s reducers.
+
+Middlewares must conform to a specific, nested function structure in order to work as part of the pipeline (this nested structure is also called a higher-order function, if you’d like to read more). That structure looks like this:
+
+const exampleMiddleware = storeAPI => next => action => {
+  // do stuff here
+  return next(action);  // pass the action on to the next middleware in the pipeline
+}
+
+Each middleware has access to the storeAPI (which consists of the dispatch and getState functions), as well as the next middleware in the pipeline, and the action that is to be dispatched. The body of the middleware function performs the middleware’s specific task before calling the next middleware in the pipeline with the current action (note that if the middleware is the last in the pipeline, then next is storeAPI.dispatch so calling next(action) is the same as dispatching the action to the store).
+
+Now let’s write a custom middleware that logs the contents of our store to the console.
+
+Instructions
+Checkpoint 1 Passed
+1.
+In the code editor, you’ll notice we’ve created a simple reducer for you, and taken care of importing Redux’s createStore and applyMiddleware functions. We’ve created a store by calling createStore and passing it the reducer. Since all Redux middleware have the same basic structure, you can start by copying this snippet:
+
+const logger = storeAPI => next => action => {
+  // do stuff here
+
+  return next(action);
+};
+
+
+Hint
+To start writing your own middleware, copy the provided snippet, which has the correct function signature for a Redux middleware.
+
+Checkpoint 2 Passed
+2.
+Replace the comment // do stuff here, with a line of code that logs the contents of the store to the console. Remember, you can access the store’s state with storeAPI.getState().
+
+
+Hint
+Use console.log to print the contents of the store to the console. To access the contents of the store, you can call storeAPI.getState().
+
+Checkpoint 3 Passed
+3.
+Instead of returning next(action), store the result of that function call in a const called nextState. Next, log nextState to the console. Finally, return nextState.
+
+
+Hint
+Start by storing the result of next(action) in a const called nextState. On the next line, log nextState to the console. On the line after that, return nextState.
+
+Checkpoint 4 Passed
+4.
+Apply your custom middleware to your store by adding a third argument to the call to createStore. This argument should be the result of calling applyMiddleware with the logger middleware you’ve written.
+
+
+Hint
+The third argument you pass to createStore will look something like applyMiddleware(yourMiddlewareHere). Note that the second argument to createStore is the initial value of that store’s state.
+
+Checkpoint 5 Passed
+5.
+Dispatch the following action to your store:
+
+{
+  type: 'NEW_MESSAGE', 
+  payload: 'I WROTE A MIDDLEWARE'
+}
+
+Note that the store’s new state was logged to the console. Congrats – you just wrote your first middleware!
+
+import { createStore, applyMiddleware } from 'redux';
+
+const messageReducer = (state = '', action) => {
+  if (action.type === 'NEW_MESSAGE') {
+    return action.payload;
+  } else {
+    return state;
+  }
+}
+
+// Paste the logger function here.
+const logger = storeAPI => next => action => {
+  console.log(storeAPI.getState())
+
+  const nextState = next(action);
+  console.log(nextState);
+  return nextState;
+};
+
+const store = createStore(messageReducer, '', applyMiddleware(logger));
+
+store.dispatch({
+  type: 'NEW_MESSAGE',
+  payload: 'I WROTE A MIDDLEWARE'
+})
+
+Introduction to Thunks
+Recall that our overarching goal in this lesson is to give you the tools you need to add asynchronous functionality to your Redux apps. One of the most flexible and popular ways to add asynchronous functionality to Redux involves using thunks. A thunk is a higher-order function that wraps the computation we want to perform later. For example, this add() function returns a thunk that will perform x+y when called.
+
+const add = (x,y) => {
+  return () => {
+    return x + y; 
+  } 
+}
+
+Thunks are helpful because they allow us to bundle up bits of computation we want to delay into packages that can be passed around in code. Consider these two function calls, which rely on the add() function above:
+
+const delayedAddition = add(2,2)
+delayedAddition() // => 4
+
+Note that calling add() does not cause the addition to happen – it merely returns a function that will perform the addition when called. To perform the addition, we must call delayedAddition().
+
+Instructions
+Checkpoint 1 Passed
+1.
+Consider the function remindMeTo(), which we’ve defined for you in the code editor. What do you think will happen if you run remindMeTo('call mom')?
+
+Call console.log(remindMeTo('call mom')) in the code editor to test your suspicion.
+
+
+Hint
+Call remindMeTo('call mom') as an argument of console.log() in the code editor and see what happens.
+
+Checkpoint 2 Passed
+2.
+Logging remindMeTo('call mom') caused “Remember to call mom!!!” to appear in the console.
+
+Complete remindMeLater() so it takes a string, task, and returns a thunk that returns the result of calling remindMeTo() with the argument task.
+
+
+Hint
+Return remindMeTo() with task as its argument inside the return statement of the remindMeLater() function.
+
+Checkpoint 3 Passed
+3.
+Call remindMeLater() with the task 'get groceries' and store the result in a constant called reminder.
+
+
+Hint
+reminder should store the result of calling remindMeLater() with a task we want to be reminded of later, which is 'get groceries'.
+
+Checkpoint 4 Passed
+4.
+What do you think will happen when you call reminder()?
+
+Test your hunch by calling reminder() in your code editor and logging the result to the console.
+
+
+Hint
+When you invoke reminder(), you’re invoking the thunk that remindMeLater returns, which logs “Remember to call mom!!!” to the console.
+
+const remindMeTo = task => {
+  return `Remember to ${task}!!!`;
+}
+
+const remindMeLater = task => {
+  return () => {
+    // call remindMeTo
+    return remindMeTo(task);
+  }
+}
+console.log(remindMeTo('call mom'))
+const reminder = remindMeLater('get groceries')
+console.log(reminder())
+
+Promise Lifecycle Actions
+In a perfect world, every network request we make would yield an immediate and successful response. But network requests can be slow, and sometimes fail. As developers, we need to account for these realities in order to create the best possible experience for our users. If we know a request is pending, we can make our application more user-friendly by displaying a loading state. Similarly, if we know a request has failed, we can display an appropriate error state.
+
+In order to create these satisfying user experiences, we need to keep track of the state our async requests are in at any given moment so that we can reflect those states for the user. It is common to dispatch a “pending” action right before performing an asynchronous operation, and “fulfilled” or “rejected” actions depending on the results of the completed operation. Take this illustrative example fetchUserById:
+
+import { fetchUser } from './api';
+
+const fetchUserById = (id) => {
+  const payload = await fetchUser(id);
+  // update user data in store with `payload`
+}
+
+Rewritten to include pending and rejected actions, it might look like this:
+
+import { fetchUser } from './api'
+const fetchUserById = (id) => {
+  // update store to show user data is being requested -> "pending" state
+  try {
+    const payload = await fetchUser(id)
+   // update user data in store with `payload` -> "fulfilled" state
+  } catch(err) {
+   // notify store to show user data failed to be fetched -> "rejected" state
+  }
+}
+
+We call these pending/fulfilled/rejected actions promise lifecycle actions. This pattern is so common that Redux Toolkit provides a neat abstraction, createAsyncThunk, for including promise lifecycle actions in your Redux apps. We’ll explore that method in the following exercises.
+
+createAsyncThunk()
+createAsyncThunk() is a function with two parameters, an action type string, and an asynchronous callback, that generates a thunk action creator that will run the provided callback and automatically dispatch promise lifecycle actions as appropriate so that you don’t have to dispatch pending/fulfilled/rejected actions by hand.
+
+To use createAsyncThunk(), you’ll first need to import it from Redux Toolkit like so:
+
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+Next, you’ll need to call createAsyncThunk(), passing two arguments. The first is a string representing the asynchronous action’s type. Conventionally, type strings take the form "resourceType/actionName". In this case, since we are getting an individual user by their id, our action type will be users/fetchUserById. The second argument to createAsyncThunk is the payload creator: an asynchronous function that returns a promise resolving to the result of an asynchronous operation. Here is fetchUserById rewritten using createAsyncThunk:
+
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { fetchUser } from './api'
+const fetchUserById = createAsyncThunk(
+  'users/fetchUserById', // action type
+  async (arg, thunkAPI) => { // payload creator
+    const response = await fetchUser(arg);
+    return response.json();
+  }
+)
+
+There are a few things worth highlighting here. First, observe that the payload creator receives two arguments—arg and thunkAPI. We will elaborate on those in the next exercise. Second, note that the payload creator we provided doesn’t dispatch any actions at all. It just returns the result of an asynchronous operation.
+
+As you can see, createAsyncThunk() makes defining thunk action creators concise. All you have to write is an asynchronous thunk function; createAsyncThunk() takes care of the rest, returning an action creator that will dispatch pending/fulfilled/rejected actions as appropriate.
+
+Instructions
+Checkpoint 1 Passed
+1.
+In the code editor, we’ve provided a constant called loadRecipes, which you will replace with an asynchronous action creator.
+
+To start, import createAsyncThunk from the Redux toolkit. Make sure you continue to import createSlice as well.
+
+
+Hint
+Add a createAsyncThunk to the list of imports from '@reduxjs/toolkit'.
+
+Checkpoint 2 Passed
+2.
+Replace the value of loadRecipes() with the result of calling createAsyncThunk(). Set the first argument (your action type string) as 'allRecipes/loadRecipes'.
+
+
+Hint
+Replace the 'replace me' string with the createAsyncThunk() function. Set the first argument of the function to be 'allRecipes/loadRecipes'. We’ll work on adding the second argument in the next task.
+
+Checkpoint 3 Passed
+3.
+Finally, for the second argument to createAsyncThunk(), let’s define our payload creator with the following code snippet as the body.
+
+const data = await fetchRecipes()  // fetch data
+const json = await data.json()  // transform to JSON
+return json  // return data as JSON
+
+Note: You don’t need arg and thunkAPI as parameters of the payload creator.
+
+
+Hint
+The payload creator should look something like the following code:
+
+async (arg, thunkAPI) => {
+  // Body of the payload creator
+}
+
+import { fetchRecipes } from '../../app/api'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+
+const loadRecipes = createAsyncThunk(
+  'allRecipes/loadRecipes',
+  async () => {
+    const data = await fetchRecipes()
+    const json = await data.json()
+    return json
+  }
+);
+
+export const allRecipesSlice = createSlice({
+  name: 'allRecipes',
+  initialState: {
+    recipes: [],
+    isLoading: false,
+    hasError: false,
+  },
+  reducers: {
+    addRecipes(state, action) {
+      state.recipes = action.payload
+    }
+  },  
+});
+
+export default allRecipesSlice.reducer;
+
+Passing Arguments to Thunks
+In the last exercise, we promised to elaborate on the two arguments that the payload creator (the asynchronous function we pass to createAsyncThunk) receives: arg and thunkAPI. The first argument, arg, will be equal to the first argument passed to the thunk action creator itself. For example, if we call fetchUserById(7), then inside the payload creator, arg will be equal to 7.
+
+But what if you need to pass multiple arguments to your thunk? Since the payload creator only receives the first argument passed to the thunk action creator, you’ll want to bundle multiple arguments into a single object. For example, say we want to search our app’s users by first and last name. If the thunk action creator is called searchUsers, we would call it like this: searchUsers({firstName: 'Ada', lastName: 'Lovelace'}).
+
+If you need to access these variables individually, you can use ES6 destructuring assignment to unpack the object when you declare the payload creator and pass it to createAsyncThunk, like this :
+
+const searchUsers = createAsyncThunk(
+    'users/searchUsers',
+    async ({ firstName, lastName}, thunkAPI) => {
+        // perform the asynchronous search request here 
+    }
+)
+
+If your thunk requires no arguments, you can just call the action creator without it, and the arg argument will be undefined.
+
+In the event the thunk requires only one param (for example, fetching a specific resource by id) you should name that first param semantically. Here’s the fetchUserById example from the last exercise, with the arg parameter semantically renamed to userId.
+
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { fetchUser } from './api'
+const fetchUserById = createAsyncThunk(
+    'users/fetchUserById', // action type
+    async (userId, thunkAPI) => { // payload creator
+        const response = await fetchUser(userId)
+        return response.data
+    }
+)
+
+The payload creator’s second argument, thunkAPI, is an object containing several useful methods, including the store’s dispatch and getState. For an exhaustive list of methods available in the thunkAPI object, you can read the documentation https://redux-toolkit.js.org/api/createAsyncThunk#payloadcreator.
+
+Instructions
+Checkpoint 1 Enabled
+1.
+In the code editor, we’ve defined a thunk action creator searchRecipesByName. Rename arg to the semantically appropriate variable name recipeName.
+
+
+Hint
+Replace both instances of arg in the payload creator’s definition with the semantically appropriate variable name recipeName.
+
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { searchRecipes } from './api';
+
+const searchRecipesByName = createAsyncThunk(
+  'recipes/searchRecipesByName',
+  (recipeName, thunkAPI) => {
+    const response = await searchRecipes(recipeName);
+    return response.data;
+  }
+);
+
+Actions Generated by createAsyncThunk()
+As you know, createAsyncThunk takes care of dispatching actions for each of the promise lifecycle states: pending, fulfilled, and rejected. But what exactly do these actions look like?
+
+Building off the action type string you pass to it, createAsyncThunk produces an action type for each promise lifecycle states. If you pass the action type string 'resourceType/actionType' to createAsyncThunk, it will produce these three action types:
+
+'resourceType/actionType/pending'
+'resourceType/actionType/fulfilled'
+'resourceType/actionType/rejected'
+To use our earlier example:
+
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { fetchUser } from './api'
+
+const fetchUserById = createAsyncThunk(
+  'users/fetchUserById', // action type
+  async (userId, thunkAPI) => { // payload creator
+    const response = await fetchUser(userId)
+    return response.data
+  }
+)
+
+When you pass createAsyncThunk the action type string 'users/fetchUserById', createAsyncThunk produces these three action types:
+
+'users/fetchUserById/pending'
+'users/fetchUserById/fulfilled'
+'users/fetchUserById/rejected'
+If you need to access the individual pending/fulfilled/rejected action creators, you can reference them like this:
+
+fetchUserById.pending
+fetchUserById.fulfilled
+fetchUserById.rejected
+You will have to handle these action types in your reducers if you want to reflect these promise lifecycle states in your app. In the next exercise, we will show you how to do that.
+
+Instructions
+Checkpoint 1 Passed
+1.
+In the code editor, we’ve used createAsyncThunk to define a thunk action creator, loadRecipes. What three action type strings are generated by the call to createAsyncThunk? Write out the three strings in your code editor in the comments below the call to loadRecipes.
+
+
+Hint
+Assuming createAsyncThunk receives a string actionTypeBase as its first argument, the formula for the action types createAsyncThunk generates is actionTypeBase/promiseLifecycleState for each of the three promise lifecycle states. The promise lifecycle states are: pending, fulfilled, and rejected.
+
+import { fetchRecipes } from '../../app/api'
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
+const loadRecipes = createAsyncThunk(
+  'allRecipes/loadRecipes',
+  (arg, thunkAPI) => {
+    const response = await fetchRecipes();
+    return response.data
+  }
+)
+
+// The above call to createAsyncThunk will generate what three action types?
+// 1. allRecipes/loadRecipes/pending
+// 2. allRecipes/loadRecipes/fulfilled
+// 3. allRecipes/loadRecipes/rejected
+
+Using createSlice() with Async Action Creators
+In a previous lesson, you learned about createSlice(). In this lesson, you will learn about extraReducers, a property you can optionally pass to createSlice that allows createSlice to respond to action types it did not generate.
+
+To refresh your memory, createSlice() accepts a single argument, options, which is an object containing configuration parameters including a name, some initial state, and reducers. createSlice() then uses these configuration parameters to generate a slice of the store, including action creators and action types for updating the state contained in that slice. Consider the following example:
+
+const usersSlice = createSlice({
+  name: 'users',
+  initialState: { users:  [] },
+  reducers: {
+    addUser: (state, action) => { 
+      state.users.push(action.payload) 
+    }        
+  },
+})
+
+This call to createSlice(), generates a slice of the store that responds to the action creator usersSlice.actions.addUser. But what if we’ve generated our action creators via calls to createAsyncThunk()? Consider fetchUserById, the asynchronous action creator from earlier in this lesson:
+
+const fetchUserById = createAsyncThunk(
+  'users/fetchUserById', // action type
+  async (userId, thunkAPI) => { // payload creator
+    const response = await fetchUser(userId)
+    return response.data
+  }
+)
+
+This asynchronous action creator will generate three action types: 'users/fetchUserById/pending', 'users/fetchUserById/fulfilled', and 'users/fetchUserById/rejected'. Currently, these action types have no effect on our user’s slice, which only responds to the users/addUser action type generated by createSlice().
+
+How can we account for these promise lifecycle action types in our user slice? This is exactly the problem that extraReducers, an optional property on the configuration object passed to createSlice(), was designed to solve. extraReducers allows createSlice() to respond to action types generated elsewhere. To make the user’s slice respond to promise lifecycle action types, we pass them to createSlice() in the extraReducers property.
+
+Open usersSlice.js in your code editor to see an example of the extraReducers property in context.
+
+Note that in addition to using the extraReducers property, we also added some extra fields to our state object: a boolean, isLoading, which will be true when a request is pending, and otherwise false, and a boolean hasError, which we will set to true if our request to fetch a user is rejected. These additions allow us to track promise lifecycle states so that we can create satisfying and informative user interfaces when the promise is either pending or rejected. When the promise is fulfilled these are set to false, and the user data is added to the state.
+
+Instructions
+Checkpoint 1 Passed
+1.
+In allRecipesSlice.js, we’ve used createAsyncThunk() to define loadRecipes, an asynchronous action creator that fetches all our app’s recipes, and createSlice() to define a slice of recipes in our app’s store.
+
+Add two booleans, isLoading and hasError, to the initialState property passed to createSlice(). What should their initial values be?
+
+
+Hint
+Add two booleans, isLoading and hasError, to initialState. When the app first runs, isLoading and hasError should both be false.
+
+Checkpoint 2 Passed
+2.
+Using the extraReducers property, add reducers for each of the promise lifecycle action types generated by createAsyncThunk.
+
+What about the app’s behavior has changed? While the recipes are being fetched, the app displays a loading spinner. And if the recipes fail to fetch, the app displays an error message.
+
+Why does the app behave differently when you pass extra Reducers to createSlice? Adding the extra reducers to the recipes slice causes the store to update in response to each of the pending/fulfilled/rejected actions dispatched by loadRecipes. These changes are reflected in the app’s UI.
+
+
+Hint
+Your extraReducers property will look something like this:
+
+extraReducers: {
+  [loadRecipes.pending]: (state, action) => { 
+    // fill out function body
+  },
+  [loadRecipes.fulfilled]: (state, action) => {
+    // fill out function body
+  },
+  [loadRecipes.rejected]: (state, action) => {
+    // fill out function body
+  }
+}
+
+allRecipesSlice.js
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  addFavoriteRecipe,
+  removeFavoriteRecipe,
+} from "../favoriteRecipes/favoriteRecipesSlice";
+import { selectSearchTerm } from "../search/searchSlice";
+export const loadRecipes = createAsyncThunk(
+  "allRecipes/getAllRecipes",
+  async () => {
+    const data = await fetch("api/recipes?limit=10");
+    const json = await data.json();
+    return json;
+  }
+);
+
+const sliceOptions = {
+  name: "allRecipes",
+  initialState: {
+    recipes: [],
+    isLoading: false,
+    hasError: false
+  },
+  reducers: {},
+  extraReducers: {
+    [loadRecipes.pending]: (state, action) => {
+      state.isLoading = true;
+      state.hasError = false;
+    },
+    [loadRecipes.fulfilled]: (state, action) => {
+      state.recipes = action.payload;
+      state.isLoading = false;
+      state.hasError = false;
+    },
+    [loadRecipes.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.hasError = true;
+    }
+  }
+};
+
+export const allRecipesSlice = createSlice(sliceOptions);
+
+export const selectAllRecipes = (state) => state.allRecipes.recipes;
+
+export const selectFilteredAllRecipes = (state) => {
+  const allRecipes = selectAllRecipes(state);
+  const searchTerm = selectSearchTerm(state);
+
+  return allRecipes.filter((recipe) =>
+    recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
+
+export default allRecipesSlice.reducer;
+
+usersSlice.js
+const fetchUserById = createAsyncThunk(
+  'users/fetchUserById',
+  async (userId) => {
+    const users = await fetch(`api/users${userId}`)
+    const data = await users.json()
+    return data
+  }
+)
+
+const usersSlice = createSlice({
+  name: 'users',
+  initialState: { 
+    users:  [], 
+    isLoading: false, 
+    hasError: false 
+  },
+  reducers: {
+    addUser: (state, action) => { 
+      state.users.push(action.payload) 
+    }        
+  },
+  extraReducers: {
+    [fetchUserById.pending]: (state, action) => {
+      state.isLoading = true;
+      state.hasError = false;
+    },
+    [fetchUserById.fulfilled]: (state, action) => {
+      state.users.push(action.payload);
+      state.isLoading = false;
+      state.hasError = false;
+    },
+    [fetchUserById.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.hasError = true;
+    }
+  }
+})
+
+Review
+Well done! Let’s summarize what you’ve learned in this lesson. In this lesson, you:
+
+Learned about Redux middleware and wrote your own simple logging middleware
+Encountered thunks and learned about how valuable thunks are for deferring computation
+Learned the three promise lifecycle actions: pending, fulfilled, and rejected
+Learned how to use createAsyncThunk(), which abstracts the process of handling promise lifecycle states according to best practices/common design paradigms
+Imported createAsyncThunk from the Redux Toolkit:
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+Created action creators using createAsyncThunk().
+Made your reducers respond to pending/fulfilled/rejected promise lifecycle actions by supplying the extraReducers property to createSlice().
