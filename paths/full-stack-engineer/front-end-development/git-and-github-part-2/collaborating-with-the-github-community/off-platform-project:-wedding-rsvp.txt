@@ -1,0 +1,13 @@
+Off-Platform Project: Wedding RSVP
+This article links to a project to complete in a public GitHub repository. You will practice forking and making a pull request.
+
+In this project, you will practice forking a public repository and making a pull request to the original repository.
+
+The Project
+Elizabeth and Phillip are having a wedding and they are having guests update the guest lists themselves. To RSVP, you will fork their repository and create a pull request.
+
+The instructions and projects are stored in this Codecademy repository https://github.com/Codecademy/wedding-rsvp-off-platform-project. Click through and scroll to the README.md to start!
+
+Walkthrough Video
+You can follow the project walkthrough if you need, although we recommend you try the instructions yourself first!
+https://youtu.be/fvUT87lj3EQ
