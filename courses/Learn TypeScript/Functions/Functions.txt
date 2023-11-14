@@ -61,7 +61,7 @@ function exclaim(name, count) {
 exclaim('Muriel', 6);
  
 
- Parameter Type Annotations
+Parameter Type Annotations
 In TypeScript, function parameters may be given type annotations https://www.codecademy.com/resources/docs/typescript/type-annotations with the same syntax as variable declarations: a colon next to the name. The type annotations ensure that the parameters are of the correct type:
 
 function greet(name: string) {
