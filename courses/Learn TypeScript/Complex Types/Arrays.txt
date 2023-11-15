@@ -1,0 +1,323 @@
+Introduction
+Our TypeScript journey has now led us to a new destination: Array-bia. Typing arrays https://www.codecademy.com/resources/docs/typescript/arrays is a little bit different than working with primitive types. This is because arrays usually contain many pieces of data. Keeping track of the array’s type means keeping track of every element’s type. For example:
+
+let firstArray = [1, 2, 3, 4];
+let secondArray =  [5, '6', [7]];
+
+We can see that firstArray has elements that are all number types. On the other hand, secondArray has elements of varying types: number, string, and Array. Both are examples of valid JavaScript arrays. As we’ll soon explore, TypeScript makes it very easy to keep track of element types in arrays, such as those above.
+
+For now, though, let’s make life difficult by pretending that TypeScript didn’t have special ways of typing arrays. How hard would it be to enforce type consistency?
+
+Instructions
+
+1.
+Imagine you are a software engineer for a company that keeps track of customer names in the array customersArray. The company’s codebase loops through this array to generate an annual report. The code was written by an untrained intern over 10 years ago, and it will crash the entire system if customersArray is found to contain any data of the number type!
+
+Because you’re not using TypeScript, you need to write the function checkCustomersArray() to check that every element of customersArray is a string. For any element el that is not a string, this function should log an error message using the statement console.log(`Type error: ${el} should be a string!`).
+
+Call the checkCustomersArray() function after you’ve defined it to see your messages print out.
+
+
+2.
+OK, you found a couple of errors. (Wouldn’t it be nice if this error checking was automatic?) You’ll fix them later. Right now, there is a more pressing concern. The array customersArray is constantly being altered by existing code. The last thing we want is for somebody to .push() a non-string value into this array.
+
+Write an alternative pushing function called stringPush() that takes one argument: val, the value meant to be pushed into the array. The function should check if the val is a string and .push() it into the customersArray array only if it is a string.
+
+3.
+Even with all this, people could ruin your precious string array by writing code like customersArray[4] = 4. You don’t have to waste time finding a way around this right now.
+
+Now you can see how needlessly difficult manual type-checking is. And imagine, you would have to write even more code if you needed arrays of numbers! It’s all too much.
+
+Click the “Run” button to move on to the next exercise, where you will learn how TypeScript makes it easy to maintain a typed array!
+
+index.js
+
+let customersArray = ['Custy Stomer', 'C. Oostomar', 'C.U.S. Tomer', 3432434, 'Custo Mer', 'Custopher Ustomer', 3432435, 'Kasti Yastimeur'];
+
+//Write Your Code here:
+// function checkCustomersArray() {
+//   customersArray.forEach(el => {
+//     if (typeof el === 'number') {
+//       console.log(`Type error: ${el} should be a string!`)
+//     }
+//   })
+// }
+
+function checkCustomersArray() {
+  for (let i = 0; i < customersArray.length; i++) {
+    if (typeof customersArray[i] === 'number') {
+      console.log(`Type error: ${customersArray[i]} should be a string!`)
+    }
+  }
+}
+
+function stringPush(val) {
+  if (typeof val === 'string') {
+    customersArray.push(val)
+  }
+}
+
+stringPush('good')
+
+console.log(customersArray)
+
+checkCustomersArray()
+
+Array Type Annotations
+The TypeScript type annotation for array types is fairly straightforward: we put [] after the element type. In this code, names is an Array that can only contain strings:
+
+let names: string[] = ['Danny', 'Samantha'];
+
+An alternative method is to use the Array<T> syntax, where T stands for the type.
+
+let names: Array<string> = ['Danny', 'Samantha'];
+
+In the code above, the type, T, is string. We won’t use Array<T> syntax in this lesson, but it’s nice to be familiar with it.
+
+As we may expect, we get a type error if we try to assign an array of numbers to a string[] variable:
+
+let names: string[] = [1,2,3]; // Type Error!
+
+That was just like an assignment error with primitive types. TypeScript arrays, however, can also throw errors when elements of the wrong type are added:
+
+let names: string[] = ['Damien'];
+names.push(666) // Type Error!
+
+Let’s practice some array type annotations!
+
+Instructions
+
+1.
+The code editor contains several array assignments. Add the appropriate type annotations to the array variables in the // Arrays: section.
+
+index.ts
+
+// Arrays:
+let bestNumbers: number[] = [7,77,4];
+let bestLunches: string[] = ['chicken soup', 'non-chicken soup'];
+let bestBreakfasts: string[] = ['scrambled eggs', 'oatmeal', 'tamago kake gohan', 'any kind of soup'];
+let bestBooleans: boolean[] = [true, false];
+
+Multi-dimensional Arrays
+So far we’ve looked at string[] arrays https://www.codecademy.com/resources/docs/typescript/arrays, but we could also have arrays that only contain numbers (number[]) or booleans (boolean[]). In fact, we can make arrays of any type whatsoever. We can also declare multidimensional arrays: arrays of arrays (of some type).
+
+let arr: string[][] = [['str1', 'str2'], ['more', 'strings']];
+
+Think of the string[][] above as short for (string[])[], that is, an array where every element has type string[]. We’ll explore more complex array types in later lessons.
+
+The empty array ([]) is compatible with any array type:
+
+let names: string[] = []; // No type errors.
+let numbers: number[] = []; // No type errors.
+names.push('Isabella');  
+numbers.push(30);
+
+Practice time!
+
+Instructions
+
+1.
+Please provide type annotations for all the arrays provided in the // Multidimensional arrays: section.
+
+index.ts
+
+// Arrays:
+let bestNumbers: number[] = [7,77,4];
+let bestLunches: string[] = ['chicken soup', 'non-chicken soup'];
+let bestBreakfasts: string[]= ['fasting', 'oatmeal', 'tamago kake gohan', 'any kind of soup'];
+let bestBooleans: boolean[] = [true, false];
+
+// Multidimensional Arrays:
+let bestMealPlan: string[][] = [bestLunches, bestBreakfasts, ['baked potato', 'mashed potato']];
+let bestBooleansTwice: boolean[][] = [bestBooleans, bestBooleans];
+let numbersMulti: number[][][] = [ [[1],[2,3]], [[7],bestNumbers] ];
+
+Tuples
+So far we’ve looked at arrays https://www.codecademy.com/resources/docs/typescript/arrays with all elements of the same type. But, as we know, JavaScript arrays are flexible and can have elements of different types. With TypeScript, we can also define arrays with a fixed sequence of types:
+
+let ourTuple: [string, number, string, boolean] = ['Is', 7 , 'our favorite number?' , false]; 
+
+In TypeScript, when an array is typed with elements of specific types, it’s called a tuple. The tuple above (ourTuple) contains the elements: 'Is', 7 , 'our favorite number?' , false and the tuple has a type of [string, number, string, boolean]. Tuple types specify both the lengths and the orders of compatible tuples https://www.codecademy.com/resources/docs/typescript/tuples, and will cause an error if either of these conditions are not met:
+
+let numbersTuple: [number, number, number] = [1,2,3,4]; // Type Error! numbersTuple should only have three elements.
+let mixedTuple: [number, string, boolean] = ['hi', 3, true] // Type Error! The first elements should be a number, the second a string, and the third a boolean. 
+
+
+As far as JavaScript is concerned, tuples act just like arrays. They both have .length properties. We can access (or change) the elements of both using [index]. But despite their similarities, tuples and arrays do not have compatible types within TypeScript. Specifically, we can’t assign an array to a tuple variable, even when the elements are of the correct type:
+
+let tup: [string, string] = ['hi', 'bye'];
+let arr: string[] = ['there','there'];
+tup = ['there', 'there']; // No Errors.
+tup = arr; // Type Error! An array cannot be assigned to a tuple.
+
+
+Now let’s practice using tuples and tuple types!
+
+Instructions
+
+1.
+The code editor has defined the variable favoriteCoordinates with the precise location of the Codecademy headquarters. The location is expressed as a tuple encoding the coordinates 40 degrees 43.2 minutes north latitude, 73 degrees 59.8 minutes west longitude.
+
+Please provide the correct type annotation for this tuple.
+
+2.
+Actually, our favorite place is not the Codecademy headquarters (wonderful though it may be). Reassign the variable favoriteCoordinates to a tuple that expresses the objectively best coordinates, the center of the Marianas trench at 17 degrees 45 minutes north, 142 degrees 30 minutes east.
+
+3.
+Sadly, the tuple favoriteCoordinates still doesn’t describe the best part of the marianas trench: the bottom. Try to fix this by adding the deepest depth to the end of the tuple: Add the code favoriteCoordinates[6] = -6.825; and then run tsc.
+
+That’s 6.825 miles deep!
+
+4.
+OK luckily that didn’t work. The whole point of tuples is that they have fixed lengths, so you cannot access elements of favoriteCoordinates with indices greater than 5. Even when you want to!
+
+Click the “Run” button to move on to the next exercise.
+
+index.ts
+
+let favoriteCoordinates: [number, number, string, number, number, string] = [40, 43.2, 'N', 73, 59.8, 'W'];
+
+favoriteCoordinates = [17, 45, 'N', 142, 30, 'E']
+
+favoriteCoordinates[6] = -6.825;
+
+Array Type Inference
+TypeScript can infer variable types from initial values and return statements. Even still, we may not know exactly what type inference to expect when dealing with arrays https://www.codecademy.com/resources/docs/typescript/arrays. For example:
+
+let examAnswers= [true, false, false];
+
+What is the type of examAnswers? It seems it could equally well be boolean[] or [boolean, boolean, boolean]. In reality, it is always the first of these, since this is the less restrictive type. This enables us to expand the array:
+
+examAnswers[3] = true; // No type error.
+
+Since tuples https://www.codecademy.com/resources/docs/typescript/tuples have fixed lengths, we wouldn’t be able to add additional boolean elements to a tuple:
+
+let tupleOfExamAnswers: [boolean, boolean, boolean] = [true, false, false];
+tupleOfExamAnswers[3] = true; // Type error! The tuple only has 3 elements.
+
+We also get the same kind of type inference when we use the .concat() method:
+
+let tup: [number, number, number] = [1,2,3];
+let concatResult = tup.concat([4,5,6]); // concatResult has the value [1,2,3,4,5,6].
+
+In the code above, TypeScript infers the variable concatResult as an array of numbers, not a tuple.
+
+The takeaway here is that type inference returns arrays. When we want tuples, we need to use explicit type annotations https://www.codecademy.com/resources/docs/typescript/type-annotations.
+
+Rest Parameters
+Assigning types to rest parameters https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters is similar to assigning types to arrays https://www.codecademy.com/resources/docs/typescript/arrays. Here’s a rest parameter example without types:
+
+function smush(firstString, ...otherStrings){
+  let output = firstString;
+  for(let i = 0; i < otherStrings.length; i++){
+    output = output.concat(otherStrings[i]);
+  }
+  return output;
+}
+
+This function concatenates all of its arguments. For example, calling: smush('hi ', 'there') returns the value 'hi there'.” The rest parameter otherStrings lets the function work with any number of parameters greater than zero:
+
+smush('a','h','h','H','H','H','!','!'); // Returns: 'ahhHHH!!'.
+
+
+The function works well, but it is not type safe. We don’t want a misguided coder to make a mistake like smush(1,2,3), when that would cause an error. TypeScript to the rescue! Type annotations for a rest parameter are identical to type annotations https://www.codecademy.com/resources/docs/typescript/type-annotations for arrays. The function with a correctly typed rest parameter is then:
+
+function smush(firstString, ...otherStrings: string[]){
+  /*rest of function*/
+}
+
+With this change, TypeScript will treat otherStrings as an array of strings. This means that smush(1,2,3) will result in a type error because [2,3] is not an array of strings.
+
+Now, it’s your turn to write a rest parameter type!
+
+Instructions
+
+1.
+The code editor includes another function using rest parameters. The function, addPower(p, ...numsToAdd), adds up the pth powers of all the subsequent arguments. So the call addPower(2, 3, 4) returns 25, since 3 squared plus 4 squared is 25. (Here, we are using the exponentiation operator **.)
+
+Please add the appropriate type annotations for this function. Include the annotations for all arguments and the return type.
+
+2.
+There is no such thing as a number to the power of 'a string'. Verify that the function results in a type error when you add the code addPower('a string', 4, 5, 6) and run tsc.
+
+index.ts
+
+function addPower(p: number, ...numsToAdd: number[]):number{
+  let answer = 0; 
+  for(let i = 0; i < numsToAdd.length; i++){
+    answer += numsToAdd[i] ** p;
+  }
+  return answer;
+}
+
+addPower('a string', 4, 5, 6)
+
+Spread Syntax
+Like the finest wines and cheeses, TypeScript’s tuples https://www.codecademy.com/resources/docs/typescript/tuples pair beautifully with JavaScript’s spread syntax https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax. This is most useful for function calls that use lots of arguments, like this:
+
+function gpsNavigate(startLatitudeDegrees:number, startLatitudeMinutes:number, startNorthOrSouth:string, startLongitudeDegrees: number, startLongitudeMinutes: number, startEastOrWest:string, endLatitudeDegrees:number, endLatitudeMinutes:number , endNorthOrSouth:string, endLongitudeDegrees: number, endLongitudeMinutes: number,  endEastOrWest:string) {
+  /* navigation subroutine here */
+}
+
+The function call gpsNavigate(40, 43.2, 'N', 73, 59.8, 'W', 25, 0, 'N', 71, 0, 'W') calculates a route from the Codecademy offices in New York City (40 degrees 43.2 minutes north, 73 degrees 59.8 minutes west) to selected coordinates in the Bermuda Triangle. We all agree that this function call is awkward to read.
+
+Instead, we can use tuple variables https://www.codecademy.com/resources/docs/typescript/variables that represent the starting and ending coordinates:
+
+let codecademyCoordinates: [number, number, string, number, number, string] = [40, 43.2, 'N', 73, 59.8, 'W'];
+let bermudaTCoordinates: [number, number, string, number, number, string] = [25, 0 , 'N' , 71, 0, 'W'];
+
+These tuple type annotations https://www.codecademy.com/resources/docs/typescript/type-annotations guarantee that the types of the elements will be valid function parameters for gpsNavigate().
+
+Now, we use JavaScript’s spread syntax to write a very readable function call:
+
+gpsNavigate(...codecademyCoordinates, ...bermudaTCoordinates);
+// And by the way, this makes the return trip really convenient to compute too:
+gpsNavigate(...bermudaTCoordinates, ...codecademyCoordinates);
+// If there is a return trip . . . 
+
+
+Now, you practice:
+
+Instructions
+
+1.
+An array of tuples could be a convenient way to store the arguments for many recurring function calls. In the code editor, we have defined the array danceMoves, every element of which is a tuple that contains arguments for the performDanceMove() function.
+
+Please provide a type annotation for the danceMoves array that will ensure compatibility with the performDanceMove() function.
+
+2.
+Perform the whole dance from start to finish by looping over the danceMoves array in whatever way you like, but make sure to use JavaScript’s spread syntax within performDanceMove().
+
+It’s time to see the results of the dance! Run tsc to transpile the code to JavaScript and then run it with node index.js.
+
+index.ts
+
+function performDanceMove(moveName:string, moveReps:number, hasFlair:boolean):void{
+  console.log(`I do the ${moveName} ${moveReps} times !`);
+  if(hasFlair){
+    console.log('I do it with flair!');
+  }
+}
+
+let danceMoves: [string, number, boolean][] = [
+  ['chicken beak', 4, false],
+  ['wing flap', 4, false],
+  ['tail feather shake', 4, false],
+  ['clap', 4, false],
+  ['chicken beak', 4, true],
+  ['wing flap', 4, true],
+  ['tail feather shake', 4, true],
+  ['clap', 4, true],
+];
+
+danceMoves.forEach(move => performDanceMove(...move))
+
+ARRAYS
+Review
+Beautiful! Array types may seem like a monster topic, but now you’ve got it tamed. You learned:
+
+The type annotations https://www.codecademy.com/resources/docs/typescript/type-annotations for arrays https://www.codecademy.com/resources/docs/typescript/arrays.
+What tuples https://www.codecademy.com/resources/docs/typescript/tuples are, and how to do their type annotations.
+How type inference works with arrays and tuples.
+How to use the rest and spread operators with TypeScript.
+Arrays types are a crucial component of TypeScript, so great job!
