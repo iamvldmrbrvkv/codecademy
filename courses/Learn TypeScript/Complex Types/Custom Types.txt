@@ -490,7 +490,7 @@ In general, writing generic functions with function functionName<T> allows us to
 Wow! Let’s practice generic functions.
 
 Instructions
-Checkpoint 1 Passed
+
 1.
 Use the function getFilledArray<T>() to assign values to the variables stringArray, numberArray, personArray, and coordinateArray.
 

@@ -207,7 +207,7 @@ const liquidAmount: number = ouncesToCups(3);
 Here, TypeScript was able to infer that liquidAmount was being assigned a value of type string, despite it being declared as a variable of type number. This correctly results in an error being surfaced.
 
 Instructions
-Checkpoint 1 Passed
+
 1.
 Challenge! Using what you’ve learned above, create a variable myVar with the type number. To make this more interesting:
 
