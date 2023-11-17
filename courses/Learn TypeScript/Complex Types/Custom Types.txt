@@ -311,9 +311,6 @@ In the code editor, you should see something familiar. This code was the “impr
 
 First, create the type alias Coord to stand for the coordinate tuple type. It should be of the same type as codecademyCoordinates and bermudaTCoordinates.
 
-
-Stuck? Get a hint
-Checkpoint 2 Passed
 2.
 Now, replace the old, long type annotations for codecademyCoordinates and bermudaTCoordinates with annotations that use your new type alias.
 
