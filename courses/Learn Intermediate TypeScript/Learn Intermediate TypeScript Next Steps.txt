@@ -1,0 +1,15 @@
+Learn Intermediate TypeScript Next Steps
+You’ve completed the Learn Intermediate TypeScript course! What’s next?
+
+Congratulations, you’ve successfully completed the Learn Intermediate TypeScript course! You’ve built upon your knowledge of TypeScript and can now work on your own projects or together with others on bigger TypeScript projects! More specifically, you learned to:
+
+work with TypeScript in VSCode
+use the TypeScript CLI
+set up TypeScript within a project
+configure commonly used TypeScript options
+Learn Intermediate TypeScript Continued…
+Your learning journey into TypeScript isn’t over yet!
+
+Keep a watch out for the rest of the Learn Intermediate TypeScript course — in this upcoming course, we will cover class visibility, composed types, and generics.
+
+Once again, congratulations on finishing your Learn Intermediate TypeScript course! We are excited to see what you accomplish next. Happy coding!

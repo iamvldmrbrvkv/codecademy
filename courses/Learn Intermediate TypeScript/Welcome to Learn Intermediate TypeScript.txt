@@ -1,0 +1,15 @@
+Welcome to Learn Intermediate TypeScript
+A brief overview of what you will learn in this course.
+
+What will you learn?
+In this course, you will build upon your knowledge of TypeScript to work on your own projects or together with others on bigger TypeScript projects.
+
+After this course, you will be able to:
+
+work with TypeScript in VSCode
+use the TypeScript CLI
+set up TypeScript within a project
+configure commonly used TypeScript options
+Learning is social. Whatever you’re working on, be sure to connect with the Codecademy community in the forums https://discuss.codecademy.com/?_gl=1*1prtxsk*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTAyMTQxOS41NTkuMS4xNzAxMDIxNTQxLjYwLjAuMA... Remember to check in with the community regularly, including for things like asking for code reviews on your project work and providing code reviews to others in the projects category https://discuss.codecademy.com/c/project/1833?_gl=1*1prtxsk*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTAyMTQxOS41NTkuMS4xNzAxMDIxNTQxLjYwLjAuMA.., which can help to reinforce what you’ve learned.
+
+We are excited for you to start your journey into Learn Intermediate TypeScript!
