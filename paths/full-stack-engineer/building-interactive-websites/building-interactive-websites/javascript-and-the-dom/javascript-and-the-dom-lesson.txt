@@ -53,6 +53,7 @@ let blueElement = document.querySelector('.blue');
 blueElement.style.backgroundColor = 'blue';
 Unlike CSS, the DOM .style property does not implement a hyphen such as background-color, but rather camel case notation, backgroundColor. 
 Check out this MDN reference page https://developer.mozilla.org/en-US/docs/Web/CSS/Reference#index to see a list of how CSS properties are converted into JavaScript.
+Check out this W3 Reference on the HTML DOM style object https://www.w3schools.com/jsref/dom_obj_style.asp to see a list of how CSS properties are converted into JavaScript.
 The following chaining syntax would also work:
 document.querySelector('.blue').style.fontFamily = 'Roboto';
 
