@@ -1,0 +1,139 @@
+Introduction
+jQuery https://www.codecademy.com/resources/docs/javascript/jquery Effects are a group of methods https://www.codecademy.com/resources/docs/javascript/methods in the jQuery library that are responsible for adding dynamic behavior to websites. You may have seen many of these effects on modern websites without even realizing it. For example, you are seeing jQuery Effects in action when drop-down menus slide into place or a warning message appears after entering an incorrect password.
+
+While adding dynamic behavior is possible using only JavaScript, the code to do so is somewhat long and confusing. The beauty of jQuery is how one or two lines of jQuery can replace long JavaScript code blocks.
+
+In this course, you’ll learn how to make elements appear and disappear, fade in and out, and slide around the page. Let’s get started!
+
+How do I know if a site is running JQuery for its effects?
+https://discuss.codecademy.com/t/how-do-i-know-if-a-site-is-running-jquery-for-its-effects/387085?_gl=1*gnhg0c*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTg5NzQ4OC41NjIuMS4xNzAxOTAwMDQyLjAuMC4w
+
+.hide()
+The first tool you will add to your jQuery effects tool belt is the .hide() method. When you hide an element, your browser will render the HTML as if the hidden element does not exist. It will disappear from the page and the space that it was taking up will disappear as well. Take a look at the code below to learn how to use the .hide() method:
+
+$('.hide-arrow').on('click', () => {
+  $('.shoe-information').hide();
+});
+
+In the example above, the event handler gets triggered whenever an element with a class of hide-arrow is clicked. That element could be a button, some text, an image, or any other HTML element. When the event is triggered, we target all elements of the class shoe-information and call .hide() on them. Check out the gif below to see an example.
+
+
+In this gif, the shoe-information element hides when the hide-arrow button is clicked. Notice that the HTML elements below the shoe-information element move up to fill the space left by the hidden element.
+
+Is there anything else we can do with .hide()?
+https://discuss.codecademy.com/t/is-there-anything-else-we-can-do-with-hide/387097?_gl=1*4sp5wb*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTkzOTI2NC41NjMuMS4xNzAxOTM5MzgwLjAuMC4w
+
+.show()
+Now that we’ve learned how to hide elements on our page, we want to know how to make them reappear. Luckily, the .show() method does the opposite of .hide(). If an element on your page is hidden, .show() will make it appear.
+
+$('.show-arrow').on('click', () => {
+  $('.shoe-information-2').show();
+});
+
+The code above should look similar to the code you wrote using .hide(). The only difference is that we are calling a different method on the targeted elements. This time we are calling the .show() method on the shoe’s textual information.
+
+Check out the gif below to see .show() in action!
+
+
+In this gif, all elements of class shoe-information-2 appear when an element of class show-arrow is clicked.
+
+Do .show() and .hide() are only able to be called on click?
+https://discuss.codecademy.com/t/do-show-and-hide-are-only-able-to-be-called-on-click/387123?_gl=1*1emkrgi*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTkzOTI2NC41NjMuMS4xNzAxOTM5OTc5LjAuMC4w
+
+.toggle()
+Great work! Our table now has two buttons that hide and show our image. But wouldn’t it be nice to have one button do both? It is common for web pages to have one button that will either hide or show elements depending on their current state. We can achieve this by using the .toggle() method.
+
+$('.toggle-button').on('click', () => {
+  $('.shoe-information-3').toggle();
+});
+
+In the above code we call the .toggle() method on elements of class shoe-information-3. If the information is visible, clicking the .toggle-button will hide it, as if the following code were run.
+
+$('.toggle-button').on('click', () => {
+  $('.shoe-information-3').hide();
+});
+
+At the same time, if the shoe information is hidden, it will show itself as if the following code were run:
+
+$('.toggle-button').on('click', () => {
+  $('.shoe-information-3').show();
+});
+
+Take a look at the gif below to see the .toggle() method being called.
+
+
+In this gif, the .toggle() method is called twice. The first time the arrow is clicked, .toggle() shows the shoe information because it was hidden. The second time the arrow is clicked, .toggle() hides the shoe information because the information was being shown. There’s no need to have a different button for .hide() and .show(); .toggle() can do both!
+
+Why do we have .show() and .hide() if there is .toggle()?
+https://discuss.codecademy.com/t/why-do-we-have-show-and-hide-if-there-is-toggle/387125?_gl=1*effz04*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTkzOTI2NC41NjMuMS4xNzAxOTQwNzE4LjAuMC4w
+
+fading
+Great work! In this exercise, you will learn about two new methods that are similar to .hide() and .show(). Take a look at the gif below:
+
+
+In this gif, the .fadeIn() method is called on an HTML element. Instead of instantly showing the element, .fadeIn() and .fadeOut() make the element appear or disappear over a given period of time. You can think of this as an animation. The transition between being visible and invisible happens over a duration of time.
+
+Both .fadeIn() and .fadeOut() take an optional parameter that specifies how long the animation will take. For example, in the code below, all <div> elements will fade out over a period of 1000 milliseconds (or one second).
+
+$('div').fadeOut(1000);
+
+In the example above, the 1000 argument is optional; you don’t need to put a number between the parentheses. This number represents the number of milliseconds it takes for the animation to complete. If no argument is given, the default animation duration is 400 milliseconds.
+
+How are .fadeIn() and .fadeOut() different from .show() and .hide()?
+https://discuss.codecademy.com/t/how-are-fadein-and-fadeout-different-from-show-and-hide/387132?_gl=1*1ppbn9f*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTkzOTI2NC41NjMuMS4xNzAxOTQxMDA1LjAuMC4w
+
+.fadeToggle()
+Great work! With fade, our website is starting to look dynamic. .fadeToggle() is the third and final method in this trio of fade methods https://www.codecademy.com/resources/docs/javascript/methods. This method is similar to .toggle(). If you call .fadeToggle() on an element that is invisible, it will fade in. And if the element is already visible, then .fadeToggle() will make it fade out.
+
+Like the other fade methods, .fadeToggle() can take an argument that sets https://www.codecademy.com/resources/docs/javascript/sets the duration of the effect.
+
+$('div').fadeToggle(1000);
+
+In the example above, all div elements will fade in or out over a period of 1000 milliseconds. Hidden div elements will fade in, and visible div elements will fade out.
+
+What would be the advantage of using a string argument over a number one on .fadeToggle()?
+https://discuss.codecademy.com/t/what-would-be-the-advantage-of-using-a-string-argument-over-a-number-one-on-fadetoggle/387136?_gl=1*e31oif*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTkzOTI2NC41NjMuMS4xNzAxOTQxODc2LjAuMC4w
+
+Sliding
+Have you ever been to a website and seen HTML elements slide into place? Many websites use this effect to show menus; you click on your profile image and a menu slides down revealing different settings and options that you can change. These sites are likely using jQuery sliding effects.
+
+By using sliding effects, an element on your web page will slide up or down into place instead of appearing or disappearing. Just like with the other effects, sliding can be applied to any element on your page whether it be an image, a video, or text.
+
+Sliding methods are animations; they happen over a period of time. As a result, sliding methods have an optional parameter to determine how long the animation will take.
+
+$('.menu-button').on('click', () => {
+  $('.menu-content').slideDown('slow');
+});
+
+In the above code, we call the .slideDown() method on the elements of class menu-content whenever menu-button elements are clicked. The slow parameter determines the speed of the animation. That code will produce something that looks like this:
+
+
+The menu-button element is clicked and the menu-content element slides down into place
+
+There are two other sliding methods in jQuery Effects. Use the documentation https://api.jquery.com/category/effects/ to find their names and read about their usage. One is used to slide elements up, and the other is used to toggle sliding effects.
+
+Why the element with .slideUp() looks like going towards the center?
+https://discuss.codecademy.com/t/why-the-element-with-slideup-looks-like-going-towards-the-center/387138?_gl=1*fliftl*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTkzOTI2NC41NjMuMS4xNzAxOTQyMTkxLjAuMC4w
+
+Review: Effects
+Wow! You’ve completed this table of 9 different jQuery effects. Great job! To review, the methods https://www.codecademy.com/resources/docs/javascript/methods that we learned were:
+
+.hide() https://www.codecademy.com/resources/docs/javascript/jquery/hide
+.show() https://www.codecademy.com/resources/docs/javascript/jquery/show
+.toggle()
+These methods instantly hide or show elements on a web page.
+
+.fadeOut()
+.fadeIn()
+.fadeToggle()
+These methods make elements disappear or appear over a given period of time.
+
+.slideUp()
+.slideDown()
+.slideToggle()
+These methods make elements slide up or down into place over a given period of time.
+
+Using these effects, you can make your web pages eye-catching and dynamic. And thanks to the magic of jQuery all of this can be done with very few lines of code!
+
+Are JQuery effect methods able to be chained on the same element?
+https://discuss.codecademy.com/t/are-jquery-effect-methods-able-to-be-chained-on-the-same-element/387827?_gl=1*4b0pwa*_ga*NDk3Mzk5MDMyMy4xNjc3Njk2MDE3*_ga_3LRZM6TM9L*MTcwMTkzOTI2NC41NjMuMS4xNzAxOTQzMDYwLjAuMC4w
