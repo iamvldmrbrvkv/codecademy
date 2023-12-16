@@ -121,7 +121,6 @@ It should have the following information:
 A type of 'songs/removeSong'
 A payload of 'Take Five', the title of the song to remove
 
-Stuck? Get a hint
 3.
 Last, let’s make it possible to wipe all songs.
 
