@@ -49,7 +49,7 @@ Define the state of a playlist application in a state array. It should represent
 Take Five
 Clair de Lune
 Respect
-Checkpoint 2 Passed
+
 
 Hint
 Here’s a similar example:

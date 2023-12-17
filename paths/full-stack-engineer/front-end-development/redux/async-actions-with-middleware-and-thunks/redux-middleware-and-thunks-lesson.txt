@@ -63,7 +63,7 @@ Each middleware has access to the storeAPI (which consists of the dispatch and g
 Now let’s write a custom middleware that logs the contents of our store to the console.
 
 Instructions
-Checkpoint 1 Passed
+
 1.
 In the code editor, you’ll notice we’ve created a simple reducer for you, and taken care of importing Redux’s createStore and applyMiddleware functions. We’ve created a store by calling createStore and passing it the reducer. Since all Redux middleware have the same basic structure, you can start by copying this snippet:
 
@@ -77,7 +77,6 @@ const logger = storeAPI => next => action => {
 Hint
 To start writing your own middleware, copy the provided snippet, which has the correct function signature for a Redux middleware.
 
-Checkpoint 2 Passed
 2.
 Replace the comment // do stuff here, with a line of code that logs the contents of the store to the console. Remember, you can access the store’s state with storeAPI.getState().
 
@@ -85,7 +84,6 @@ Replace the comment // do stuff here, with a line of code that logs the contents
 Hint
 Use console.log to print the contents of the store to the console. To access the contents of the store, you can call storeAPI.getState().
 
-Checkpoint 3 Passed
 3.
 Instead of returning next(action), store the result of that function call in a const called nextState. Next, log nextState to the console. Finally, return nextState.
 
@@ -93,7 +91,6 @@ Instead of returning next(action), store the result of that function call in a c
 Hint
 Start by storing the result of next(action) in a const called nextState. On the next line, log nextState to the console. On the line after that, return nextState.
 
-Checkpoint 4 Passed
 4.
 Apply your custom middleware to your store by adding a third argument to the call to createStore. This argument should be the result of calling applyMiddleware with the logger middleware you’ve written.
 
@@ -101,7 +98,6 @@ Apply your custom middleware to your store by adding a third argument to the cal
 Hint
 The third argument you pass to createStore will look something like applyMiddleware(yourMiddlewareHere). Note that the second argument to createStore is the initial value of that store’s state.
 
-Checkpoint 5 Passed
 5.
 Dispatch the following action to your store:
 
@@ -155,7 +151,7 @@ delayedAddition() // => 4
 Note that calling add() does not cause the addition to happen – it merely returns a function that will perform the addition when called. To perform the addition, we must call delayedAddition().
 
 Instructions
-Checkpoint 1 Passed
+
 1.
 Consider the function remindMeTo(), which we’ve defined for you in the code editor. What do you think will happen if you run remindMeTo('call mom')?
 
@@ -165,7 +161,6 @@ Call console.log(remindMeTo('call mom')) in the code editor to test your suspici
 Hint
 Call remindMeTo('call mom') as an argument of console.log() in the code editor and see what happens.
 
-Checkpoint 2 Passed
 2.
 Logging remindMeTo('call mom') caused “Remember to call mom!!!” to appear in the console.
 
@@ -175,7 +170,6 @@ Complete remindMeLater() so it takes a string, task, and returns a thunk that re
 Hint
 Return remindMeTo() with task as its argument inside the return statement of the remindMeLater() function.
 
-Checkpoint 3 Passed
 3.
 Call remindMeLater() with the task 'get groceries' and store the result in a constant called reminder.
 
@@ -183,7 +177,6 @@ Call remindMeLater() with the task 'get groceries' and store the result in a con
 Hint
 reminder should store the result of calling remindMeLater() with a task we want to be reminded of later, which is 'get groceries'.
 
-Checkpoint 4 Passed
 4.
 What do you think will happen when you call reminder()?
 
@@ -258,7 +251,7 @@ There are a few things worth highlighting here. First, observe that the payload 
 As you can see, createAsyncThunk() makes defining thunk action creators concise. All you have to write is an asynchronous thunk function; createAsyncThunk() takes care of the rest, returning an action creator that will dispatch pending/fulfilled/rejected actions as appropriate.
 
 Instructions
-Checkpoint 1 Passed
+
 1.
 In the code editor, we’ve provided a constant called loadRecipes, which you will replace with an asynchronous action creator.
 
@@ -268,7 +261,6 @@ To start, import createAsyncThunk from the Redux toolkit. Make sure you continue
 Hint
 Add a createAsyncThunk to the list of imports from '@reduxjs/toolkit'.
 
-Checkpoint 2 Passed
 2.
 Replace the value of loadRecipes() with the result of calling createAsyncThunk(). Set the first argument (your action type string) as 'allRecipes/loadRecipes'.
 
@@ -276,7 +268,6 @@ Replace the value of loadRecipes() with the result of calling createAsyncThunk()
 Hint
 Replace the 'replace me' string with the createAsyncThunk() function. Set the first argument of the function to be 'allRecipes/loadRecipes'. We’ll work on adding the second argument in the next task.
 
-Checkpoint 3 Passed
 3.
 Finally, for the second argument to createAsyncThunk(), let’s define our payload creator with the following code snippet as the body.
 

@@ -367,7 +367,7 @@ Documentation comments are especially useful for documenting functions https://w
 Many text editors will helpfully display documentation comments, for example, when hovering over a function name.
 
 Instructions
-Checkpoint 1 Passed
+
 1.
 We grabbed a few functions from earlier exercises. They are sorely missing some documentation comments…
 
@@ -377,7 +377,7 @@ a brief description of what the function does
 a first @param tag for the first parameter
 a second @param tag for the second parameter
 a @returns tag explaining what the function returns (in this case, nothing)
-Checkpoint 2 Passed
+
 2.
 Add a documentation comment proclaim() function. Your comment should include:
 

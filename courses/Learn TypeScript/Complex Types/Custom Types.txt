@@ -305,7 +305,7 @@ The reason this works is that MyString and MyOtherString are not distinct types.
 Using type aliases https://www.codecademy.com/resources/docs/typescript/type-aliases, we can make our code much simpler to understand. Let’s give it a try!
 
 Instructions
-Checkpoint 1 Submitting
+
 1.
 In the code editor, you should see something familiar. This code was the “improved” version of the navigation example in a previous lesson. Here, we can improve it even more by replacing a long, awkward type annotation with a short, supple type alias.
 
