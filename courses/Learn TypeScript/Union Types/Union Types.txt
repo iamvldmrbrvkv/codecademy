@@ -195,6 +195,27 @@ Run tsc in the terminal to make sure there are no type errors.
 
 index.ts
 
+function formatListings(listings: (string | number)[]) {
+  return listings.map((listing) => {
+    if (typeof listing === 'string') {
+      return listing.toUpperCase();
+    }
+
+    if (typeof listing === 'number') {
+      return `$${listing.toLocaleString()}`;
+    }
+  });
+}
+
+const result = formatListings([
+  '123 Main St',
+  226800,
+  '580 Broadway Apt 4a',
+  337900,
+]);
+
+console.log(result);
+
 Common Key Value Pairs
 When we put type members in a union, TypeScript will only allow us to use the common methods and properties that all members of the union share. Take this code:
 
