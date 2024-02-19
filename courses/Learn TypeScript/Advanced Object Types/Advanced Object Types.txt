@@ -13,7 +13,7 @@ This lesson is about how we can deal with a variety of situations to make sure t
 
 In this lesson, we’ll dive deep into how to use types with object-oriented programming patterns, how to use types together to create combined types, and so much more!
 
-nterfaces and Types
+Interfaces and Types
 In TypeScript, we can define types in a variety of ways to fit our code. We’ve used the type keyword to define types, however, there’s another way to define types with the interface keyword.
 
 Here’s a type that you’ve seen before:
